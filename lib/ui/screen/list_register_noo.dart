@@ -21,24 +21,24 @@ class ListRegisterNoo extends StatelessWidget {
                     ),
                     (controller.selectedIndex == 0)
                         ? ListStatusNoo(
-                            noos: (state.noos
+                            noos: (controller.noos
                                 .where((element) =>
                                     element.status!.contains(NooStatus.pending))
                                 .toList()))
                         : (controller.selectedIndex == 1)
                             ? ListStatusNoo(
-                                noos: (state.noos
+                                noos: (controller.noos
                                     .where((element) => element.status!
                                         .contains(NooStatus.confirmed))
                                     .toList()))
                             : (controller.selectedIndex == 2)
                                 ? ListStatusNoo(
-                                    noos: (state.noos
+                                    noos: (controller.noos
                                         .where((element) => element.status!
                                             .contains(NooStatus.approved))
                                         .toList()))
                                 : ListStatusNoo(
-                                    noos: (state.noos
+                                    noos: (controller.noos
                                         .where((element) => element.status!
                                             .contains(NooStatus.rejected))
                                         .toList()))

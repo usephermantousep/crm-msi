@@ -2,20 +2,23 @@ part of 'controllers.dart';
 
 class ListNooController extends GetxController {
   int selectedIndex = 0;
-  List<NooModel> = [];
-
+  List<NooModel> noos = [];
   void changeMenu(int index) {
     selectedIndex = index;
+    update();
+  }
+
+  Future<void> getNoo(int id) async {
+    ApiReturnValue<List<NooModel>> result = await NooService.bySales(id);
+
+    if (result.value != null) {
+      noos = result.value!;
+    }
   }
 
   @override
   void onInit() {
-    Future<void> getNoo(int id) async {
-      ApiReturnValue<List<NooModel>> result = await NooService.bySales(id);
-    }
-
-
-
+    getNoo(1);
     super.onInit();
   }
 }

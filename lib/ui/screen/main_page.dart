@@ -26,17 +26,11 @@ class MainPage extends StatelessWidget {
                     child: HomePage(),
                   ),
                   Center(
-                      child: Container(
-                    child: Text("kedua"),
-                  )
-                      // ListRegisterNoo(),
-                      ),
+                    child: ListRegisterNoo(),
+                  ),
                   Center(
-                      child: Container(
-                    child: Text("ketiga"),
-                  )
-                      // ProfilePage(),
-                      ),
+                    child: ProfilePage(),
+                  ),
                 ],
               ),
             ),
