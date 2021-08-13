@@ -4,11 +4,11 @@ class PlanVisitController extends GetxController {
   DateTime? selectedTime;
   String? selectedOutlet;
 
-  static String getDate(DateTime now) {
+  String getDate(DateTime now) {
     return new DateFormat("MMMM, y").format(now);
   }
 
-  static String getIntMonth(DateTime now) {
+  String getIntMonth(DateTime now) {
     return new DateFormat("M").format(now);
   }
 

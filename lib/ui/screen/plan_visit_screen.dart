@@ -5,7 +5,8 @@ class PlanVisitScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GeneralPage(
+    return GetBuilder<PlanVisitController>(builder: (controller) =>
+    GeneralPage(
       title: 'Plan Visit',
       subtitle: 'Form',
       onBackButtonPressed: () {
@@ -46,7 +47,7 @@ class PlanVisitScreen extends StatelessWidget {
                       )),
                 ),
                 LabelFormRegisterHalf(
-                    nama: (selectedTime == null) ? '-' : getDate(selectedTime!))
+                    nama: (controller.selectedTime == null) ? '-' : controller.getDate(controller.selectedTime!))
               ],
             ),
             Row(
@@ -55,14 +56,13 @@ class PlanVisitScreen extends StatelessWidget {
                 LabelFormRegisterHalf(
                   nama: "Pilih Outlet",
                 ),
-                     DropDownHalf(
-                          dropdownValue: selectedOutlet,
-                          opsi: outlets,
+                GetBuilder<CiCoController>(builder: (con)=> DropDownHalf(
+                          dropdownValue: con.selectedOutlet,
+                          opsi: con.outlets.map((e) => e.namaOutlet!).toList(),
                           function: (val) {
-                            setState(() {
                               selectedOutlet = val;
-                            });
-                          });
+                          });),
+                    
                 
               ],
             ),
@@ -155,6 +155,7 @@ class PlanVisitScreen extends StatelessWidget {
           ],
         ),
       ),
-    );
+    ));
+     
   }
 }
