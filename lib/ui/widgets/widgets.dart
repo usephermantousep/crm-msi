@@ -1,0 +1,26 @@
+import 'package:crm_msi/model/models.dart';
+import 'package:crm_msi/shared/share.dart';
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:timer_builder/timer_builder.dart';
+import 'package:supercharged/supercharged.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+
+part 'maps_widget.dart';
+part 'clock_widget.dart';
+part 'rounded_button.dart';
+part 'text_field_container.dart';
+part 'rounded_input_field.dart';
+part 'custom_bottom_navbar.dart';
+part 'custom_tabbar.dart';
+part 'list_log_visit.dart';
+part 'label_form_register.dart';
+part 'label_form_register_half.dart';
+part 'form_register_full.dart';
+part 'form_register_half.dart';
+part 'box_foto_registration.dart';
+part 'menu_profile.dart';
+part 'list_status_noo.dart';
+part 'drop_down_half.dart';
+part 'list_plan_visit.dart';
+part 'list_plan_visit_form.dart';
