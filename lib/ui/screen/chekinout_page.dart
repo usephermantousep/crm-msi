@@ -68,7 +68,7 @@ class _CheckInOutScreenState extends State<CheckInOutScreen> {
                                       .toList(),
                                   value: selectedOutlet,
                                   hint: Text("Pilih Outlet"),
-                                  onChanged: (value) {
+                                  onChanged: (String? value) {
                                     List latLong = value.toString().split(",");
                                     for (int i = 0; i < latLong.length; i++) {
                                       if (i == 0) {

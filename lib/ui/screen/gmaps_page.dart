@@ -118,7 +118,7 @@ class _GmapsScreenState extends State<GmapsScreen> {
       },
       child: Container(
         color: Colors.white,
-        height: MediaQuery.of(context).size.height,
+        height: MediaQuery.of(context).size.height - 150,
         child: Column(
           children: [
             Row(
@@ -196,28 +196,33 @@ class _GmapsScreenState extends State<GmapsScreen> {
                   padding: EdgeInsets.only(left: 20),
                   child: (widget.title == "Check In")
                       ? Text(
-                          "*Pastikan untuk upload foto sebelum ${widget.title}")
+                          "*Pastikan untuk upload foto sebelum ${widget.title}",
+                          style: blackFontStyle3.copyWith(fontSize: 10),
+                        )
                       : Text(
-                          "*Pastikan untuk upload foto dan input laporan sebelum ${widget.title}"),
+                          "*Pastikan untuk upload foto dan input laporan sebelum ${widget.title}",
+                          style: blackFontStyle3.copyWith(fontSize: 10),
+                        ),
                 ),
               ],
             ),
             Container(
               margin: EdgeInsets.only(top: 20),
               child: ElevatedButton(
-                  style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all("FF3F0A".toColor()),
-                      elevation: MaterialStateProperty.all(0)),
-                  onPressed: () {
-                    OutletModel selectedOutlet = widget.outlet!
-                        .singleWhere((i) => i.latLong == widget.latLong!);
-                    print(selectedOutlet.namaOutlet);
-                    print(DateTime.now());
-                  },
-                  child: Text(
-                    widget.title!,
-                  )),
+                style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all("FF3F0A".toColor()),
+                    elevation: MaterialStateProperty.all(0)),
+                onPressed: () {
+                  OutletModel selectedOutlet = widget.outlet!
+                      .singleWhere((i) => i.latLong == widget.latLong!);
+                  print(selectedOutlet.namaOutlet);
+                  print(DateTime.now());
+                },
+                child: Text(
+                  widget.title!,
+                ),
+              ),
             ),
           ],
         ),
