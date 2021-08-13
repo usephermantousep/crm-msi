@@ -1,2 +1,3 @@
 part of 'controllers.dart';
-class AppController extends
+
+class AppController extends GetxController {}

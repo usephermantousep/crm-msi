@@ -67,7 +67,7 @@ List<OutletModel> mockOutlet = [
     namaSales: mockUser,
     region: "WJU",
     cluster: "WJ1",
-    latLong: "-6.721455799999999,108.5637634",
+    latLong: "-6.721455799999999,108.56376334",
     radius: 50,
   ),
 ];

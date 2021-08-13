@@ -1,3 +1,4 @@
+import 'package:crm_msi/controller/controllers.dart';
 import 'package:crm_msi/ui/screen/screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,6 +10,10 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    Get.put(LoginController());
+    Get.put(HomePageController());
+    Get.put(CiCoController());
+    Get.put(MainPageController());
     return GetMaterialApp(
       theme: ThemeData(scaffoldBackgroundColor: const Color(0xFFEFEFEF)),
       title: 'CRM - MIS',

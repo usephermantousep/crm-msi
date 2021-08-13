@@ -198,7 +198,9 @@ class _GmapsScreenState extends State<GmapsScreen> {
                       ? Text(
                           "*Pastikan untuk upload foto sebelum ${widget.title}")
                       : Text(
-                          "*Pastikan untuk upload foto dan input laporan sebelum ${widget.title}"),
+                          "*Pastikan untuk upload foto dan input laporan sebelum ${widget.title}",
+                          style: blackFontStyle3.copyWith(fontSize: 10),
+                        ),
                 ),
               ],
             ),
