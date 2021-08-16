@@ -5,7 +5,7 @@ class ListLogVisit extends StatelessWidget {
   const ListLogVisit({Key? key, required this.data}) : super(key: key);
 
   static String getDate(DateTime waktu) {
-    return new DateFormat("EEE, MMM d yyyy").format(waktu);
+    return new DateFormat("hh:mm").format(waktu);
   }
 
   @override
@@ -19,8 +19,12 @@ class ListLogVisit extends StatelessWidget {
           itemBuilder: (_, index) {
             return ListTile(
               title: Text(
-                getDate(data![index].tanggalVisit!),
+                data![index].outlet!.namaOutlet!,
                 style: blackFontStyle3,
+              ),
+              subtitle: Text(
+                "CI : ${getDate(data![index].checkInTime!)} || CO : ${getDate(data![index].checkOutTime!)} || Durasi : ${data![index].durasiVisit!.toString()}",
+                style: blackFontStyle3.copyWith(fontSize: 12),
               ),
             );
           },

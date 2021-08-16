@@ -1,7 +1,7 @@
 part of 'screen.dart';
 
 class CheckInOutScreen extends StatelessWidget {
-  final CiCoController _controller = Get.find<CiCoController>();
+  final controller = Get.put(CiCoController());
   @override
   Widget build(BuildContext context) {
     return GeneralPage(
@@ -77,7 +77,7 @@ class CheckInOutScreen extends StatelessWidget {
                                       Colors.green[400]),
                                 ),
                                 onPressed: () {
-                                  if (_controller.selectedOutlet == null) {
+                                  if (controller.selectedOutlet == null) {
                                     {
                                       Get.snackbar("", "",
                                           padding: EdgeInsets.all(10),
@@ -99,11 +99,11 @@ class CheckInOutScreen extends StatelessWidget {
                                     }
                                   } else {
                                     Get.to(() => GmapsScreen(
-                                          outlet: _controller.outlets,
-                                          latOutlet: _controller.latOutlet,
-                                          longOutlet: _controller.longOutlet,
+                                          outlet: controller.outlets,
+                                          latOutlet: controller.latOutlet,
+                                          longOutlet: controller.longOutlet,
                                           title: "Check In",
-                                          latLong: _controller.selectedOutlet,
+                                          latLong: controller.selectedOutlet,
                                         ));
                                   }
                                 },
@@ -123,7 +123,7 @@ class CheckInOutScreen extends StatelessWidget {
                                       Colors.red[400]),
                                 ),
                                 onPressed: () {
-                                  if (_controller.selectedOutlet == null) {
+                                  if (controller.selectedOutlet == null) {
                                     {
                                       Get.snackbar("", "",
                                           padding: EdgeInsets.all(10),
@@ -145,11 +145,11 @@ class CheckInOutScreen extends StatelessWidget {
                                     }
                                   } else {
                                     Get.to(() => GmapsScreen(
-                                          outlet: _controller.outlets,
-                                          latOutlet: _controller.latOutlet,
-                                          longOutlet: _controller.longOutlet,
+                                          outlet: controller.outlets,
+                                          latOutlet: controller.latOutlet,
+                                          longOutlet: controller.longOutlet,
                                           title: "Check Out",
-                                          latLong: _controller.selectedOutlet,
+                                          latLong: controller.selectedOutlet,
                                         ));
                                   }
                                 },
@@ -184,8 +184,10 @@ class CheckInOutScreen extends StatelessWidget {
                 style: blackFontStyle1,
               ),
             ),
-            ListLogVisit(
-              data: [],
+            GetBuilder<CiCoController>(
+              builder: (_) {
+                return ListLogVisit(data: controller.visits);
+              },
             ),
           ],
         ),

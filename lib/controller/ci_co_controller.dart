@@ -4,6 +4,7 @@ class CiCoController extends GetxController {
   String? selectedOutlet;
   double? latOutlet, longOutlet;
   List<OutletModel> outlets = [];
+  List<VisitModel> visits = [];
 
   Future<void> getOutlet(int id) async {
     ApiReturnValue<List<OutletModel>> result =
@@ -12,11 +13,23 @@ class CiCoController extends GetxController {
     if (result.value != null) {
       outlets = result.value!;
     }
+    update();
+  }
+
+  Future<void> getVisit(int id) async {
+    ApiReturnValue<List<VisitModel>> result = await VisitServices.getAll(id);
+
+    if (result.value != null) {
+      visits = result.value!;
+    }
+
+    update();
   }
 
   @override
   void onInit() {
     getOutlet(1);
+    getVisit(1);
     super.onInit();
   }
 

@@ -11,11 +11,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Get.put(LoginController());
-    Get.put(HomePageController());
-    Get.put(CiCoController());
-    Get.put(MainPageController());
-    Get.put(ListNooController());
-    Get.put(ProfileController());
     return GetMaterialApp(
       theme: ThemeData(scaffoldBackgroundColor: const Color(0xFFEFEFEF)),
       title: 'CRM - MIS',

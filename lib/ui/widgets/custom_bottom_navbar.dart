@@ -1,10 +1,10 @@
 part of 'widgets.dart';
 
 class CustomBottomNavBar extends StatelessWidget {
-  final int selectedIndex;
+  final controller = Get.find<MainPageController>();
   final Function(int index)? onTap;
 
-  CustomBottomNavBar({this.selectedIndex = 0, this.onTap});
+  CustomBottomNavBar({this.onTap});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -27,7 +27,9 @@ class CustomBottomNavBar extends StatelessWidget {
                 image: DecorationImage(
                     image: AssetImage(
                       'assets/ic_home' +
-                          ((selectedIndex == 0) ? '.png' : '_normal.png'),
+                          ((controller.selectedPage == 0)
+                              ? '.png'
+                              : '_normal.png'),
                     ),
                     fit: BoxFit.contain),
               ),
@@ -47,7 +49,9 @@ class CustomBottomNavBar extends StatelessWidget {
                 image: DecorationImage(
                     image: AssetImage(
                       'assets/ic_order' +
-                          ((selectedIndex == 1) ? '.png' : '_normal.png'),
+                          ((controller.selectedPage == 1)
+                              ? '.png'
+                              : '_normal.png'),
                     ),
                     fit: BoxFit.contain),
               ),
@@ -66,7 +70,9 @@ class CustomBottomNavBar extends StatelessWidget {
                 image: DecorationImage(
                     image: AssetImage(
                       'assets/ic_profile' +
-                          ((selectedIndex == 2) ? '.png' : '_normal.png'),
+                          ((controller.selectedPage == 2)
+                              ? '.png'
+                              : '_normal.png'),
                     ),
                     fit: BoxFit.contain),
               ),

@@ -1,9 +1,9 @@
 part of 'screen.dart';
 
 class ProfilePage extends StatelessWidget {
+  final controller = Get.put(ProfileController());
   @override
   Widget build(BuildContext context) {
-    final ProfileController controller = Get.put(ProfileController());
     return Scaffold(
       backgroundColor: Colors.grey[100],
       body: SafeArea(
@@ -72,12 +72,12 @@ class ProfilePage extends StatelessWidget {
                   ),
                   GetBuilder<ProfileController>(
                     builder: (con) => (con.selectedIndex == 0)
-                        ? GetBuilder<CiCoController>(
+                        ? GetBuilder<ProfileController>(
                             builder: (con) => Column(
                               children: [
                                 MenuAccount(
                                   title: "Outlet Total",
-                                  count: con.outlets.length.toString(),
+                                  count: con.outlets!.length.toString(),
                                   onpress: () {},
                                   mdiIcons: MdiIcons.storefront,
                                 ),
@@ -102,7 +102,6 @@ class ProfilePage extends StatelessWidget {
                                       .toString(),
                                   mdiIcons: MdiIcons.fileRefresh,
                                   onpress: () {
-                                    print("object");
                                     Get.to(
                                       () => MainPage(),
                                     );

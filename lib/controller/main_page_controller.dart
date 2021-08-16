@@ -1,14 +1,8 @@
 part of 'controllers.dart';
 
 class MainPageController extends GetxController {
-  int? selectedPage;
-  PageController pageController = PageController(initialPage: 0);
-
-  @override
-  void onInit() {
-    selectedPage = 1;
-    super.onInit();
-  }
+  int selectedPage = 0;
+  PageController? pageController;
 
   void swipePage(int index) {
     selectedPage = index;
@@ -17,7 +11,15 @@ class MainPageController extends GetxController {
 
   void chaneNavbarBottom(int index) {
     selectedPage = index;
-    pageController.jumpToPage(selectedPage!);
     update();
+    pageController!.jumpToPage(selectedPage);
+    update();
+  }
+
+  @override
+  void onInit() {
+    pageController = PageController(initialPage: selectedPage);
+    update();
+    super.onInit();
   }
 }

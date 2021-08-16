@@ -1,14 +1,10 @@
 part of 'controllers.dart';
 
 class HomePageController extends GetxController {
-  var selectedIndex = 0.obs;
+  int selectedIndex = 0;
   List<PlanVisitModel> listPlan = [];
   String? month;
   int? bulan;
-
-  static String getIntMonth(DateTime? now) {
-    return new DateFormat("M").format(now!);
-  }
 
   Future<void> getPlanData(int id, int month) async {
     ApiReturnValue<List<PlanVisitModel>> result =
@@ -16,16 +12,22 @@ class HomePageController extends GetxController {
 
     if (result.value != null) {
       listPlan = result.value!;
+      update();
     }
+    update();
   }
 
   @override
-  void onInit() {
+  void onInit() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    int? userId = pref.getInt('userId');
+    print(userId);
+
     month = DateFormat("M").format(DateTime.now());
     if (month == "8") {
       bulan = 8;
     }
-    getPlanData(1, bulan!);
+    getPlanData(userId!, bulan!);
     super.onInit();
   }
 }

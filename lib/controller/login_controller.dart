@@ -14,6 +14,17 @@ class LoginController extends GetxController {
     super.onInit();
   }
 
+  void showError(String judul, String msg) {
+    Get.snackbar('title', 'message',
+        snackPosition: SnackPosition.BOTTOM,
+        margin: EdgeInsets.only(bottom: 10),
+        titleText:
+            Text(judul, style: blackFontStyle1.copyWith(color: Colors.white)),
+        messageText:
+            Text(msg, style: blackFontStyle2.copyWith(color: Colors.white)),
+        backgroundColor: "FF3F0A".toColor());
+  }
+
   @override
   void onClose() {
     userName!.dispose();
@@ -21,7 +32,18 @@ class LoginController extends GetxController {
     super.onClose();
   }
 
-  static String getIntMonth(DateTime now) {
-    return new DateFormat("M").format(now);
+  Future<UserModel> signIn(String userName, String pass) async {
+    if (userName == "usep" && pass == '123') {
+      ApiReturnValue<UserModel> result =
+          await UserServices.signIn(userName, pass);
+
+      if (result.value != null) {
+        return result.value!;
+      }
+      return UserModel();
+    } else {
+      showError('Salah !', 'Username / Password Salah');
+      return UserModel();
+    }
   }
 }

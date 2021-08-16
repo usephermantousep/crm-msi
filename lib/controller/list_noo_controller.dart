@@ -14,6 +14,7 @@ class ListNooController extends GetxController {
     if (result.value != null) {
       noos = result.value!;
     }
+    update();
   }
 
   @override
