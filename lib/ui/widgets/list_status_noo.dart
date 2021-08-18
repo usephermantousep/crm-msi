@@ -1,9 +1,11 @@
 part of 'widgets.dart';
 
-class ListStatusNoo extends StatelessWidget {
-  final List<NooModel>? noos;
+class ListStatusNoo extends GetView<ListNooController> {
+  final List<NooModel> noos;
+  final String status;
   const ListStatusNoo({
-    this.noos,
+    required this.status,
+    required this.noos,
     Key? key,
   }) : super(key: key);
 
@@ -14,31 +16,38 @@ class ListStatusNoo extends StatelessWidget {
       padding: EdgeInsets.only(bottom: 10),
       height: MediaQuery.of(context).size.height - 100,
       color: Colors.white,
-      child: GestureDetector(
-        onTap: () {
-          print("tap!!");
-        },
-        child: ListView.separated(
-            itemBuilder: (_, i) {
-              return ListTile(
+      child: ListView.separated(
+          itemBuilder: (_, i) {
+            return GestureDetector(
+              onTap: () {
+                Get.to(() => DetailNoo(noos[i], status));
+              },
+              child: ListTile(
                 leading: Icon(
                   MdiIcons.storefront,
+                  color: (status == 'STATUS : PENDING')
+                      ? Colors.grey
+                      : (status == 'STATUS : CONFIRMED')
+                          ? Colors.yellow[400]
+                          : (status == 'STATUS : APPROVED')
+                              ? Colors.green
+                              : Colors.red,
                   size: 25,
                 ),
                 title: Text(
-                  noos![i].namaOutlet!,
+                  noos[i].namaOutlet!,
                   style: blackFontStyle3,
                 ),
-                subtitle: Text(noos![i].daerah! +
+                subtitle: Text(noos[i].daerah! +
                     " || " +
-                    noos![i].namaPemilik! +
+                    noos[i].namaPemilik! +
                     " || " +
-                    noos![i].nomerPemilik!),
-              );
-            },
-            separatorBuilder: (_, __) => Divider(height: 0.5),
-            itemCount: noos!.length),
-      ),
+                    noos[i].nomerPemilik!),
+              ),
+            );
+          },
+          separatorBuilder: (_, __) => Divider(height: 0.5),
+          itemCount: noos.length),
     );
   }
 }

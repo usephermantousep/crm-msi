@@ -13,7 +13,7 @@ class ListLogVisit extends StatelessWidget {
     return Container(
       width: double.infinity,
       padding: EdgeInsets.only(bottom: 10),
-      height: MediaQuery.of(context).size.height - 470,
+      height: MediaQuery.of(context).size.height - 500,
       color: Colors.white,
       child: ListView.separated(
           itemBuilder: (_, index) {

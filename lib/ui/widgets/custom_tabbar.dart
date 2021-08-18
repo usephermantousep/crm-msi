@@ -1,15 +1,15 @@
 part of 'widgets.dart';
 
 class CustomTabBar extends StatelessWidget {
-  final int? selectedIndex;
+  final int selectedIndex;
   final List<String>? titles;
   final Function? onTap;
   final MainAxisAlignment mainAxisAlignment;
   final double paddingLeft;
 
   const CustomTabBar(
-      {this.selectedIndex,
-      @required this.titles,
+      {required this.selectedIndex,
+      required this.titles,
       this.onTap,
       this.mainAxisAlignment = MainAxisAlignment.start,
       this.paddingLeft = defaultMargin});

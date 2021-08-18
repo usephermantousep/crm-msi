@@ -1,6 +1,7 @@
 part of 'screen.dart';
 
-class HomePage extends GetView {
+class HomePage extends StatelessWidget {
+  final controller = Get.put(HomePageController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,7 +27,7 @@ class HomePage extends GetView {
                           Text(
                             "MEDIA SELULAR INDONESIA",
                             softWrap: false,
-                            style: (MediaQuery.of(context).size.width < 1080)
+                            style: (MediaQuery.of(context).size.width < 1000)
                                 ? blackFontStyle2
                                 : blackFontStyle1,
                           ),

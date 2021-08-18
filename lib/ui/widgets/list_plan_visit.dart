@@ -1,8 +1,8 @@
 part of 'widgets.dart';
 
 class ListPlanVisit extends StatelessWidget {
-  final List<PlanVisitModel>? data;
-  const ListPlanVisit({Key? key, this.data}) : super(key: key);
+  final List<PlanVisitModel> data;
+  const ListPlanVisit({Key? key, required this.data}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,14 +14,14 @@ class ListPlanVisit extends StatelessWidget {
       child: ListView.separated(
           itemBuilder: (_, index) => ListTile(
                 title: Text(
-                  data![index].namaOutlet!,
+                  data[index].namaOutlet!,
                   style: blackFontStyle2,
                 ),
               ),
           separatorBuilder: (_, index) => Divider(
                 thickness: 3,
               ),
-          itemCount: data!.length),
+          itemCount: data.length),
     );
   }
 }

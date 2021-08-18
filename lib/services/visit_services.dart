@@ -1,6 +1,6 @@
 part of 'services.dart';
 
-class VisitServices {
+class VisitServices extends GetConnect {
   // static Future<ApiReturnValue<VisitModel>> checkIn(
   //     int outletId,
   //     int userId,

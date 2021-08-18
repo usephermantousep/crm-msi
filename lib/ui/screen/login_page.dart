@@ -1,6 +1,6 @@
 part of 'screen.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginPage extends StatelessWidget {
   final controller = Get.put(LoginController());
   @override
   Widget build(BuildContext context) {
@@ -41,6 +41,7 @@ class LoginScreen extends StatelessWidget {
                           await SharedPreferences.getInstance();
                       pref.setInt('userId', value.id!);
                     });
+
                     Get.offAll(() => MainPage());
                   }
                 },

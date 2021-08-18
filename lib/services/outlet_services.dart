@@ -1,6 +1,6 @@
 part of 'services.dart';
 
-class OutletServices {
+class OutletServices extends GetxService {
   static Future<ApiReturnValue<List<OutletModel>>> getOutlet(int idSales,
       {http.Client? client}) async {
     // client ??= http.Client();

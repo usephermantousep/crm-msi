@@ -1,6 +1,6 @@
 part of 'services.dart';
 
-class UserServices {
+class UserServices extends GetxService {
   static Future<ApiReturnValue<UserModel>> signIn(
       String userName, String pass) async {
     try {

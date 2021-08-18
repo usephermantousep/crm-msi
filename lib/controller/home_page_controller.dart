@@ -21,7 +21,6 @@ class HomePageController extends GetxController {
   void onInit() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     int? userId = pref.getInt('userId');
-    print(userId);
 
     month = DateFormat("M").format(DateTime.now());
     if (month == "8") {

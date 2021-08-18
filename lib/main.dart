@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(scaffoldBackgroundColor: const Color(0xFFEFEFEF)),
       title: 'CRM - MIS',
       debugShowCheckedModeBanner: false,
-      home: LoginScreen(),
+      home: LoginPage(),
     );
   }
 }

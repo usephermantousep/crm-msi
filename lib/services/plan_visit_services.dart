@@ -1,6 +1,6 @@
 part of 'services.dart';
 
-class PlanVisitServices {
+class PlanVisitServices extends GetxService {
   static Future<ApiReturnValue<List<PlanVisitModel>>> getPlanVisit(
       int idSales, int month) async {
     await Future.delayed(Duration(milliseconds: 500));

@@ -15,17 +15,36 @@ class CheckInOutScreen extends StatelessWidget {
         child: Column(
           children: [
             Container(
-              padding: EdgeInsets.symmetric(
-                  horizontal: defaultMargin, vertical: defaultMargin),
+              padding: EdgeInsets.symmetric(horizontal: defaultMargin),
               width: double.infinity,
-              height: 250,
+              height: 270,
               color: Colors.white,
               child: Column(
                 children: [
-                  ClockWidget(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(
+                        "Extra Call ?",
+                        style: blackFontStyle3,
+                      ),
+                      GetBuilder<CiCoController>(
+                        builder: (con) {
+                          return Switch(
+                            value: con.isplaned.value,
+                            onChanged: (value) {
+                              con.changeListPlaned();
+                              con.extraCall();
+                            },
+                          );
+                        },
+                      )
+                    ],
+                  ),
                   SizedBox(
                     height: 10,
                   ),
+                  ClockWidget(),
                   Container(
                     width: double.infinity,
                     child: Column(
@@ -44,22 +63,24 @@ class CheckInOutScreen extends StatelessWidget {
                             builder: (controller) => DropdownButton(
                               underline: SizedBox(),
                               isExpanded: true,
-                              items: controller.outlets
+                              items: controller.showList
                                   .map(
                                     (e) => DropdownMenuItem<String>(
                                       child: Text(
-                                        e.namaOutlet!,
+                                        e,
                                         style: blackFontStyle3.copyWith(
                                             fontSize: 14),
                                       ),
-                                      value: e.latLong!,
+                                      value: e,
                                     ),
                                   )
                                   .toList(),
                               value: controller.selectedOutlet,
                               hint: Text("Pilih Outlet"),
                               onChanged: (String? value) {
-                                controller.newSelected(value!);
+                                if (value != null) {
+                                  controller.newSelected(value);
+                                }
                               },
                             ),
                           ),
@@ -98,13 +119,13 @@ class CheckInOutScreen extends StatelessWidget {
                                           ));
                                     }
                                   } else {
-                                    Get.to(() => GmapsScreen(
-                                          outlet: controller.outlets,
-                                          latOutlet: controller.latOutlet,
-                                          longOutlet: controller.longOutlet,
-                                          title: "Check In",
-                                          latLong: controller.selectedOutlet,
-                                        ));
+                                    // Get.to(() => GmapsScreen(
+                                    //       outlet: controller.planVisit.,
+                                    //       latOutlet: controller.latOutlet,
+                                    //       longOutlet: controller.longOutlet,
+                                    //       title: "Check In",
+                                    //       latLong: controller.selectedOutlet,
+                                    //     ));
                                   }
                                 },
                                 child: Text(
@@ -144,13 +165,13 @@ class CheckInOutScreen extends StatelessWidget {
                                           ));
                                     }
                                   } else {
-                                    Get.to(() => GmapsScreen(
-                                          outlet: controller.outlets,
-                                          latOutlet: controller.latOutlet,
-                                          longOutlet: controller.longOutlet,
-                                          title: "Check Out",
-                                          latLong: controller.selectedOutlet,
-                                        ));
+                                    // Get.to(() => GmapsScreen(
+                                    //       outlet: controller.outlets,
+                                    //       latOutlet: controller.latOutlet,
+                                    //       longOutlet: controller.longOutlet,
+                                    //       title: "Check Out",
+                                    //       latLong: controller.selectedOutlet,
+                                    //     ));
                                   }
                                 },
                                 child: Text(

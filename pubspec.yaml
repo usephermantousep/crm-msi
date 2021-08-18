@@ -31,6 +31,7 @@ dependencies:
   syncfusion_flutter_datepicker: ^19.2.55
   timer_builder: ^2.0.0
   trust_location: ^2.0.13
+  video_player: ^2.1.14
 
 dev_dependencies:
   flutter_test:

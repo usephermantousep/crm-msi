@@ -3,10 +3,12 @@ import 'package:crm_msi/services/services.dart';
 import 'package:crm_msi/shared/share.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supercharged/supercharged.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+import 'package:video_player/video_player.dart';
 
 part 'app_controller.dart';
 part 'home_page_controller.dart';

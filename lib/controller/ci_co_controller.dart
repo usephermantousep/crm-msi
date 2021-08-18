@@ -3,16 +3,26 @@ part of 'controllers.dart';
 class CiCoController extends GetxController {
   String? selectedOutlet;
   double? latOutlet, longOutlet;
-  List<OutletModel> outlets = [];
   List<VisitModel> visits = [];
+  List<PlanVisitModel> planVisit = [];
+  List<String> showList = [];
+  var isplaned = false.obs;
 
-  Future<void> getOutlet(int id) async {
-    ApiReturnValue<List<OutletModel>> result =
-        await OutletServices.getOutlet(id);
+  Future<void> getPlan(int id) async {
+    ApiReturnValue<List<PlanVisitModel>> result =
+        await PlanVisitServices.getPlanVisit(1, 8);
 
     if (result.value != null) {
-      outlets = result.value!;
+      planVisit = result.value!;
+      List<String> namaOutlet = planVisit.map((e) => e.namaOutlet!).toList();
+      showList = namaOutlet;
     }
+    update();
+  }
+
+  void changeListPlaned() {
+    selectedOutlet = null;
+    isplaned.toggle();
     update();
   }
 
@@ -26,24 +36,35 @@ class CiCoController extends GetxController {
     update();
   }
 
+  void extraCall() async {
+    if (isplaned.value) {
+      ApiReturnValue<List<OutletModel>> result =
+          await OutletServices.getOutlet(1);
+      if (result.value != null) {
+        List<String> outletName =
+            result.value!.map((e) => e.namaOutlet!).toList();
+        Set setPlan = Set.from(showList);
+        Set setOutlet = Set.from(outletName);
+
+        List<String> data = List.from(setOutlet.difference(setPlan));
+        showList = data;
+      }
+    } else {
+      getPlan(1);
+    }
+    update();
+  }
+
   @override
   void onInit() {
-    getOutlet(1);
+    getPlan(1);
     getVisit(1);
     super.onInit();
   }
 
-  void newSelected(String latlong) {
-    List latLong = latlong.toString().split(",");
-    for (int i = 0; i < latLong.length; i++) {
-      if (i == 0) {
-        latOutlet = double.parse(latLong[i]);
-      } else {
-        longOutlet = double.parse(latLong[i]);
-      }
-    }
-    print(latOutlet.toString() + longOutlet.toString());
-    selectedOutlet = latlong;
+  void newSelected(String value) {
+    selectedOutlet = value;
+    print(selectedOutlet);
     update();
   }
 }

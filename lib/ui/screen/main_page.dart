@@ -2,7 +2,6 @@ part of 'screen.dart';
 
 class MainPage extends StatelessWidget {
   final controller = Get.put(MainPageController());
-  final c = Get.put(HomePageController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,15 +22,9 @@ class MainPage extends StatelessWidget {
                 controller.swipePage(index);
               },
               children: [
-                Center(
-                  child: HomePage(),
-                ),
-                Center(
-                  child: ListRegisterNoo(),
-                ),
-                Center(
-                  child: ProfilePage(),
-                ),
+                HomePage(),
+                ListNooPage(),
+                ProfilePage(),
               ],
             ),
           ),
