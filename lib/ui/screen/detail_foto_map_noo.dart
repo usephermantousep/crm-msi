@@ -27,7 +27,7 @@ class DetailFotoDanMap extends GetView<ListNooController> {
                       LabelFormRegisterHalf(nama: 'Foto Shop Sign'),
                       Container(
                         height: 200,
-                        width: MediaQuery.of(context).size.width * 0.37,
+                        width: MediaQuery.of(context).size.width * 0.36,
                         margin: EdgeInsets.symmetric(horizontal: defaultMargin),
                         padding: EdgeInsets.symmetric(horizontal: 10),
                         decoration: BoxDecoration(
@@ -45,7 +45,7 @@ class DetailFotoDanMap extends GetView<ListNooController> {
                       LabelFormRegisterHalf(nama: 'Foto Etalase'),
                       Container(
                         height: 200,
-                        width: MediaQuery.of(context).size.width * 0.37,
+                        width: MediaQuery.of(context).size.width * 0.36,
                         margin: EdgeInsets.symmetric(horizontal: defaultMargin),
                         padding: EdgeInsets.symmetric(horizontal: 10),
                         decoration: BoxDecoration(
@@ -68,7 +68,7 @@ class DetailFotoDanMap extends GetView<ListNooController> {
                       LabelFormRegisterHalf(nama: 'Foto Depan'),
                       Container(
                         height: 200,
-                        width: MediaQuery.of(context).size.width * 0.37,
+                        width: MediaQuery.of(context).size.width * 0.36,
                         margin: EdgeInsets.symmetric(horizontal: defaultMargin),
                         padding: EdgeInsets.symmetric(horizontal: 10),
                         decoration: BoxDecoration(
@@ -86,7 +86,7 @@ class DetailFotoDanMap extends GetView<ListNooController> {
                       LabelFormRegisterHalf(nama: 'Foto Belakang'),
                       Container(
                         height: 200,
-                        width: MediaQuery.of(context).size.width * 0.37,
+                        width: MediaQuery.of(context).size.width * 0.36,
                         margin: EdgeInsets.symmetric(horizontal: defaultMargin),
                         padding: EdgeInsets.symmetric(horizontal: 10),
                         decoration: BoxDecoration(
@@ -109,7 +109,7 @@ class DetailFotoDanMap extends GetView<ListNooController> {
                       LabelFormRegisterHalf(nama: 'Foto Kanan'),
                       Container(
                         height: 200,
-                        width: MediaQuery.of(context).size.width * 0.37,
+                        width: MediaQuery.of(context).size.width * 0.36,
                         margin: EdgeInsets.symmetric(horizontal: defaultMargin),
                         padding: EdgeInsets.symmetric(horizontal: 10),
                         decoration: BoxDecoration(
@@ -127,7 +127,7 @@ class DetailFotoDanMap extends GetView<ListNooController> {
                       LabelFormRegisterHalf(nama: 'Foto Kiri'),
                       Container(
                         height: 200,
-                        width: MediaQuery.of(context).size.width * 0.37,
+                        width: MediaQuery.of(context).size.width * 0.36,
                         margin: EdgeInsets.symmetric(horizontal: defaultMargin),
                         padding: EdgeInsets.symmetric(horizontal: 10),
                         decoration: BoxDecoration(

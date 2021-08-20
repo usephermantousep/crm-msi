@@ -16,9 +16,14 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     super.initState();
     _controller = VideoPlayerController.network(widget.videoUrl)
       ..initialize().then((_) {
-        // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
         setState(() {});
       });
+  }
+
+  @override
+  void dispose() {
+    _controller!.dispose();
+    super.dispose();
   }
 
   @override
@@ -26,9 +31,16 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     return Scaffold(
       body: Center(
         child: _controller!.value.isInitialized
-            ? AspectRatio(
-                aspectRatio: _controller!.value.aspectRatio,
-                child: VideoPlayer(_controller!),
+            ? RotatedBox(
+                quarterTurns: 3,
+                child: Container(
+                  height: Get.width,
+                  width: Get.height,
+                  child: AspectRatio(
+                    aspectRatio: _controller!.value.aspectRatio,
+                    child: VideoPlayer(_controller!),
+                  ),
+                ),
               )
             : Container(),
       ),

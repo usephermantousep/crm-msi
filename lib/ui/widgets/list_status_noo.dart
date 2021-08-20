@@ -28,7 +28,7 @@ class ListStatusNoo extends GetView<ListNooController> {
                   color: (status == 'STATUS : PENDING')
                       ? Colors.grey
                       : (status == 'STATUS : CONFIRMED')
-                          ? Colors.yellow[400]
+                          ? Colors.yellow[300]
                           : (status == 'STATUS : APPROVED')
                               ? Colors.green
                               : Colors.red,

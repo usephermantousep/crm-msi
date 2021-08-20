@@ -12,7 +12,7 @@ class BoxFotoRegistration extends StatelessWidget {
     return Container(
       height: 200,
       width: MediaQuery.of(context).size.width * 0.37,
-      margin: EdgeInsets.symmetric(horizontal: defaultMargin),
+      margin: EdgeInsets.symmetric(horizontal: 20),
       padding: EdgeInsets.symmetric(horizontal: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),

@@ -6,11 +6,13 @@ class DropDownHalf extends StatelessWidget {
     required this.dropdownValue,
     required this.opsi,
     required this.function,
+    required this.width,
   }) : super(key: key);
 
   final String? dropdownValue;
   final List<String> opsi;
   final Function(String? val) function;
+  final double? width;
 
   @override
   Widget build(BuildContext context) {
@@ -19,9 +21,9 @@ class DropDownHalf extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
         border: Border.all(color: Colors.black),
       ),
-      margin: EdgeInsets.symmetric(horizontal: defaultMargin),
+      margin: EdgeInsets.symmetric(horizontal: 20),
       padding: EdgeInsets.symmetric(horizontal: 10),
-      width: MediaQuery.of(context).size.width * 0.36,
+      width: MediaQuery.of(context).size.width * width!,
       child: DropdownButton<String>(
         underline: SizedBox(),
         value: dropdownValue,
