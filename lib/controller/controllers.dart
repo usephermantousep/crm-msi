@@ -13,16 +13,15 @@ import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supercharged/supercharged.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+import 'package:trust_location/trust_location.dart';
 import 'package:video_player/video_player.dart';
 
 part 'app_controller.dart';
 part 'home_page_controller.dart';
 part 'login_controller.dart';
 part 'ci_co_controller.dart';
-part 'gmaps_controller.dart';
 part 'main_page_controller.dart';
 part 'list_noo_controller.dart';
 part 'profile_controller.dart';
-part 'outlet_controller.dart';
 part 'plan_visit_controller.dart';
 part 'register_noo_controller.dart';

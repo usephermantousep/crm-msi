@@ -29,20 +29,20 @@ class LoginPage extends StatelessWidget {
                           controller.pass!.text.isEmpty ||
                       controller.userName!.text == '' ||
                       controller.pass!.text == '') {
-                    controller.showError(
-                        'Salah !', 'Username/password tidak benar');
+                    controller.showError('Salah !',
+                        'isi username dan password dengan benar dan lengkap');
                   } else {
                     controller.isLoading.toggle();
                     controller
                         .signIn(
                             controller.userName!.text, controller.pass!.text)
-                        .then((value) async {
-                      SharedPreferences pref =
-                          await SharedPreferences.getInstance();
-                      pref.setInt('userId', value.id!);
+                        .then((value) {
+                      if (value) {
+                        Get.to(() => MainPage());
+                      } else {
+                        controller.isLoading.toggle();
+                      }
                     });
-
-                    Get.offAll(() => MainPage());
                   }
                 },
                 style: ButtonStyle(

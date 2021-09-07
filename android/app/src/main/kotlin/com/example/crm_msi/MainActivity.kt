@@ -1,4 +1,4 @@
-package com.example.crm_msi
+package com.msi.crmmsi
 
 import io.flutter.embedding.android.FlutterActivity
 

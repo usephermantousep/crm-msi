@@ -6,27 +6,20 @@ class HomePageController extends GetxController {
   String? month;
   int? bulan;
 
-  Future<void> getPlanData(int id, int month) async {
+  Future<void> getPlanVisit() async {
     ApiReturnValue<List<PlanVisitModel>> result =
-        await PlanVisitServices.getPlanVisit(id, month);
+        await PlanVisitServices.getPlanVisit();
 
     if (result.value != null) {
       listPlan = result.value!;
-      update();
+      update(['planvisit']);
     }
     update();
   }
 
   @override
   void onInit() async {
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    int? userId = pref.getInt('userId');
-
-    month = DateFormat("M").format(DateTime.now());
-    if (month == "8") {
-      bulan = 8;
-    }
-    getPlanData(userId!, bulan!);
+    getPlanVisit();
     super.onInit();
   }
 }

@@ -13,7 +13,7 @@ class RegisterNooController extends GetxController {
 
   String? selectedCluster;
 
-  String? oppo, vivo, realme, infinix, xiaomi, fl;
+  String? oppo, vivo, realme, samsung, xiaomi, fl;
 
   CameraPosition? initialCamera;
   double? lat, long;
@@ -75,7 +75,7 @@ class RegisterNooController extends GetxController {
         realme = val;
         break;
       case 'infinix':
-        infinix = val;
+        samsung = val;
         break;
       case 'xiaomi':
         xiaomi = val;
@@ -131,7 +131,7 @@ class RegisterNooController extends GetxController {
   void submit() {
     print(oppo);
     print(vivo);
-    print(infinix);
+    print(samsung);
     print(realme);
     print(xiaomi);
     print(fl);

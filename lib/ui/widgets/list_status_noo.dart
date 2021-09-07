@@ -38,7 +38,7 @@ class ListStatusNoo extends GetView<ListNooController> {
                   noos[i].namaOutlet!,
                   style: blackFontStyle3,
                 ),
-                subtitle: Text(noos[i].daerah! +
+                subtitle: Text(noos[i].region! +
                     " || " +
                     noos[i].namaPemilik! +
                     " || " +

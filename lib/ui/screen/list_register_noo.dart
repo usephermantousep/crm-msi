@@ -11,6 +11,7 @@ class ListNooPage extends StatelessWidget {
         child: Column(
           children: [
             GetBuilder<ListNooController>(
+              id: 'menutab',
               builder: (_) {
                 return CustomTabBar(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -25,6 +26,7 @@ class ListNooPage extends StatelessWidget {
             ),
             Container(
               child: GetBuilder<ListNooController>(
+                  id: 'listnoo',
                   builder: (_) => (controller.selectedIndex == 0)
                       ? ListStatusNoo(
                           status: "STATUS : PENDING",

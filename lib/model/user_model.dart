@@ -1,43 +1,85 @@
 part of 'models.dart';
 
 class UserModel extends Equatable {
-  final int? id;
-  final String? userName;
-  final String? nama;
-  final String? region;
-  final String? cluster;
-  final String? roles;
-  final String? potoUrl;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
+  UserModel({
+    this.id,
+    this.username,
+    this.namaLengkap,
+    this.region,
+    this.cluster,
+    this.roles,
+    this.idNotif,
+    this.profilePhotoPath,
+  });
 
-  UserModel(
-      {this.id,
-      this.userName,
-      this.nama,
-      this.region,
-      this.cluster,
-      this.roles,
-      this.potoUrl,
-      this.createdAt,
-      this.updatedAt});
+  final int? id;
+  final String? username;
+  final String? namaLengkap;
+  final String? region;
+  final Cluster? cluster;
+  final String? roles;
+  final String? idNotif;
+  final String? profilePhotoPath;
+  static String? token;
   @override
-  List<Object?> get props =>
-      [id, userName, region, cluster, roles, potoUrl, createdAt, updatedAt];
+  List<Object?> get props => [
+        id,
+        username,
+        namaLengkap,
+        region,
+        cluster,
+        roles,
+        profilePhotoPath,
+      ];
+
+  UserModel copyWith({
+    final int? id,
+    final String? username,
+    final String? namaLengkap,
+    final String? region,
+    final Cluster? cluster,
+    final String? roles,
+    final String? profilePhotoPath,
+  }) =>
+      UserModel(
+        id: id ?? this.id,
+        username: username ?? this.username,
+        namaLengkap: namaLengkap ?? this.namaLengkap,
+        region: region ?? this.region,
+        cluster: cluster ?? this.cluster,
+        roles: roles ?? this.roles,
+        profilePhotoPath: profilePhotoPath ?? this.profilePhotoPath,
+      );
 
   factory UserModel.fromJson(Map<String, dynamic> data) => UserModel(
         id: data['id'],
+        username: data['username'],
+        namaLengkap: data['nama_lengkap'],
+        region: data['region'],
+        cluster: Cluster.fromjson(data['cluster']),
+        roles: data['roles'],
+        profilePhotoPath: data['profile_photo_path'],
       );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "username": username,
+        "nama_lengkap": namaLengkap,
+        "region": region,
+        "cluster": Cluster(namaCluster: 'namacluster'),
+        "roles": roles,
+        "id_notif": idNotif,
+        "profile_photo_path": profilePhotoPath,
+      };
 }
 
 UserModel mockUser = UserModel(
   id: 1,
-  userName: "USEP",
-  nama: "USEP HERMANTO",
+  username: "USEP",
+  namaLengkap: "USEP HERMANTO",
   region: "WJU",
-  cluster: "WJ1",
+  cluster: Cluster(id: 1, namaCluster: 'cj1'),
   roles: "SALES",
-  potoUrl: "http://servercsa1.sytes.net:3900/itsupport/member/usep.jpg",
-  createdAt: DateTime.fromMillisecondsSinceEpoch(1627667510),
-  updatedAt: DateTime.fromMillisecondsSinceEpoch(1627667510),
+  profilePhotoPath:
+      "http://servercsa1.sytes.net:3900/itsupport/member/usep.jpg",
 );

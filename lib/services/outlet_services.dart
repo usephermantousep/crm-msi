@@ -1,28 +1,60 @@
 part of 'services.dart';
 
-class OutletServices extends GetxService {
-  static Future<ApiReturnValue<List<OutletModel>>> getOutlet(int idSales,
+class OutletServices {
+  static Future<ApiReturnValue<List<OutletModel>>> getOutlet(
       {http.Client? client}) async {
-    // client ??= http.Client();
+    try {
+      client ??= http.Client();
 
-    // String url = baseUrl + 'outlet/?user_id=1';
-    // Uri uri = Uri.parse(url);
+      String url = baseUrl + 'outlet';
+      Uri uri = Uri.parse(url);
 
-    // var response = await client.get(uri);
+      var response = await client.get(uri, headers: {
+        'Content-Type': "application/json",
+        'Authorization': "Bearer ${UserModel.token!}",
+      });
 
-    // if (response.statusCode != 200) {
-    //   return ApiReturnValue(message: 'Please reload the App');
-    // }
+      if (response.statusCode != 200) {
+        return ApiReturnValue(message: 'Please reload the App');
+      }
 
-    // var data = jsonDecode(response.body);
-    // List<OutletModel> outlets = (data['data']['outlet'] as Iterable)
-    //     .map((e) => OutletModel.fromJson(e))
-    //     .toList();
+      var data = jsonDecode(response.body);
+      List<OutletModel> outlets = (data['data'] as Iterable)
+          .map((e) => OutletModel.fromJson(e))
+          .toList();
+      return ApiReturnValue(value: outlets);
+    } catch ($err) {
+      return ApiReturnValue(message: $err.toString());
+    }
+  }
 
-    // return ApiReturnValue(value: outlets);
+  static Future<ApiReturnValue<OutletModel>> getSingleOutlet(String namaOutlet,
+      {http.Client? client}) async {
+    try {
+      if (client == null) {
+        client = http.Client();
+      }
 
-    await Future.delayed(Duration(milliseconds: 500));
+      String url = baseUrl + 'outlet/$namaOutlet';
+      Uri uri = Uri.parse(url);
 
-    return ApiReturnValue(value: mockOutlet);
+      var response = await http.get(uri, headers: {
+        'Content-Type': "application/json",
+        'Authorization': "Bearer ${UserModel.token!}",
+      });
+
+      if (response.statusCode != 200) {
+        var data = jsonDecode(response.body);
+        String message = data['message'];
+        return ApiReturnValue(message: message);
+      }
+
+      var data = jsonDecode(response.body);
+
+      OutletModel value = OutletModel.fromJson(data['data'][0]);
+      return ApiReturnValue(value: value);
+    } catch ($err) {
+      return ApiReturnValue(message: $err.toString());
+    }
   }
 }

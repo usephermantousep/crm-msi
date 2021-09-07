@@ -33,10 +33,10 @@ class OpsiDigitWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                  width: 50,
+                  width: 70,
                   child: Text(
                     title1,
-                    style: blackFontStyle3,
+                    style: blackFontStyle3.copyWith(fontSize: 13),
                   ),
                 ),
                 DropDownHalf(
@@ -47,7 +47,7 @@ class OpsiDigitWidget extends StatelessWidget {
                         controller.onChangeDigit(val, text1);
                       }
                     },
-                    width: 0.2),
+                    width: 0.17),
               ],
             ),
           ),
@@ -56,10 +56,10 @@ class OpsiDigitWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                  width: 50,
+                  width: 70,
                   child: Text(
                     title2,
-                    style: blackFontStyle3,
+                    style: blackFontStyle3.copyWith(fontSize: 13),
                   ),
                 ),
                 DropDownHalf(
@@ -70,7 +70,7 @@ class OpsiDigitWidget extends StatelessWidget {
                         controller.onChangeDigit(val, text2);
                       }
                     },
-                    width: 0.2),
+                    width: 0.17),
               ],
             ),
           )

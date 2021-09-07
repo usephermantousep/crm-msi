@@ -6,14 +6,13 @@ class MainPageController extends GetxController {
 
   void swipePage(int index) {
     selectedPage = index;
-    update();
+    update(['bottomnavbar']);
   }
 
   void chaneNavbarBottom(int index) {
     selectedPage = index;
-    update();
     pageController!.jumpToPage(selectedPage);
-    update();
+    update(['bottomnavbar']);
   }
 
   @override

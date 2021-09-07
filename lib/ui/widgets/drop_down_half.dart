@@ -30,12 +30,13 @@ class DropDownHalf extends StatelessWidget {
         isExpanded: true,
         style: blackFontStyle3,
         onChanged: function,
-        items: opsi.map<DropdownMenuItem<String>>((String value) {
-          return DropdownMenuItem<String>(
-            value: value,
-            child: Text(value),
-          );
-        }).toList(),
+        items: opsi
+            .map<DropdownMenuItem<String>>(
+                (String value) => DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    ))
+            .toList(),
       ),
     );
   }

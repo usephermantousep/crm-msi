@@ -118,9 +118,9 @@ class RegisterNoo extends StatelessWidget {
                   title1: 'REALME',
                   text1: 'realme',
                   dropdownValue1: controller.realme,
-                  title2: 'INFINIX',
+                  title2: 'SAMSUNG',
                   text2: 'infinix',
-                  dropdownValue2: controller.infinix,
+                  dropdownValue2: controller.samsung,
                 );
               },
             ),

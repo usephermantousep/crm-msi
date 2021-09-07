@@ -6,20 +6,19 @@ class ProfileController extends GetxController {
   List<OutletModel>? outlets;
 
   Future<void> getDetailUser() async {
-    ApiReturnValue<UserModel> result = await UserServices.getSingleUser(1);
-
+    ApiReturnValue<UserModel> result = await UserServices.getSingleUser();
     if (result.value != null) {
       user = result.value;
+      update();
     }
-    update();
   }
 
   Future<void> getDataOutlet() async {
-    ApiReturnValue<List<OutletModel>> result =
-        await OutletServices.getOutlet(1);
+    ApiReturnValue<List<OutletModel>> result = await OutletServices.getOutlet();
 
     if (result.value != null) {
       outlets = result.value!;
+      update();
     }
 
     update();

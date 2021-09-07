@@ -30,7 +30,11 @@ class ProfilePage extends StatelessWidget {
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         image: DecorationImage(
-                            image: NetworkImage(controller.user!.potoUrl!),
+                            image: NetworkImage((controller
+                                        .user!.profilePhotoPath ==
+                                    null)
+                                ? 'https://media-exp1.licdn.com/dms/image/C510BAQE_qu9Y_R0E_w/company-logo_200_200/0/1524477655696?e=2159024400&v=beta&t=bax_2jR9zR5IHlQdnTzDbTsn1maZsXOjEm3BJunbZMM'
+                                : controller.user!.profilePhotoPath!),
                             fit: BoxFit.cover),
                       ),
                     ),
@@ -39,11 +43,11 @@ class ProfilePage extends StatelessWidget {
                     height: 10,
                   ),
                   Text(
-                    controller.user!.nama!,
+                    controller.user!.namaLengkap!,
                     style: blackFontStyle1,
                   ),
                   Text(
-                    controller.user!.region!,
+                    controller.user!.cluster!.namaCluster!,
                     style: greyFontStyle,
                   )
                 ],
@@ -73,7 +77,7 @@ class ProfilePage extends StatelessWidget {
                   GetBuilder<ProfileController>(
                     builder: (con) => (con.selectedIndex == 0)
                         ? GetBuilder<ProfileController>(
-                            builder: (con) => Column(
+                            builder: (_) => Column(
                               children: [
                                 MenuAccount(
                                   title: "Outlet Total",

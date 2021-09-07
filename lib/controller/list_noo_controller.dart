@@ -10,7 +10,7 @@ class ListNooController extends GetxController {
 
   void changeMenu(int index) {
     selectedIndex = index;
-    update();
+    update(['menutab', 'listnoo']);
   }
 
   Future<void> getNoo(int id) async {
@@ -19,7 +19,7 @@ class ListNooController extends GetxController {
     if (result.value != null) {
       noos = result.value!;
     }
-    update();
+    update(['listnoo']);
   }
 
   void generateLokasi(String data, String videoUrl) {

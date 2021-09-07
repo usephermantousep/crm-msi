@@ -65,6 +65,13 @@ class DetailNoo extends GetView<ListNooController> {
             Divider(),
             Row(
               children: [
+                LabelFormRegisterHalf(nama: "Cluster"),
+                LabelFormRegisterHalf(nama: data.cluster!.namaCluster),
+              ],
+            ),
+            Divider(),
+            Row(
+              children: [
                 LabelFormRegisterHalf(nama: "Tanggal Dibuat"),
                 LabelFormRegisterHalf(
                   nama: getDate(data.createdAt!),

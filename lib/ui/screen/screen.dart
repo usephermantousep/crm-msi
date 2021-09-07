@@ -15,9 +15,9 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:month_picker_dialog/month_picker_dialog.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:image/image.dart' as Img;
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supercharged/supercharged.dart';
 import 'package:video_player/video_player.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 
 part 'gmaps_page.dart';
 part 'chekinout_page.dart';
@@ -29,7 +29,7 @@ part 'login_page.dart';
 part 'list_register_noo.dart';
 part 'profile_page.dart';
 part 'register_noo_foto_page.dart';
-part 'plan_visit_screen.dart';
+part 'plan_visit_page.dart';
 part 'detail_noo.dart';
 part 'detail_foto_map_noo.dart';
 part 'single_poto_noo.dart';

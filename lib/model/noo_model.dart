@@ -9,8 +9,9 @@ class NooModel extends Equatable {
   final String? nomerPemilik;
   final String? ktpNpwp;
   final String? alamatOutlet;
-  final String? daerah;
+  final String? region;
   final String? kota;
+  final Cluster? cluster;
   final String? collectKg;
   final String? fotloc;
   final String? tukarNoPemilik;
@@ -48,8 +49,9 @@ class NooModel extends Equatable {
     this.nomerPemilik,
     this.ktpNpwp,
     this.alamatOutlet,
-    this.daerah,
+    this.region,
     this.kota,
+    this.cluster,
     this.collectKg,
     this.fotloc,
     this.tukarNoPemilik,
@@ -87,8 +89,9 @@ class NooModel extends Equatable {
         namaOutlet,
         namaPemilik,
         alamatOutlet,
-        daerah,
+        region,
         kota,
+        cluster,
         nomerPemilik,
         ktpNpwp,
         collectKg,
@@ -135,8 +138,9 @@ List<NooModel> mockNoo = [
     ktpNpwp: "239592836493274",
     alamatOutlet: "Jl. Jagasatru No.31, RT.1/RW.7",
     nomerPemilik: "08765432132",
-    daerah: "WJU",
+    region: "WJU",
     kota: "CIREBON",
+    cluster: Cluster(id: 1, namaCluster: "WJ1"),
     collectKg: "NO",
     fotloc: "YES",
     tukarNoPemilik: "YES",
@@ -175,8 +179,9 @@ List<NooModel> mockNoo = [
     ktpNpwp: "239592836493274",
     alamatOutlet: "Jl. Jagasatru No.31, RT.1/RW.7",
     nomerPemilik: "08765432132",
-    daerah: "WJU",
+    region: "WJU",
     kota: "CIREBON",
+    cluster: Cluster(id: 1, namaCluster: "WJ1"),
     collectKg: "NO",
     fotloc: "YES",
     tukarNoPemilik: "YES",
@@ -215,8 +220,9 @@ List<NooModel> mockNoo = [
     ktpNpwp: "239592836493274",
     alamatOutlet: "Jl. Jagasatru No.31, RT.1/RW.7",
     nomerPemilik: "08765432132",
-    daerah: "WJU",
+    region: "WJU",
     kota: "CIREBON",
+    cluster: Cluster(id: 1, namaCluster: "WJ1"),
     collectKg: "NO",
     fotloc: "YES",
     tukarNoPemilik: "YES",
@@ -255,7 +261,7 @@ List<NooModel> mockNoo = [
     ktpNpwp: "239592836493274",
     alamatOutlet: "Jl. Jagasatru No.31, RT.1/RW.7",
     nomerPemilik: "08765432132",
-    daerah: "WJU",
+    region: "WJU",
     kota: "CIREBON",
     collectKg: "NO",
     fotloc: "YES",
@@ -295,7 +301,7 @@ List<NooModel> mockNoo = [
     ktpNpwp: "239592836493274",
     alamatOutlet: "Jl. Jagasatru No.31, RT.1/RW.7",
     nomerPemilik: "08765432132",
-    daerah: "WJU",
+    region: "WJU",
     kota: "CIREBON",
     collectKg: "NO",
     fotloc: "YES",
