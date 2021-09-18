@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:crm_msi/controller/controllers.dart';
 import 'package:crm_msi/model/models.dart';
 import 'package:crm_msi/shared/share.dart';
@@ -28,3 +30,5 @@ part 'drop_down_half.dart';
 part 'list_plan_visit.dart';
 part 'list_plan_visit_form.dart';
 part 'dropdown_digit.dart';
+part 'form_register_noo.dart';
+part 'box_foto_regitstration_noo.dart';

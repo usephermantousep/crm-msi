@@ -10,7 +10,7 @@ class BoxFotoRegistration extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 200,
+      height: 250,
       width: MediaQuery.of(context).size.width * 0.37,
       margin: EdgeInsets.symmetric(horizontal: 20),
       padding: EdgeInsets.symmetric(horizontal: 10),

@@ -25,7 +25,7 @@ class ListLogVisit extends StatelessWidget {
               subtitle: Text(
                 (data![index].checkOutTime == null ||
                         data![index].durasiVisit == null)
-                    ? "CI : ${getDate(data![index].checkInTime!)} || CO : - || Durasi : -"
+                    ? "CI : ${getDate(data![index].checkInTime!)} || CO : - || Durasi : - || Jenis : ${data![index].tipeVisit}"
                     : "CI : ${getDate(data![index].checkInTime!)} || CO : ${getDate(data![index].checkOutTime!)} || Durasi : ${data![index].durasiVisit!.toString()} Menit || Jenis : ${data![index].tipeVisit}",
                 style: blackFontStyle3.copyWith(fontSize: 12),
               ),

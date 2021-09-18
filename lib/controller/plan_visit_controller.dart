@@ -5,38 +5,46 @@ class PlanVisitController extends GetxController {
   String? selectedOutlet;
   String? bulan;
   String? tahun;
-  List select = [];
+  DateTime selectedDateTime = DateTime.now();
+  List<String> plans = [];
+  List<String> allOutlet = [];
   List<PlanVisitModel> planVisit = [];
-  List<OutletModel>? allOutlet = [];
+
+  String? validater(String? value) {
+    if (value!.isEmpty) {
+      return 'wajib di isi';
+    }
+    return null;
+  }
 
   void show() {
     Get.bottomSheet(
       SfDateRangePicker(
         selectionMode: DateRangePickerSelectionMode.multiple,
-        initialDisplayDate: DateTime.now(),
-        maxDate: DateTime(2021, 8, 31),
-        minDate: DateTime(2021, 8, 1),
+        initialDisplayDate: selectedDateTime,
+        maxDate: DateTime(2030, 12, 31),
+        minDate: DateTime.now().subtract(Duration(days: 5)),
         backgroundColor: Colors.white,
         cancelText: "CANCEL",
         confirmText: "OK",
         onCancel: () {
-          select.clear();
           Get.back();
         },
         showActionButtons: true,
         onSubmit: (Object? value) {
-          List datas = (value as List).map((e) => e).toList();
-          datas.sort();
-          for (var data in datas) {
-            addPlan(DateFormat("yyyy-MM-dd").format(data));
+          if (value != null) {
+            List datas = (value as List).map((e) => e).toList();
+            datas.sort();
+            for (var data in datas) {
+              addPlan(DateFormat("yyyy-MM-dd").format(data));
+            }
           }
-          getPlanByMonth(tahun!, bulan!);
-
+          Future.delayed(Duration(seconds: 1))
+              .then((value) => getPlanByMonth(tahun!, bulan!));
           Get.back();
         },
       ),
     );
-    update();
   }
 
   void addPlan(String date) async {
@@ -45,31 +53,43 @@ class PlanVisitController extends GetxController {
           await PlanVisitServices.addPlanVisit(date, selectedOutlet!);
       if (result.value != null) {
         if (result.value) {
-          notif('Berhasil', "Berhasil menambahkan plan visit");
+          notif(
+            'Berhasil',
+            "Menambahkan plan visit",
+          );
+        } else {
+          notif(
+            "Salah",
+            "ada tanggal sama!\nhanya di tambahkan untuk tanggal yang berbeda",
+          );
         }
       } else {
-        notif("Salah", "ada tanggal yang sama ");
+        notif(
+          "Error",
+          result.message!,
+        );
       }
     }
   }
 
   void changeMonth(DateTime value) {
-    print(value);
+    selectedDateTime = value;
+    print(selectedDateTime);
     selectedMonth = DateFormat("MMMM, y").format(value);
     bulan = DateFormat('MM').format(value);
     tahun = DateFormat('y').format(value);
     if (tahun != null && bulan != null) {
       getPlanByMonth(tahun!, bulan!);
     }
-    update();
+    update(['tanggal', 'list', 'button']);
   }
 
   void getOutlet() async {
     ApiReturnValue<List<OutletModel>> result = await OutletServices.getOutlet();
 
     if (result.value != null) {
-      allOutlet = result.value!;
-      update();
+      allOutlet = result.value!.map((e) => e.namaOutlet!).toList();
+      update(['dropdown']);
     }
   }
 
@@ -79,14 +99,68 @@ class PlanVisitController extends GetxController {
 
     if (plan.value != null) {
       planVisit = plan.value!;
-      update();
+      plans = plan.value!.map((e) => e.outlet!.namaOutlet!).toSet().toList();
+      plans.sort();
+      update(['list']);
     }
-    update();
   }
 
   void changeOutlet(String val) {
     selectedOutlet = val;
-    update();
+    update(['dropdown']);
+  }
+
+  String showDate(String outlet) {
+    List<String> tanggal = [];
+    for (var plan in planVisit) {
+      if (plan.outlet!.namaOutlet == outlet) {
+        tanggal.add(DateFormat('d').format(plan.tanggalVisit!));
+      }
+    }
+    return tanggal.join(', ');
+  }
+
+  void confirmDelete(String namaOutlet) {
+    Get.defaultDialog(
+        title: 'Delete :',
+        middleText: 'Hapus plan visit outlet\n$namaOutlet ?',
+        titleStyle: blackFontStyle1,
+        middleTextStyle: blackFontStyle2,
+        actions: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  delete(namaOutlet, tahun!, bulan!);
+                  Get.back();
+                },
+                child: Text("YA"),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Get.back();
+                },
+                child: Text("TIDAK"),
+              )
+            ],
+          ),
+        ]);
+  }
+
+  void delete(String namaOutlet, String tahun, String bulan) async {
+    ApiReturnValue<bool> result =
+        await PlanVisitServices.deletePlanVisit(namaOutlet, tahun, bulan);
+
+    if (result.value != null) {
+      if (result.value!) {
+        notif("Berhasil", result.message!);
+        Future.delayed(Duration(seconds: 1))
+            .then((_) => getPlanByMonth(tahun, bulan));
+      } else {
+        notif('Salah', result.message!);
+      }
+    }
   }
 
   @override
@@ -97,7 +171,7 @@ class PlanVisitController extends GetxController {
 
   void notif(String judul, String pesan) {
     Get.snackbar('title', 'message',
-        snackPosition: SnackPosition.BOTTOM,
+        snackPosition: SnackPosition.TOP,
         margin: EdgeInsets.only(bottom: 10),
         titleText:
             Text(judul, style: blackFontStyle1.copyWith(color: Colors.white)),

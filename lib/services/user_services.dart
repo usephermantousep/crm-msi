@@ -8,6 +8,9 @@ class UserServices {
         client = http.Client();
       }
 
+      final status = await OneSignal.shared.getDeviceState();
+      final String? osUserID = status?.userId;
+
       String url = baseUrl + 'user/login';
       Uri uri = Uri.parse(url);
       var response = await client.post(
@@ -19,7 +22,7 @@ class UserServices {
           <String, String>{
             'username': userName,
             'password': pass,
-            'notif_id': '123123'
+            'notif_id': osUserID!,
           },
         ),
       );
@@ -66,6 +69,37 @@ class UserServices {
       return ApiReturnValue(value: value);
     } catch (err) {
       return ApiReturnValue(message: err.toString());
+    }
+  }
+
+  static Future<ApiReturnValue<bool>> check({http.Client? client}) async {
+    try {
+      if (client == null) {
+        client = http.Client();
+      }
+
+      String url = baseUrl + 'user';
+      Uri uri = Uri.parse(url);
+
+      var response = await client.get(uri, headers: {
+        "Content-Type": "application/json",
+        'Authorization': "Bearer ${UserModel.token!}",
+      });
+
+      if (response.statusCode != 200) {
+        var data = jsonDecode(response.body);
+        String message = data['message'];
+        return ApiReturnValue(message: message);
+      }
+
+      var data = jsonDecode(response.body);
+      String role = data['data']['roles'];
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      pref.setString('role', role);
+      print(pref.getString('role'));
+      return ApiReturnValue(value: true);
+    } catch (err) {
+      return ApiReturnValue(value: false, message: err.toString());
     }
   }
 }

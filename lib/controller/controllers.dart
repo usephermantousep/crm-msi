@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:crm_msi/ui/screen/screen.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:image/image.dart' as Img;
 import 'package:crm_msi/model/models.dart';
@@ -15,6 +16,7 @@ import 'package:supercharged/supercharged.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:trust_location/trust_location.dart';
 import 'package:video_player/video_player.dart';
+import 'package:location_permissions/location_permissions.dart';
 
 part 'app_controller.dart';
 part 'home_page_controller.dart';

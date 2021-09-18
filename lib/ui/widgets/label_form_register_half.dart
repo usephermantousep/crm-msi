@@ -11,7 +11,7 @@ class LabelFormRegisterHalf extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 150,
-      margin: EdgeInsets.fromLTRB(defaultMargin, 10, 0, 10),
+      margin: EdgeInsets.fromLTRB(0, 10, 10, 10),
       child: Text(
         nama!,
         style: blackFontStyle3,

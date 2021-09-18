@@ -4,13 +4,16 @@ class LoginController extends GetxController {
   TextEditingController? userName;
   UserModel? user;
   TextEditingController? pass;
+  bool islogin = false;
 
   var isLoading = false.obs;
 
   @override
-  void onInit() {
+  void onInit() async {
     userName = TextEditingController();
     pass = TextEditingController();
+    await LocationPermissions().requestPermissions();
+    check();
     super.onInit();
   }
 
@@ -53,5 +56,22 @@ class LoginController extends GetxController {
         return false;
       }
     }
+  }
+
+  Future<bool> check() async {
+    if (UserModel.token == null) {
+      return false;
+    } else {
+      ApiReturnValue<bool> result = await UserServices.check();
+      if (result.value != null) {
+        if (result.value!) {
+          islogin = true;
+          return true;
+        } else {
+          return false;
+        }
+      }
+    }
+    return false;
   }
 }

@@ -3,25 +3,29 @@ part of 'widgets.dart';
 class FormRegisterHalf extends StatelessWidget {
   final TextEditingController controller;
   final String nama;
+  final String? Function(String? val) validator;
   const FormRegisterHalf(
-      {Key? key, required this.controller, required this.nama})
+      {Key? key,
+      required this.controller,
+      required this.nama,
+      required this.validator})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width * 0.36,
-      margin: EdgeInsets.symmetric(horizontal: defaultMargin),
-      padding: EdgeInsets.symmetric(horizontal: 10),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: Colors.black),
-      ),
-      child: TextField(
-        controller: controller,
-        textInputAction: TextInputAction.next,
+      child: TextFormField(
+        autovalidateMode: AutovalidateMode.always,
         decoration: InputDecoration(
-            border: InputBorder.none, hintStyle: greyFontStyle, hintText: nama),
+            hintStyle: greyFontStyle,
+            hintText: nama,
+            border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide(color: Colors.black, width: 1))),
+        validator: validator,
+        controller: controller,
+        textInputAction: TextInputAction.done,
       ),
     );
   }

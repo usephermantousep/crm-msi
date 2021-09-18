@@ -31,15 +31,12 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     return Scaffold(
       body: Center(
         child: _controller!.value.isInitialized
-            ? RotatedBox(
-                quarterTurns: 3,
-                child: Container(
-                  height: Get.width,
-                  width: Get.height,
-                  child: AspectRatio(
-                    aspectRatio: _controller!.value.aspectRatio,
-                    child: VideoPlayer(_controller!),
-                  ),
+            ? Container(
+                height: Get.width,
+                width: Get.height,
+                child: AspectRatio(
+                  aspectRatio: _controller!.value.aspectRatio,
+                  child: VideoPlayer(_controller!),
                 ),
               )
             : Container(),

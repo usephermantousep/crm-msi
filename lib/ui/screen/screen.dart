@@ -1,23 +1,23 @@
-import 'dart:io';
 import 'package:crm_msi/controller/controllers.dart';
 import 'package:crm_msi/model/models.dart';
+import 'package:crm_msi/services/services.dart';
 import 'package:crm_msi/shared/share.dart';
 import 'package:crm_msi/ui/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
+import 'package:flutter/painting.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:month_picker_dialog/month_picker_dialog.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:image/image.dart' as Img;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supercharged/supercharged.dart';
+import 'package:trust_location/trust_location.dart';
 import 'package:video_player/video_player.dart';
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:timeline_tile/timeline_tile.dart';
 
 part 'gmaps_page.dart';
 part 'chekinout_page.dart';

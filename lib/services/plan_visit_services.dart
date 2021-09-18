@@ -84,16 +84,48 @@ class PlanVisitServices {
         'Application': "application/json",
         'Authorization': "Bearer ${UserModel.token!}",
       });
-      print(response.statusCode);
 
       if (response.statusCode != 200) {
         var data = jsonDecode(response.body);
         String message = data['meta']['message'];
-        return ApiReturnValue(message: message);
+        return ApiReturnValue(value: false, message: message);
       }
 
       return ApiReturnValue(value: true);
     } catch (err) {
+      return ApiReturnValue(value: false, message: err.toString());
+    }
+  }
+
+  static Future<ApiReturnValue<bool>> deletePlanVisit(
+      String namaOutlet, String tahun, String bulan,
+      {http.Client? client}) async {
+    if (client == null) {
+      client = http.Client();
+    }
+
+    try {
+      String url = baseUrl + 'planvisit';
+      Uri uri = Uri.parse(url);
+
+      var response = await client.delete(uri, headers: <String, String>{
+        'Application': "application/json",
+        'Authorization': "Bearer ${UserModel.token!}",
+      }, body: <String, String>{
+        'bulan': bulan,
+        'tahun': tahun,
+        'nama_outlet': namaOutlet,
+      });
+
+      if (response.statusCode != 200) {
+        var data = jsonDecode(response.body);
+        String message = data['meta']['message'];
+        return ApiReturnValue(value: false, message: message);
+      }
+
+      return ApiReturnValue(value: true, message: 'Berhasil hapus plan visit');
+    } catch (err) {
+      print(err.toString());
       return ApiReturnValue(value: false, message: err.toString());
     }
   }

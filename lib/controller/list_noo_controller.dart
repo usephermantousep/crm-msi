@@ -13,8 +13,8 @@ class ListNooController extends GetxController {
     update(['menutab', 'listnoo']);
   }
 
-  Future<void> getNoo(int id) async {
-    ApiReturnValue<List<NooModel>> result = await NooService.bySales(id);
+  Future<void> getNoo() async {
+    ApiReturnValue<List<NooModel>> result = await NooService.bySales();
 
     if (result.value != null) {
       noos = result.value!;
@@ -51,7 +51,7 @@ class ListNooController extends GetxController {
 
   @override
   void onInit() async {
-    getNoo(1);
+    getNoo();
 
     super.onInit();
   }

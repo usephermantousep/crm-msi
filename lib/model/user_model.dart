@@ -72,14 +72,3 @@ class UserModel extends Equatable {
         "profile_photo_path": profilePhotoPath,
       };
 }
-
-UserModel mockUser = UserModel(
-  id: 1,
-  username: "USEP",
-  namaLengkap: "USEP HERMANTO",
-  region: "WJU",
-  cluster: Cluster(id: 1, namaCluster: 'cj1'),
-  roles: "SALES",
-  profilePhotoPath:
-      "http://servercsa1.sytes.net:3900/itsupport/member/usep.jpg",
-);

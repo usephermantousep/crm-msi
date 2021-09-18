@@ -36,9 +36,12 @@ class LoginPage extends StatelessWidget {
                     controller
                         .signIn(
                             controller.userName!.text, controller.pass!.text)
-                        .then((value) {
+                        .then((value) async {
                       if (value) {
-                        Get.to(() => MainPage());
+                        SharedPreferences pref =
+                            await SharedPreferences.getInstance();
+                        pref.setString('role', controller.user!.roles!);
+                        Get.offAll(() => MainPage());
                       } else {
                         controller.isLoading.toggle();
                       }

@@ -14,7 +14,7 @@ class ListStatusNoo extends GetView<ListNooController> {
     return Container(
       width: double.infinity,
       padding: EdgeInsets.only(bottom: 10),
-      height: MediaQuery.of(context).size.height - 100,
+      height: MediaQuery.of(context).size.height - 230,
       color: Colors.white,
       child: ListView.separated(
           itemBuilder: (_, i) {
@@ -40,9 +40,9 @@ class ListStatusNoo extends GetView<ListNooController> {
                 ),
                 subtitle: Text(noos[i].region! +
                     " || " +
-                    noos[i].namaPemilik! +
+                    noos[i].namaPemilikOutlet! +
                     " || " +
-                    noos[i].nomerPemilik!),
+                    noos[i].nomerTlpOutlet!),
               ),
             );
           },

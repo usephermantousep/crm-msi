@@ -26,11 +26,13 @@ dependencies:
   location_permissions: ^4.0.0
   material_design_icons_flutter: ^5.0.5955-rc.1
   month_picker_dialog: ^0.4.0
+  onesignal_flutter: ^3.2.3
   path_provider: ^2.0.2
   permission_handler: ^8.1.2
   shared_preferences: ^2.0.6
   supercharged: ^2.0.0
   syncfusion_flutter_datepicker: ^19.2.55
+  timeline_tile: ^2.0.0
   timer_builder: ^2.0.0
   trust_location: ^2.0.13
   video_player: ^2.1.14

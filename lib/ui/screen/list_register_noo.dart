@@ -24,41 +24,39 @@ class ListNooPage extends StatelessWidget {
                 );
               },
             ),
-            Container(
-              child: GetBuilder<ListNooController>(
-                  id: 'listnoo',
-                  builder: (_) => (controller.selectedIndex == 0)
-                      ? ListStatusNoo(
-                          status: "STATUS : PENDING",
-                          noos: (controller.noos
-                              .where((element) =>
-                                  element.status!.contains(NooStatus.pending))
-                              .toList()),
-                        )
-                      : (controller.selectedIndex == 1)
-                          ? ListStatusNoo(
-                              status: "STATUS : CONFIRMED",
-                              noos: (controller.noos
-                                  .where((element) => element.status!
-                                      .contains(NooStatus.confirmed))
-                                  .toList()),
-                            )
-                          : (controller.selectedIndex == 2)
-                              ? ListStatusNoo(
-                                  status: "STATUS : APPROVED",
-                                  noos: (controller.noos
-                                      .where((element) => element.status!
-                                          .contains(NooStatus.approved))
-                                      .toList()),
-                                )
-                              : ListStatusNoo(
-                                  status: "STATUS : REJECTED",
-                                  noos: (controller.noos
-                                      .where((element) => element.status!
-                                          .contains(NooStatus.rejected))
-                                      .toList()),
-                                )),
-            ),
+            GetBuilder<ListNooController>(
+                id: 'listnoo',
+                builder: (_) => (controller.selectedIndex == 0)
+                    ? ListStatusNoo(
+                        status: "STATUS : PENDING",
+                        noos: (controller.noos
+                            .where((element) =>
+                                element.status! == NooStatus.pending)
+                            .toList()),
+                      )
+                    : (controller.selectedIndex == 1)
+                        ? ListStatusNoo(
+                            status: "STATUS : CONFIRMED",
+                            noos: (controller.noos
+                                .where((element) =>
+                                    element.status! == NooStatus.confirmed)
+                                .toList()),
+                          )
+                        : (controller.selectedIndex == 2)
+                            ? ListStatusNoo(
+                                status: "STATUS : APPROVED",
+                                noos: (controller.noos
+                                    .where((element) =>
+                                        element.status! == NooStatus.approved)
+                                    .toList()),
+                              )
+                            : ListStatusNoo(
+                                status: "STATUS : REJECTED",
+                                noos: (controller.noos
+                                    .where((element) =>
+                                        element.status! == NooStatus.rejected)
+                                    .toList()),
+                              )),
           ],
         ),
       ),

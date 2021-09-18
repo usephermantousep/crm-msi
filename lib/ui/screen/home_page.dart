@@ -45,8 +45,8 @@ class HomePage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(8),
                           image: DecorationImage(
                               image: NetworkImage(
-                                  'https://media-exp1.licdn.com/dms/image/C510BAQE_qu9Y_R0E_w/company-logo_200_200/0/1524477655696?e=2159024400&v=beta&t=bax_2jR9zR5IHlQdnTzDbTsn1maZsXOjEm3BJunbZMM'),
-                              fit: BoxFit.cover),
+                                  'https://msis.co.id/wp-content/uploads/2021/08/Logo-MSI-Media-Selular-Indonesia-1024x570.png'),
+                              fit: BoxFit.fitWidth),
                         ),
                       )
                     ],
@@ -64,8 +64,23 @@ class HomePage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           GestureDetector(
-                            onTap: () {
-                              Get.to(() => CheckInOutScreen());
+                            onTap: () async {
+                              bool isMockLocation =
+                                  await TrustLocation.isMockLocation;
+                              if (isMockLocation) {
+                                Get.defaultDialog(
+                                    title: 'PERINGATAN',
+                                    titleStyle: blackFontStyle1,
+                                    middleText:
+                                        'Anda menggunakan aplikasi fake GPS harap hapus terlebih dahulu',
+                                    middleTextStyle: blackFontStyle2,
+                                    confirm: ElevatedButton(
+                                      onPressed: () => Get.back(),
+                                      child: Text("OK"),
+                                    ));
+                              } else {
+                                Get.to(() => CheckInOutScreen());
+                              }
                             },
                             child: Container(
                               height: 100,
@@ -96,7 +111,7 @@ class HomePage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           GestureDetector(
-                            onTap: () async {
+                            onTap: () {
                               Get.to(() => PlanVisitScreen());
                             },
                             child: Container(
@@ -128,8 +143,32 @@ class HomePage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           GestureDetector(
-                            onTap: () {
-                              Get.to(() => RegisterNoo());
+                            onTap: () async {
+                              bool isMockLocation =
+                                  await TrustLocation.isMockLocation;
+                              if (isMockLocation) {
+                                Get.defaultDialog(
+                                  title: 'PERINGATAN',
+                                  titleStyle: blackFontStyle1,
+                                  middleText:
+                                      'Anda menggunakan aplikasi\n FAKE GPS \nharap hapus terlebih dahulu',
+                                  middleTextStyle: blackFontStyle2,
+                                  confirm: ElevatedButton(
+                                    style: ButtonStyle(
+                                        foregroundColor:
+                                            MaterialStateProperty.all(
+                                                Colors.amber)),
+                                    onPressed: () => Get.back(),
+                                    child: Text(
+                                      "OK",
+                                      style: blackFontStyle3.copyWith(
+                                          color: Colors.white),
+                                    ),
+                                  ),
+                                );
+                              } else {
+                                Get.to(() => RegisterNoo());
+                              }
                             },
                             child: Container(
                               height: 100,

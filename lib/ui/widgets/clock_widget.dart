@@ -10,7 +10,7 @@ class ClockWidget extends StatelessWidget {
 
   static String getDate() {
     var now = new DateTime.now();
-    return new DateFormat("EEE, MMM d yyyy").format(now);
+    return new DateFormat("EEE, d MMM yyyy").format(now);
   }
 
   @override

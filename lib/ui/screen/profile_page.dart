@@ -33,9 +33,9 @@ class ProfilePage extends StatelessWidget {
                             image: NetworkImage((controller
                                         .user!.profilePhotoPath ==
                                     null)
-                                ? 'https://media-exp1.licdn.com/dms/image/C510BAQE_qu9Y_R0E_w/company-logo_200_200/0/1524477655696?e=2159024400&v=beta&t=bax_2jR9zR5IHlQdnTzDbTsn1maZsXOjEm3BJunbZMM'
+                                ? 'https://msis.co.id/wp-content/uploads/2021/08/Logo-MSI-Media-Selular-Indonesia-1024x570.png'
                                 : controller.user!.profilePhotoPath!),
-                            fit: BoxFit.cover),
+                            fit: BoxFit.fitWidth),
                       ),
                     ),
                   ),
@@ -63,6 +63,7 @@ class ProfilePage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   GetBuilder<ProfileController>(
+                    id: 'tab',
                     builder: (cons) => CustomTabBar(
                       titles: ["Outlet", "Noo"],
                       selectedIndex: cons.selectedIndex,
@@ -75,8 +76,10 @@ class ProfilePage extends StatelessWidget {
                     height: 16,
                   ),
                   GetBuilder<ProfileController>(
+                    id: 'tab',
                     builder: (con) => (con.selectedIndex == 0)
                         ? GetBuilder<ProfileController>(
+                            id: 'outlet',
                             builder: (_) => Column(
                               children: [
                                 MenuAccount(
@@ -89,7 +92,7 @@ class ProfilePage extends StatelessWidget {
                                     title: "Visited Today",
                                     onpress: () {},
                                     mdiIcons: MdiIcons.naturePeople,
-                                    count: "3"),
+                                    count: controller.visit!.length.toString()),
                               ],
                             ),
                           )
@@ -99,8 +102,8 @@ class ProfilePage extends StatelessWidget {
                                 MenuAccount(
                                   title: "Registered",
                                   count: connoo.noos
-                                      .where((element) => element.status!
-                                          .contains(NooStatus.pending))
+                                      .where((element) =>
+                                          element.status! == NooStatus.pending)
                                       .toList()
                                       .length
                                       .toString(),
@@ -114,8 +117,9 @@ class ProfilePage extends StatelessWidget {
                                 MenuAccount(
                                   title: "Confirmed",
                                   count: connoo.noos
-                                      .where((element) => element.status!
-                                          .contains(NooStatus.confirmed))
+                                      .where((element) =>
+                                          element.status! ==
+                                          NooStatus.confirmed)
                                       .toList()
                                       .length
                                       .toString(),
@@ -125,8 +129,8 @@ class ProfilePage extends StatelessWidget {
                                 MenuAccount(
                                   title: "Approved",
                                   count: connoo.noos
-                                      .where((element) => element.status!
-                                          .contains(NooStatus.approved))
+                                      .where((element) =>
+                                          element.status! == NooStatus.approved)
                                       .toList()
                                       .length
                                       .toString(),
@@ -136,8 +140,8 @@ class ProfilePage extends StatelessWidget {
                                 MenuAccount(
                                   title: "Rejected",
                                   count: connoo.noos
-                                      .where((element) => element.status!
-                                          .contains(NooStatus.rejected))
+                                      .where((element) =>
+                                          element.status! == NooStatus.rejected)
                                       .toList()
                                       .length
                                       .toString(),
