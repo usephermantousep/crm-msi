@@ -2,27 +2,45 @@ part of 'models.dart';
 
 class PlanVisitModel extends Equatable {
   final int? id;
+  final DateTime? tanggalVisit;
   final OutletModel? outlet;
-  final String? bulan;
-  final String? namaOutlet;
-  final String? namaSales;
 
   PlanVisitModel({
     this.id,
+    this.tanggalVisit,
     this.outlet,
-    this.bulan,
-    this.namaOutlet,
-    this.namaSales,
   });
-  @override
-  List<Object?> get props => [id, outlet, bulan, namaOutlet, namaSales];
-}
 
-List<PlanVisitModel> mockPlan = [
-  PlanVisitModel(
-      id: 1,
-      outlet: mockOutlet[0],
-      bulan: "Aug",
-      namaOutlet: "TOKO TUPAREV",
-      namaSales: "USEP HERMANTO"),
-];
+  PlanVisitModel copyWith({
+    int? id,
+    DateTime? tanggalVisit,
+    UserModel? user,
+    OutletModel? outlet,
+  }) {
+    return PlanVisitModel(
+      id: id ?? this.id,
+      tanggalVisit: tanggalVisit ?? this.tanggalVisit,
+      outlet: outlet ?? this.outlet,
+    );
+  }
+
+  @override
+  List<Object?> get props => [
+        id,
+        tanggalVisit,
+        outlet,
+      ];
+
+  factory PlanVisitModel.fromJson(Map<String, dynamic> json) => PlanVisitModel(
+        id: json["id"],
+        tanggalVisit:
+            DateTime.fromMillisecondsSinceEpoch(json['tanggal_visit']),
+        outlet: OutletModel.fromJson(json["outlet"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "tanggal_visit": tanggalVisit.toString(),
+        "outlet": outlet!.toJson(),
+      };
+}

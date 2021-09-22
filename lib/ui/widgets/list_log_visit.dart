@@ -5,7 +5,7 @@ class ListLogVisit extends StatelessWidget {
   const ListLogVisit({Key? key, required this.data}) : super(key: key);
 
   static String getDate(DateTime waktu) {
-    return new DateFormat("hh:mm").format(waktu);
+    return new DateFormat("HH:mm").format(waktu);
   }
 
   @override
@@ -23,7 +23,10 @@ class ListLogVisit extends StatelessWidget {
                 style: blackFontStyle3,
               ),
               subtitle: Text(
-                "CI : ${getDate(data![index].checkInTime!)} || CO : ${getDate(data![index].checkOutTime!)} || Durasi : ${data![index].durasiVisit!.toString()}",
+                (data![index].checkOutTime == null ||
+                        data![index].durasiVisit == null)
+                    ? "CI : ${getDate(data![index].checkInTime!)} || CO : - || Durasi : - || Jenis : ${data![index].tipeVisit}"
+                    : "CI : ${getDate(data![index].checkInTime!)} || CO : ${getDate(data![index].checkOutTime!)} || Durasi : ${data![index].durasiVisit!.toString()} Menit || Jenis : ${data![index].tipeVisit}",
                 style: blackFontStyle3.copyWith(fontSize: 12),
               ),
             );

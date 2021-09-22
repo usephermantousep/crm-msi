@@ -20,33 +20,92 @@ class RegisterFotoNoo extends GetView<RegisterNooController> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        LabelFormRegisterHalf(nama: 'Foto Shop Sign'),
-                        (controller.shopSign == null)
-                            ? BoxFotoRegistration(
-                                function: () {},
-                              )
-                            : Container(
-                                height: 200,
-                                width: MediaQuery.of(context).size.width * 0.37,
-                                margin: EdgeInsets.symmetric(
-                                    horizontal: defaultMargin),
-                                padding: EdgeInsets.symmetric(horizontal: 10),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8),
-                                  border: Border.all(color: Colors.black),
-                                  // image: DecorationImage(
-                                  //     image: FileImage(_shopSign!),
-                                  //     fit: BoxFit.fill),
-                                ),
-                              )
+                        Container(
+                          child: Row(
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(left: defaultMargin),
+                                child: LabelFormRegisterHalf(
+                                    nama: 'Foto Shop Sign'),
+                              ),
+                              GetBuilder<RegisterNooController>(
+                                id: 'fotoshopsign',
+                                builder: (_) {
+                                  return (controller.shopSign == null)
+                                      ? SizedBox()
+                                      : IconButton(
+                                          onPressed: () {
+                                            controller
+                                                .deleteFoto('fotoshopsign');
+                                          },
+                                          iconSize: defaultMargin,
+                                          color: Colors.red,
+                                          icon: Icon(MdiIcons.closeBox),
+                                        );
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                        GetBuilder<RegisterNooController>(
+                          id: 'fotoshopsign',
+                          builder: (_) {
+                            return (controller.shopSign == null)
+                                ? BoxFotoRegistration(
+                                    function: () {
+                                      controller.opsiMediaFoto('fotoshopsign');
+                                    },
+                                  )
+                                : BoxFotoRegistrationNoo(
+                                    foto: controller.shopSign!,
+                                  );
+                          },
+                        ),
                       ],
                     ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        LabelFormRegisterHalf(nama: 'Foto Etalase'),
-                        BoxFotoRegistration(
-                          function: () async {},
+                        Container(
+                          child: Row(
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(left: defaultMargin),
+                                child:
+                                    LabelFormRegisterHalf(nama: 'Foto Etalase'),
+                              ),
+                              GetBuilder<RegisterNooController>(
+                                id: 'fotoetalase',
+                                builder: (_) {
+                                  return (controller.etalase == null)
+                                      ? SizedBox()
+                                      : IconButton(
+                                          onPressed: () {
+                                            controller
+                                                .deleteFoto('fotoetalase');
+                                          },
+                                          iconSize: defaultMargin,
+                                          color: Colors.red,
+                                          icon: Icon(MdiIcons.closeBox),
+                                        );
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                        GetBuilder<RegisterNooController>(
+                          id: 'fotoetalase',
+                          builder: (_) {
+                            return (controller.etalase == null)
+                                ? BoxFotoRegistration(
+                                    function: () {
+                                      controller.opsiMediaFoto('fotoetalase');
+                                    },
+                                  )
+                                : BoxFotoRegistrationNoo(
+                                    foto: controller.etalase!,
+                                  );
+                          },
                         ),
                       ],
                     ),
@@ -58,18 +117,91 @@ class RegisterFotoNoo extends GetView<RegisterNooController> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        LabelFormRegisterHalf(nama: 'Foto Depan'),
-                        BoxFotoRegistration(
-                          function: () {},
+                        Container(
+                          child: Row(
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(left: defaultMargin),
+                                child:
+                                    LabelFormRegisterHalf(nama: 'Foto Depan'),
+                              ),
+                              GetBuilder<RegisterNooController>(
+                                id: 'fotodepan',
+                                builder: (_) {
+                                  return (controller.depan == null)
+                                      ? SizedBox()
+                                      : IconButton(
+                                          onPressed: () {
+                                            controller.deleteFoto('fotodepan');
+                                          },
+                                          iconSize: defaultMargin,
+                                          color: Colors.red,
+                                          icon: Icon(MdiIcons.closeBox),
+                                        );
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                        GetBuilder<RegisterNooController>(
+                          id: 'fotodepan',
+                          builder: (_) {
+                            return (controller.depan == null)
+                                ? BoxFotoRegistration(
+                                    function: () {
+                                      controller.opsiMediaFoto('fotodepan');
+                                    },
+                                  )
+                                : BoxFotoRegistrationNoo(
+                                    foto: controller.depan!,
+                                  );
+                          },
                         ),
                       ],
                     ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        LabelFormRegisterHalf(nama: 'Foto Belakang'),
-                        BoxFotoRegistration(
-                          function: () {},
+                        Container(
+                          child: Row(
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(left: defaultMargin),
+                                child: LabelFormRegisterHalf(
+                                    nama: 'Foto Belakang'),
+                              ),
+                              GetBuilder<RegisterNooController>(
+                                id: 'fotobelakang',
+                                builder: (_) {
+                                  return (controller.belakang == null)
+                                      ? SizedBox()
+                                      : IconButton(
+                                          onPressed: () {
+                                            controller
+                                                .deleteFoto('fotobelakang');
+                                          },
+                                          iconSize: defaultMargin,
+                                          color: Colors.red,
+                                          icon: Icon(MdiIcons.closeBox),
+                                        );
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                        GetBuilder<RegisterNooController>(
+                          id: 'fotobelakang',
+                          builder: (_) {
+                            return (controller.belakang == null)
+                                ? BoxFotoRegistration(
+                                    function: () {
+                                      controller.opsiMediaFoto('fotobelakang');
+                                    },
+                                  )
+                                : BoxFotoRegistrationNoo(
+                                    foto: controller.belakang!,
+                                  );
+                          },
                         ),
                       ],
                     ),
@@ -81,18 +213,89 @@ class RegisterFotoNoo extends GetView<RegisterNooController> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        LabelFormRegisterHalf(nama: 'Foto Kanan'),
-                        BoxFotoRegistration(
-                          function: () {},
+                        Container(
+                          child: Row(
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(left: defaultMargin),
+                                child:
+                                    LabelFormRegisterHalf(nama: 'Foto Kanan'),
+                              ),
+                              GetBuilder<RegisterNooController>(
+                                id: 'fotokanan',
+                                builder: (_) {
+                                  return (controller.kanan == null)
+                                      ? SizedBox()
+                                      : IconButton(
+                                          onPressed: () {
+                                            controller.deleteFoto('fotokanan');
+                                          },
+                                          iconSize: defaultMargin,
+                                          color: Colors.red,
+                                          icon: Icon(MdiIcons.closeBox),
+                                        );
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                        GetBuilder<RegisterNooController>(
+                          id: 'fotokanan',
+                          builder: (_) {
+                            return (controller.kanan == null)
+                                ? BoxFotoRegistration(
+                                    function: () {
+                                      controller.opsiMediaFoto('fotokanan');
+                                    },
+                                  )
+                                : BoxFotoRegistrationNoo(
+                                    foto: controller.kanan!,
+                                  );
+                          },
                         ),
                       ],
                     ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        LabelFormRegisterHalf(nama: 'Foto Kiri'),
-                        BoxFotoRegistration(
-                          function: () {},
+                        Container(
+                          child: Row(
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(left: defaultMargin),
+                                child: LabelFormRegisterHalf(nama: 'Foto Kiri'),
+                              ),
+                              GetBuilder<RegisterNooController>(
+                                id: 'fotokiri',
+                                builder: (_) {
+                                  return (controller.kiri == null)
+                                      ? SizedBox()
+                                      : IconButton(
+                                          onPressed: () {
+                                            controller.deleteFoto('fotokiri');
+                                          },
+                                          iconSize: defaultMargin,
+                                          color: Colors.red,
+                                          icon: Icon(MdiIcons.closeBox),
+                                        );
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                        GetBuilder<RegisterNooController>(
+                          id: 'fotokiri',
+                          builder: (_) {
+                            return (controller.kiri == null)
+                                ? BoxFotoRegistration(
+                                    function: () {
+                                      controller.opsiMediaFoto('fotokiri');
+                                    },
+                                  )
+                                : BoxFotoRegistrationNoo(
+                                    foto: controller.kiri!,
+                                  );
+                          },
                         ),
                       ],
                     ),

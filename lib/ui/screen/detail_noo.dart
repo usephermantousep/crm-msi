@@ -19,63 +19,70 @@ class DetailNoo extends GetView<ListNooController> {
         Get.back();
       },
       child: Container(
+        padding:
+            EdgeInsets.fromLTRB(defaultMargin, 0, defaultMargin, defaultMargin),
         child: Column(
           children: [
             Row(
               children: [
                 LabelFormRegisterHalf(nama: "Nama Outlet"),
-                LabelFormRegisterHalf(nama: data.namaOutlet!),
+                LabelFormRegisterHalf(nama: data.namaOutlet),
               ],
             ),
             Divider(),
             Row(
               children: [
                 LabelFormRegisterHalf(nama: "Nama Pemilik"),
-                LabelFormRegisterHalf(nama: data.namaPemilik!),
+                LabelFormRegisterHalf(nama: data.namaPemilikOutlet),
               ],
             ),
             Divider(),
             Row(
               children: [
                 LabelFormRegisterHalf(nama: "Alamat Outlet"),
-                LabelFormRegisterHalf(nama: data.alamatOutlet!),
-              ],
-            ),
-            Divider(),
-            Row(
-              children: [
-                LabelFormRegisterHalf(nama: "Nomer Pemilik"),
-                LabelFormRegisterHalf(nama: data.nomerPemilik!),
+                LabelFormRegisterHalf(nama: data.alamatOutlet),
               ],
             ),
             Divider(),
             Row(
               children: [
                 LabelFormRegisterHalf(nama: "KTP/NPWP Pemilik"),
-                LabelFormRegisterHalf(nama: data.ktpNpwp!),
+                LabelFormRegisterHalf(nama: data.ktpOutlet),
+              ],
+            ),
+            Divider(),
+            Row(
+              children: [
+                LabelFormRegisterHalf(nama: "Nomer Pemilik"),
+                LabelFormRegisterHalf(nama: data.nomerTlpOutlet),
+              ],
+            ),
+            Divider(),
+            Row(
+              children: [
+                LabelFormRegisterHalf(nama: "Nomer Perwakilan"),
+                LabelFormRegisterHalf(nama: data.nomerWakilOutlet),
               ],
             ),
             Divider(),
             Row(
               children: [
                 LabelFormRegisterHalf(nama: "Kota"),
-                LabelFormRegisterHalf(nama: data.kota!),
+                LabelFormRegisterHalf(nama: data.kota),
               ],
             ),
             Divider(),
             Row(
               children: [
-                LabelFormRegisterHalf(nama: "Tanggal Dibuat"),
-                LabelFormRegisterHalf(
-                  nama: getDate(data.createdAt!),
-                ),
+                LabelFormRegisterHalf(nama: "Region"),
+                LabelFormRegisterHalf(nama: data.region),
               ],
             ),
             Divider(),
             Row(
               children: [
-                LabelFormRegisterHalf(nama: "Dibuat Oleh"),
-                LabelFormRegisterHalf(nama: 'Usep Hermanto'),
+                LabelFormRegisterHalf(nama: "Cluster"),
+                LabelFormRegisterHalf(nama: data.cluster!.namaCluster),
               ],
             ),
             Divider(),
@@ -94,45 +101,98 @@ class DetailNoo extends GetView<ListNooController> {
               ],
             ),
             Divider(),
-            SizedBox(
-              height: defaultMargin,
-            ),
             Container(
+              margin: EdgeInsets.symmetric(vertical: 10),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      controller.generateLokasi(data.latlong!, data.videoUrl!);
-                      Get.to(
-                        () => DetailFotoDanMap(data: data),
-                      );
-                    },
-                    child: Text(
-                      "Foto dan Lokasi",
-                      style: blackFontStyle3.copyWith(color: Colors.white),
-                    ),
-                    style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all("FF3F0A".toColor()),
-                        elevation: MaterialStateProperty.all(0)),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      Get.to(() => VideoPlayerScreen(videoUrl: data.videoUrl!));
-                    },
-                    child: Text(
-                      "Lihat Video",
-                      style: blackFontStyle3.copyWith(color: Colors.white),
-                    ),
-                    style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all("FF3F0A".toColor()),
-                        elevation: MaterialStateProperty.all(0)),
-                  ),
+                  Container(
+                      width: 100,
+                      child:
+                          Text("OPPO : ${data.oppo}", style: blackFontStyle3)),
+                  Container(
+                      width: 100,
+                      child:
+                          Text("VIVO : ${data.vivo}", style: blackFontStyle3)),
+                  Container(
+                      width: 100,
+                      child: Text("SAMSUNG : ${data.samsung}",
+                          style: blackFontStyle3)),
                 ],
               ),
             ),
+            Divider(),
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                      width: 100,
+                      child: Text("REALME : ${data.realme}",
+                          style: blackFontStyle3)),
+                  Container(
+                      width: 100,
+                      child: Text("XIAOMI : ${data.xiaomi}",
+                          style: blackFontStyle3)),
+                  Container(
+                      width: 100,
+                      child: Text("FL : ${data.fl}", style: blackFontStyle3)),
+                ],
+              ),
+            ),
+            Divider(),
+            GetBuilder<ListNooController>(
+              id: 'timeline',
+              builder: (_) => TimelineNoo(data: data),
+            ),
+            SizedBox(
+              height: defaultMargin,
+            ),
+            (data.keterangan != null) ? Divider() : SizedBox(),
+            (data.keterangan != null)
+                ? Row(
+                    children: [
+                      LabelFormRegisterHalf(nama: "Alasan ditolak"),
+                      LabelFormRegisterHalf(nama: data.keterangan),
+                    ],
+                  )
+                : SizedBox(),
+            Divider(),
+            Row(
+              children: [
+                LabelFormRegisterHalf(nama: 'Foto dan Video :'),
+              ],
+            ),
+            ButtonFotoVideoNoo(controller: controller, data: data),
+            SizedBox(
+              height: defaultMargin,
+            ),
+            (controller.role == 'AR' && title == "STATUS : PENDING")
+                ? Divider()
+                : SizedBox(),
+            (controller.role == 'AR' && title == "STATUS : PENDING")
+                ? Row(
+                    children: [LabelFormRegisterHalf(nama: "Action :")],
+                  )
+                : SizedBox(),
+            (controller.role == 'AR' && title == "STATUS : PENDING")
+                ? ButtonActionNooAR(
+                    controller: controller,
+                    idNoo: data.id!,
+                  )
+                : Container(),
+            (controller.role == 'DSM' && title == "STATUS : CONFIRMED")
+                ? Divider()
+                : SizedBox(),
+            (controller.role == 'DSM' && title == "STATUS : CONFIRMED")
+                ? Row(
+                    children: [LabelFormRegisterHalf(nama: "Action :")],
+                  )
+                : SizedBox(),
+            (controller.role == 'DSM' && title == "STATUS : CONFIRMED")
+                ? ButtonActionNooDsm(controller: controller, idNoo: data.id!)
+                : SizedBox(),
             SizedBox(
               height: defaultMargin,
             ),

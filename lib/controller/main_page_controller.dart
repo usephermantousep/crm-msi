@@ -3,23 +3,25 @@ part of 'controllers.dart';
 class MainPageController extends GetxController {
   int selectedPage = 0;
   PageController? pageController;
+  String? role;
 
   void swipePage(int index) {
     selectedPage = index;
-    update();
+    update(['bottomnavbar']);
   }
 
   void chaneNavbarBottom(int index) {
     selectedPage = index;
-    update();
     pageController!.jumpToPage(selectedPage);
-    update();
+    update(['bottomnavbar']);
   }
 
   @override
-  void onInit() {
+  void onInit() async {
     pageController = PageController(initialPage: selectedPage);
     update();
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    role = pref.getString('role');
     super.onInit();
   }
 }

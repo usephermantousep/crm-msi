@@ -24,9 +24,12 @@ class DetailFotoDanMap extends GetView<ListNooController> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      LabelFormRegisterHalf(nama: 'Foto Shop Sign'),
+                      Padding(
+                        padding: EdgeInsets.only(left: defaultMargin),
+                        child: LabelFormRegisterHalf(nama: 'Foto Shop Sign'),
+                      ),
                       Container(
-                        height: 200,
+                        height: 250,
                         width: MediaQuery.of(context).size.width * 0.36,
                         margin: EdgeInsets.symmetric(horizontal: defaultMargin),
                         padding: EdgeInsets.symmetric(horizontal: 10),
@@ -34,7 +37,8 @@ class DetailFotoDanMap extends GetView<ListNooController> {
                             borderRadius: BorderRadius.circular(8),
                             border: Border.all(color: Colors.black),
                             image: DecorationImage(
-                                image: NetworkImage(data.fotoShopSign!),
+                                image:
+                                    NetworkImage(baseFile + data.potoShopSign!),
                                 fit: BoxFit.fill)),
                       )
                     ],
@@ -42,9 +46,12 @@ class DetailFotoDanMap extends GetView<ListNooController> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      LabelFormRegisterHalf(nama: 'Foto Etalase'),
+                      Padding(
+                        padding: EdgeInsets.only(left: defaultMargin),
+                        child: LabelFormRegisterHalf(nama: 'Foto Etalase'),
+                      ),
                       Container(
-                        height: 200,
+                        height: 250,
                         width: MediaQuery.of(context).size.width * 0.36,
                         margin: EdgeInsets.symmetric(horizontal: defaultMargin),
                         padding: EdgeInsets.symmetric(horizontal: 10),
@@ -52,48 +59,8 @@ class DetailFotoDanMap extends GetView<ListNooController> {
                             borderRadius: BorderRadius.circular(8),
                             border: Border.all(color: Colors.black),
                             image: DecorationImage(
-                                image: NetworkImage(data.fotoEtalase!),
-                                fit: BoxFit.fill)),
-                      )
-                    ],
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      LabelFormRegisterHalf(nama: 'Foto Depan'),
-                      Container(
-                        height: 200,
-                        width: MediaQuery.of(context).size.width * 0.36,
-                        margin: EdgeInsets.symmetric(horizontal: defaultMargin),
-                        padding: EdgeInsets.symmetric(horizontal: 10),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            border: Border.all(color: Colors.black),
-                            image: DecorationImage(
-                                image: NetworkImage(data.fotoDepan!),
-                                fit: BoxFit.fill)),
-                      )
-                    ],
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      LabelFormRegisterHalf(nama: 'Foto Belakang'),
-                      Container(
-                        height: 200,
-                        width: MediaQuery.of(context).size.width * 0.36,
-                        margin: EdgeInsets.symmetric(horizontal: defaultMargin),
-                        padding: EdgeInsets.symmetric(horizontal: 10),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            border: Border.all(color: Colors.black),
-                            image: DecorationImage(
-                                image: NetworkImage(data.fotoBelakang!),
+                                image:
+                                    NetworkImage(baseFile + data.potoEtalase!),
                                 fit: BoxFit.fill)),
                       )
                     ],
@@ -106,9 +73,12 @@ class DetailFotoDanMap extends GetView<ListNooController> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      LabelFormRegisterHalf(nama: 'Foto Kanan'),
+                      Padding(
+                        padding: EdgeInsets.only(left: defaultMargin),
+                        child: LabelFormRegisterHalf(nama: 'Foto Depan'),
+                      ),
                       Container(
-                        height: 200,
+                        height: 250,
                         width: MediaQuery.of(context).size.width * 0.36,
                         margin: EdgeInsets.symmetric(horizontal: defaultMargin),
                         padding: EdgeInsets.symmetric(horizontal: 10),
@@ -116,7 +86,7 @@ class DetailFotoDanMap extends GetView<ListNooController> {
                             borderRadius: BorderRadius.circular(8),
                             border: Border.all(color: Colors.black),
                             image: DecorationImage(
-                                image: NetworkImage(data.fotokanan!),
+                                image: NetworkImage(baseFile + data.potoDepan!),
                                 fit: BoxFit.fill)),
                       )
                     ],
@@ -124,9 +94,12 @@ class DetailFotoDanMap extends GetView<ListNooController> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      LabelFormRegisterHalf(nama: 'Foto Kiri'),
+                      Padding(
+                        padding: EdgeInsets.only(left: defaultMargin),
+                        child: LabelFormRegisterHalf(nama: 'Foto Belakang'),
+                      ),
                       Container(
-                        height: 200,
+                        height: 250,
                         width: MediaQuery.of(context).size.width * 0.36,
                         margin: EdgeInsets.symmetric(horizontal: defaultMargin),
                         padding: EdgeInsets.symmetric(horizontal: 10),
@@ -134,7 +107,55 @@ class DetailFotoDanMap extends GetView<ListNooController> {
                             borderRadius: BorderRadius.circular(8),
                             border: Border.all(color: Colors.black),
                             image: DecorationImage(
-                                image: NetworkImage(data.fotoKiri!),
+                                image:
+                                    NetworkImage(baseFile + data.potoBelakang!),
+                                fit: BoxFit.fill)),
+                      )
+                    ],
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(left: defaultMargin),
+                        child: LabelFormRegisterHalf(nama: 'Foto Kanan'),
+                      ),
+                      Container(
+                        height: 250,
+                        width: MediaQuery.of(context).size.width * 0.36,
+                        margin: EdgeInsets.symmetric(horizontal: defaultMargin),
+                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(color: Colors.black),
+                            image: DecorationImage(
+                                image: NetworkImage(baseFile + data.potoKanan!),
+                                fit: BoxFit.fill)),
+                      )
+                    ],
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(left: defaultMargin),
+                        child: LabelFormRegisterHalf(nama: 'Foto Kiri'),
+                      ),
+                      Container(
+                        height: 250,
+                        width: MediaQuery.of(context).size.width * 0.36,
+                        margin: EdgeInsets.symmetric(horizontal: defaultMargin),
+                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(color: Colors.black),
+                            image: DecorationImage(
+                                image: NetworkImage(baseFile + data.potoKiri!),
                                 fit: BoxFit.fill)),
                       )
                     ],

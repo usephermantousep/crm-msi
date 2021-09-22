@@ -9,13 +9,13 @@ class ListPlanVisit extends StatelessWidget {
     return Container(
       width: double.infinity,
       padding: EdgeInsets.only(bottom: 10),
-      height: MediaQuery.of(context).size.height - 495,
+      height: MediaQuery.of(context).size.height - 435,
       color: Colors.white,
       child: ListView.separated(
           itemBuilder: (_, index) => ListTile(
                 title: Text(
-                  data[index].namaOutlet!,
-                  style: blackFontStyle2,
+                  data[index].outlet!.namaOutlet!,
+                  style: blackFontStyle3.copyWith(fontSize: 14),
                 ),
               ),
           separatorBuilder: (_, index) => Divider(

@@ -2,72 +2,77 @@ part of 'models.dart';
 
 class OutletModel extends Equatable {
   final int? id;
-  final UserModel? namaSales;
+  final int? userId;
   final String? namaOutlet;
+  final String? alamatOutlet;
+  final String? namaPemilikOutlet;
+  final String? nomerTlpOutlet;
   final String? region;
-  final String? cluster;
-  final String? latLong;
-  final double? radius;
+  final Cluster? cluster;
+  final int? radius;
+  final String? latlong;
+  final String? statusOutlet;
+  final UserModel? user;
 
-  OutletModel(
-      {this.id,
-      this.namaSales,
-      this.namaOutlet,
-      this.region,
-      this.cluster,
-      this.latLong,
-      this.radius});
+  OutletModel({
+    this.id,
+    this.userId,
+    this.namaOutlet,
+    this.alamatOutlet,
+    this.namaPemilikOutlet,
+    this.nomerTlpOutlet,
+    this.region,
+    this.cluster,
+    this.radius,
+    this.latlong,
+    this.statusOutlet,
+    this.user,
+  });
 
-  factory OutletModel.fromJson(Map<String, dynamic> data) => OutletModel(
-        id: data['id'],
-        namaSales: data['nama_sales'],
-        namaOutlet: data['nama_outlet'],
-        region: data['region'],
-        cluster: data['cluster'],
-        latLong: data['latlong'],
-        radius: data['radius'],
+  factory OutletModel.fromJson(Map<String, dynamic> json) => OutletModel(
+        id: json["id"],
+        userId: json["user_id"],
+        namaOutlet: json["nama_outlet"],
+        alamatOutlet: json["alamat_outlet"],
+        namaPemilikOutlet: json["nama_pemilik_outlet"],
+        nomerTlpOutlet: json["nomer_tlp_outlet"],
+        region: json["region"],
+        cluster: Cluster.fromjson(json["cluster"]),
+        radius: json["radius"],
+        latlong: json["latlong"],
+        statusOutlet: json["status_outlet"],
+        user: UserModel.fromJson(
+          json["user"],
+        ),
       );
 
-  @override
-  List<Object?> get props =>
-      [id, namaSales, namaOutlet, region, cluster, latLong, radius];
-}
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "user_id": userId,
+        "nama_outlet": namaOutlet,
+        "alamat_outlet": alamatOutlet,
+        "nama_pemilik_outlet": namaPemilikOutlet,
+        "nomer_tlp_outlet": nomerTlpOutlet,
+        "region": region,
+        "cluster": cluster,
+        "radius": radius,
+        "latlong": latlong,
+        "status_outlet": statusOutlet,
+      };
 
-List<OutletModel> mockOutlet = [
-  OutletModel(
-    id: 1,
-    namaOutlet: "TOKO TUPAREV",
-    namaSales: mockUser,
-    region: "WJU",
-    cluster: "WJ1",
-    latLong: "-6.7108306020177455,108.53886410485876",
-    radius: 50,
-  ),
-  OutletModel(
-    id: 2,
-    namaOutlet: "TOKO PERUM",
-    namaSales: mockUser,
-    region: "WJU",
-    cluster: "WJ1",
-    latLong: "-6.748829354494562,108.56074800552257",
-    radius: 50,
-  ),
-  OutletModel(
-    id: 3,
-    namaOutlet: "TOKO PETRATEAN",
-    namaSales: mockUser,
-    region: "WJU",
-    cluster: "WJ1",
-    latLong: "-6.721455799999999,108.5637634",
-    radius: 50,
-  ),
-  OutletModel(
-    id: 3,
-    namaOutlet: "TOKO JMS",
-    namaSales: mockUser,
-    region: "WJU",
-    cluster: "WJ1",
-    latLong: "-6.721455799999999,108.56376334",
-    radius: 50,
-  ),
-];
+  @override
+  List<Object?> get props => [
+        id,
+        userId,
+        namaOutlet,
+        alamatOutlet,
+        namaPemilikOutlet,
+        nomerTlpOutlet,
+        region,
+        cluster,
+        latlong,
+        radius,
+        statusOutlet,
+        user
+      ];
+}

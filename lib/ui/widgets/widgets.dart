@@ -1,10 +1,14 @@
+import 'dart:io';
+
 import 'package:crm_msi/controller/controllers.dart';
 import 'package:crm_msi/model/models.dart';
+import 'package:crm_msi/services/services.dart';
 import 'package:crm_msi/shared/share.dart';
 import 'package:crm_msi/ui/screen/screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:timeline_tile/timeline_tile.dart';
 import 'package:timer_builder/timer_builder.dart';
 import 'package:supercharged/supercharged.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -28,3 +32,9 @@ part 'drop_down_half.dart';
 part 'list_plan_visit.dart';
 part 'list_plan_visit_form.dart';
 part 'dropdown_digit.dart';
+part 'form_register_noo.dart';
+part 'box_foto_regitstration_noo.dart';
+part 'timeline_noo.dart';
+part 'button_foto_video_noo.dart';
+part 'button_action_noo_ar.dart';
+part 'button_action_dsm.dart';

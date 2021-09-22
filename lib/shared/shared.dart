@@ -8,12 +8,12 @@ Widget loadingIndicator = SpinKitFadingCircle(
   color: mainColor,
 );
 
-TextStyle greyFontStyle = GoogleFonts.poppins().copyWith(color: greyColor);
-TextStyle blackFontStyle1 = GoogleFonts.poppins()
+TextStyle greyFontStyle = GoogleFonts.montserrat().copyWith(color: greyColor);
+TextStyle blackFontStyle1 = GoogleFonts.montserrat()
     .copyWith(color: Colors.black, fontSize: 22, fontWeight: FontWeight.w500);
-TextStyle blackFontStyle2 = GoogleFonts.poppins()
+TextStyle blackFontStyle2 = GoogleFonts.montserrat()
     .copyWith(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w500);
-TextStyle blackFontStyle3 = GoogleFonts.poppins()
+TextStyle blackFontStyle3 = GoogleFonts.montserrat()
     .copyWith(color: Colors.black, fontWeight: FontWeight.w500);
 
 const double defaultMargin = 24;

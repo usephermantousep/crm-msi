@@ -22,7 +22,7 @@ class MainPage extends StatelessWidget {
                 controller.swipePage(index);
               },
               children: [
-                HomePage(),
+                (controller.role == 'SALES') ? HomePage() : Center(),
                 ListNooPage(),
                 ProfilePage(),
               ],
@@ -31,6 +31,7 @@ class MainPage extends StatelessWidget {
           Align(
             alignment: Alignment.bottomCenter,
             child: GetBuilder<MainPageController>(
+              id: 'bottomnavbar',
               builder: (_) {
                 return CustomBottomNavBar(
                   onTap: (index) {

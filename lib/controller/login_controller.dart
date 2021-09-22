@@ -2,22 +2,25 @@ part of 'controllers.dart';
 
 class LoginController extends GetxController {
   TextEditingController? userName;
-
+  UserModel? user;
   TextEditingController? pass;
+  bool islogin = false;
 
   var isLoading = false.obs;
 
   @override
-  void onInit() {
+  void onInit() async {
     userName = TextEditingController();
     pass = TextEditingController();
+    await LocationPermissions().requestPermissions();
+    check();
     super.onInit();
   }
 
   void showError(String judul, String msg) {
     Get.snackbar('title', 'message',
-        snackPosition: SnackPosition.BOTTOM,
-        margin: EdgeInsets.only(bottom: 10),
+        snackPosition: SnackPosition.TOP,
+        margin: EdgeInsets.all(10),
         titleText:
             Text(judul, style: blackFontStyle1.copyWith(color: Colors.white)),
         messageText:
@@ -32,18 +35,41 @@ class LoginController extends GetxController {
     super.onClose();
   }
 
-  Future<UserModel> signIn(String userName, String pass) async {
-    if (userName == "usep" && pass == '123') {
+  Future<bool> signIn(String userName, String pass) async {
+    if (userName.isEmpty ||
+        pass.isEmpty ||
+        userName.isBlank! ||
+        pass.isBlank!) {
+      showError('Salah !', 'Username / Password harus di isi dan lengkap');
+      return false;
+    } else {
       ApiReturnValue<UserModel> result =
           await UserServices.signIn(userName, pass);
 
       if (result.value != null) {
-        return result.value!;
+        user = result.value;
+        return true;
+      } else {
+        showError("ERROR", result.message!);
+        return false;
       }
-      return UserModel();
-    } else {
-      showError('Salah !', 'Username / Password Salah');
-      return UserModel();
     }
+  }
+
+  Future<bool> check() async {
+    if (UserModel.token == null) {
+      return false;
+    } else {
+      ApiReturnValue<bool> result = await UserServices.check();
+      if (result.value != null) {
+        if (result.value!) {
+          islogin = true;
+          return true;
+        } else {
+          return false;
+        }
+      }
+    }
+    return false;
   }
 }

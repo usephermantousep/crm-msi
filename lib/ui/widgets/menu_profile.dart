@@ -26,7 +26,7 @@ class MenuAccount extends StatelessWidget {
               style: blackFontStyle3,
             ),
             Spacer(),
-            Text(count!),
+            (count == null) ? SizedBox() : Text(count!),
             IconButton(
                 icon: Icon(
                   mdiIcons!,

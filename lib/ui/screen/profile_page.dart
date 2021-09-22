@@ -30,8 +30,12 @@ class ProfilePage extends StatelessWidget {
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         image: DecorationImage(
-                            image: NetworkImage(controller.user!.potoUrl!),
-                            fit: BoxFit.cover),
+                            image: NetworkImage((controller
+                                        .user!.profilePhotoPath ==
+                                    null)
+                                ? 'https://msis.co.id/wp-content/uploads/2021/08/Logo-MSI-Media-Selular-Indonesia-1024x570.png'
+                                : controller.user!.profilePhotoPath!),
+                            fit: BoxFit.fitWidth),
                       ),
                     ),
                   ),
@@ -39,11 +43,11 @@ class ProfilePage extends StatelessWidget {
                     height: 10,
                   ),
                   Text(
-                    controller.user!.nama!,
+                    controller.user!.namaLengkap!,
                     style: blackFontStyle1,
                   ),
                   Text(
-                    controller.user!.region!,
+                    controller.user!.cluster!.namaCluster!,
                     style: greyFontStyle,
                   )
                 ],
@@ -59,6 +63,7 @@ class ProfilePage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   GetBuilder<ProfileController>(
+                    id: 'tab',
                     builder: (cons) => CustomTabBar(
                       titles: ["Outlet", "Noo"],
                       selectedIndex: cons.selectedIndex,
@@ -71,9 +76,11 @@ class ProfilePage extends StatelessWidget {
                     height: 16,
                   ),
                   GetBuilder<ProfileController>(
+                    id: 'tab',
                     builder: (con) => (con.selectedIndex == 0)
                         ? GetBuilder<ProfileController>(
-                            builder: (con) => Column(
+                            id: 'outlet',
+                            builder: (_) => Column(
                               children: [
                                 MenuAccount(
                                   title: "Outlet Total",
@@ -85,7 +92,28 @@ class ProfilePage extends StatelessWidget {
                                     title: "Visited Today",
                                     onpress: () {},
                                     mdiIcons: MdiIcons.naturePeople,
-                                    count: "3"),
+                                    count: controller.visit!.length.toString()),
+                                Divider(),
+                                Container(
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      con.logout().then((value) => value
+                                          ? Get.offAll(() => LoginPage())
+                                          : con.showError(
+                                              'gagal', 'logout gagal'));
+                                    },
+                                    child: MenuAccount(
+                                      title: "Log Out",
+                                      mdiIcons: MdiIcons.logout,
+                                      onpress: () {
+                                        con.logout().then((value) => value
+                                            ? Get.offAll(() => LoginPage())
+                                            : con.showError(
+                                                'gagal', 'logout gagal'));
+                                      },
+                                    ),
+                                  ),
+                                )
                               ],
                             ),
                           )
@@ -95,8 +123,8 @@ class ProfilePage extends StatelessWidget {
                                 MenuAccount(
                                   title: "Registered",
                                   count: connoo.noos
-                                      .where((element) => element.status!
-                                          .contains(NooStatus.pending))
+                                      .where((element) =>
+                                          element.status! == NooStatus.pending)
                                       .toList()
                                       .length
                                       .toString(),
@@ -110,8 +138,9 @@ class ProfilePage extends StatelessWidget {
                                 MenuAccount(
                                   title: "Confirmed",
                                   count: connoo.noos
-                                      .where((element) => element.status!
-                                          .contains(NooStatus.confirmed))
+                                      .where((element) =>
+                                          element.status! ==
+                                          NooStatus.confirmed)
                                       .toList()
                                       .length
                                       .toString(),
@@ -121,8 +150,8 @@ class ProfilePage extends StatelessWidget {
                                 MenuAccount(
                                   title: "Approved",
                                   count: connoo.noos
-                                      .where((element) => element.status!
-                                          .contains(NooStatus.approved))
+                                      .where((element) =>
+                                          element.status! == NooStatus.approved)
                                       .toList()
                                       .length
                                       .toString(),
@@ -132,8 +161,8 @@ class ProfilePage extends StatelessWidget {
                                 MenuAccount(
                                   title: "Rejected",
                                   count: connoo.noos
-                                      .where((element) => element.status!
-                                          .contains(NooStatus.rejected))
+                                      .where((element) =>
+                                          element.status! == NooStatus.rejected)
                                       .toList()
                                       .length
                                       .toString(),

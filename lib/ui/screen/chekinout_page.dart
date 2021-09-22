@@ -29,12 +29,17 @@ class CheckInOutScreen extends StatelessWidget {
                         style: blackFontStyle3,
                       ),
                       GetBuilder<CiCoController>(
+                        id: 'extracall',
                         builder: (con) {
                           return Switch(
                             value: con.isplaned.value,
                             onChanged: (value) {
                               con.changeListPlaned();
-                              con.extraCall();
+                              if (value) {
+                                con.extraCall();
+                              } else {
+                                controller.getPlan();
+                              }
                             },
                           );
                         },
@@ -52,36 +57,43 @@ class CheckInOutScreen extends StatelessWidget {
                         Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(8),
-                            border: Border.all(color: Colors.black),
+                            // border: Border.all(color: Colors.black),
                           ),
                           margin: EdgeInsets.symmetric(
                             horizontal: defaultMargin,
                           ),
                           padding: EdgeInsets.symmetric(horizontal: 10),
-                          width: MediaQuery.of(context).size.width * 0.5,
+                          width: MediaQuery.of(context).size.width * 0.7,
                           child: GetBuilder<CiCoController>(
-                            builder: (controller) => DropdownButton(
-                              underline: SizedBox(),
-                              isExpanded: true,
-                              items: controller.showList
-                                  .map(
-                                    (e) => DropdownMenuItem<String>(
-                                      child: Text(
-                                        e,
-                                        style: blackFontStyle3.copyWith(
-                                            fontSize: 14),
-                                      ),
-                                      value: e,
-                                    ),
-                                  )
-                                  .toList(),
-                              value: controller.selectedOutlet,
-                              hint: Text("Pilih Outlet"),
-                              onChanged: (String? value) {
+                            id: 'dropdown',
+                            builder: (_) => DropdownSearch<String>(
+                              emptyBuilder: (context, message) => Center(
+                                child: Text("Tidak ada daftar Outlet"),
+                              ),
+                              showSearchBox: true,
+                              searchBoxStyle: blackFontStyle2,
+                              hint: "Cari Outlet....",
+                              popupItemBuilder: (_, item, __) => Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 20, vertical: 10),
+                                child: Text(
+                                  item,
+                                  style: blackFontStyle2,
+                                ),
+                              ),
+                              items: controller.showList,
+                              onChanged: (String? value) async {
                                 if (value != null) {
                                   controller.newSelected(value);
                                 }
                               },
+                              searchBoxDecoration: InputDecoration(
+                                hintText: "Cari Outlet ...",
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10)),
+                                contentPadding: EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 15),
+                              ),
                             ),
                           ),
                         ),
@@ -97,35 +109,46 @@ class CheckInOutScreen extends StatelessWidget {
                                   backgroundColor: MaterialStateProperty.all(
                                       Colors.green[400]),
                                 ),
-                                onPressed: () {
+                                onPressed: () async {
                                   if (controller.selectedOutlet == null) {
                                     {
-                                      Get.snackbar("", "",
-                                          padding: EdgeInsets.all(10),
-                                          margin: EdgeInsets.only(bottom: 10),
-                                          maxWidth: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.9,
-                                          backgroundColor: Colors.red[300],
-                                          snackPosition: SnackPosition.BOTTOM,
-                                          titleText: Text(
-                                            "SALAH !!!",
-                                            style: blackFontStyle1,
-                                          ),
-                                          messageText: Text(
-                                            "Pilih outlet terlebih dahulu",
-                                            style: blackFontStyle2,
-                                          ));
+                                      controller.notif('Salah',
+                                          "Pilih outlet terlebih dahulu");
                                     }
                                   } else {
-                                    // Get.to(() => GmapsScreen(
-                                    //       outlet: controller.planVisit.,
-                                    //       latOutlet: controller.latOutlet,
-                                    //       longOutlet: controller.longOutlet,
-                                    //       title: "Check In",
-                                    //       latLong: controller.selectedOutlet,
-                                    //     ));
+                                    if (controller.foto != null) {
+                                      controller.foto = null;
+                                    }
+                                    if (controller.selectedOutlet != null) {
+                                      controller
+                                          .check(
+                                              controller.selectedOutlet!, true)
+                                          .then(
+                                        (value) {
+                                          if (value) {
+                                            controller
+                                                .getLatlong(
+                                                    controller.selectedOutlet!,
+                                                    true)
+                                                .then(
+                                              (value) {
+                                                if (value) {
+                                                  Get.to(
+                                                    () => GmapsScreen(
+                                                      title: "Check In",
+                                                      tipeVisit: (controller
+                                                              .isplaned.value)
+                                                          ? 'EXTRACALL'
+                                                          : 'PLANNED',
+                                                    ),
+                                                  );
+                                                }
+                                              },
+                                            );
+                                          }
+                                        },
+                                      );
+                                    }
                                   }
                                 },
                                 child: Text(
@@ -143,35 +166,45 @@ class CheckInOutScreen extends StatelessWidget {
                                   backgroundColor: MaterialStateProperty.all(
                                       Colors.red[400]),
                                 ),
-                                onPressed: () {
+                                onPressed: () async {
                                   if (controller.selectedOutlet == null) {
                                     {
-                                      Get.snackbar("", "",
-                                          padding: EdgeInsets.all(10),
-                                          margin: EdgeInsets.only(bottom: 10),
-                                          maxWidth: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.9,
-                                          backgroundColor: Colors.red[300],
-                                          snackPosition: SnackPosition.BOTTOM,
-                                          titleText: Text(
-                                            "SALAH !!!",
-                                            style: blackFontStyle1,
-                                          ),
-                                          messageText: Text(
-                                            "Pilih outlet terlebih dahulu",
-                                            style: blackFontStyle2,
-                                          ));
+                                      controller.notif('Salah',
+                                          "Pilih outlet terlebih dahulu");
                                     }
                                   } else {
-                                    // Get.to(() => GmapsScreen(
-                                    //       outlet: controller.outlets,
-                                    //       latOutlet: controller.latOutlet,
-                                    //       longOutlet: controller.longOutlet,
-                                    //       title: "Check Out",
-                                    //       latLong: controller.selectedOutlet,
-                                    //     ));
+                                    if (controller.foto != null) {
+                                      controller.foto = null;
+                                    }
+
+                                    if (controller.selectedOutlet != null) {
+                                      controller
+                                          .check(
+                                              controller.selectedOutlet!, false)
+                                          .then(
+                                        (value) {
+                                          if (value) {
+                                            controller
+                                                .getLatlong(
+                                                    controller.selectedOutlet!,
+                                                    false)
+                                                .then(
+                                                  (value) => (value)
+                                                      ? Get.to(() =>
+                                                          GmapsScreen(
+                                                            title: "Check Out",
+                                                            tipeVisit: (controller
+                                                                    .isplaned
+                                                                    .value)
+                                                                ? 'EXTRACALL'
+                                                                : 'PLANNED',
+                                                          ))
+                                                      : print("object"),
+                                                );
+                                          }
+                                        },
+                                      );
+                                    }
                                   }
                                 },
                                 child: Text(
@@ -206,6 +239,7 @@ class CheckInOutScreen extends StatelessWidget {
               ),
             ),
             GetBuilder<CiCoController>(
+              id: 'logvisit',
               builder: (_) {
                 return ListLogVisit(data: controller.visits);
               },

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1011827693880",
+    "project_id": "crm-msi",
+    "storage_bucket": "crm-msi.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1011827693880:android:71ec89c7734a94a17b49cd",
+        "android_client_info": {
+          "package_name": "com.msi.crmmsi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1011827693880-4oousnkssc7rttavju5i02dcbasc21cs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.msi.crmmsi",
+            "certificate_hash": "40e65e658c9214a6cdb430911afff3812291d46f"
+          }
+        },
+        {
+          "client_id": "1011827693880-8mp7ghoq9e30dba8c8gm9fqgehhbjco1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCHRMiHgRrYIFTwpKdS7KDGpIaWmlTKAP4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1011827693880-8mp7ghoq9e30dba8c8gm9fqgehhbjco1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
