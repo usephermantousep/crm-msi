@@ -7,7 +7,7 @@ class ButtonFotoVideoNoo extends StatelessWidget {
     required this.data,
   }) : super(key: key);
 
-  final ListNooController controller;
+  final DetailNooController controller;
   final NooModel data;
 
   @override

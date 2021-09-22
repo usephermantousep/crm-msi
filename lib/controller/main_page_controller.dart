@@ -22,6 +22,7 @@ class MainPageController extends GetxController {
     update();
     SharedPreferences pref = await SharedPreferences.getInstance();
     role = pref.getString('role');
+    update(['mode']);
     super.onInit();
   }
 }

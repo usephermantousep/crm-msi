@@ -22,7 +22,17 @@ class MainPage extends StatelessWidget {
                 controller.swipePage(index);
               },
               children: [
-                (controller.role == 'SALES') ? HomePage() : Center(),
+                GetBuilder<MainPageController>(
+                  id: 'mode',
+                  builder: (_) => (controller.role == 'SALES')
+                      ? HomePage()
+                      : Center(
+                          child: Text(
+                            'Mode Non Sales',
+                            style: blackFontStyle1,
+                          ),
+                        ),
+                ),
                 ListNooPage(),
                 ProfilePage(),
               ],

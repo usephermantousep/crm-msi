@@ -7,7 +7,7 @@ class ButtonActionNooDsm extends StatelessWidget {
     required this.idNoo,
   }) : super(key: key);
 
-  final ListNooController controller;
+  final DetailNooController controller;
   final int idNoo;
 
   @override
@@ -118,16 +118,23 @@ class ButtonActionNooDsm extends StatelessWidget {
                         children: [
                           LabelFormRegisterHalf(nama: 'Masukkan alasan :'),
                           Container(
-                            width: 300,
-                            child: TextFormField(
-                              controller: controller.alasan,
-                              decoration: InputDecoration(
-                                hintText: 'Alasan',
-                                hintStyle: blackFontStyle3.copyWith(
-                                  fontSize: 12,
-                                  color: Colors.grey,
-                                ),
-                              ),
+                            width: 150,
+                            child: DropDownHalf(
+                              dropdownValue: controller.alasan,
+                              opsi: controller.listAlasan,
+                              function: (String? value) {
+                                if (value != null) {
+                                  controller.alasan = value;
+                                }
+                              },
+                              width: 0.4,
+                              validator: (String? valid) {
+                                if (valid == null) {
+                                  return 'harus pilih';
+                                } else {
+                                  return null;
+                                }
+                              },
                             ),
                           )
                         ],
@@ -142,8 +149,7 @@ class ButtonActionNooDsm extends StatelessWidget {
                                 elevation: MaterialStateProperty.all(0)),
                             onPressed: () {
                               controller
-                                  .reject(
-                                      idNoo.toString(), controller.alasan.text)
+                                  .reject(idNoo.toString(), controller.alasan!)
                                   .then((value) => value
                                       ? Get.offAll(() => MainPage())
                                       : print('error'));

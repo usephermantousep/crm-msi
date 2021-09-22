@@ -27,3 +27,4 @@ part 'list_noo_controller.dart';
 part 'profile_controller.dart';
 part 'plan_visit_controller.dart';
 part 'register_noo_controller.dart';
+part 'detail_noo_controller.dart';

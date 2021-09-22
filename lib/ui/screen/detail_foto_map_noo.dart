@@ -1,6 +1,6 @@
 part of 'screen.dart';
 
-class DetailFotoDanMap extends GetView<ListNooController> {
+class DetailFotoDanMap extends GetView<DetailNooController> {
   final NooModel data;
 
   DetailFotoDanMap({

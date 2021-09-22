@@ -7,7 +7,7 @@ class ButtonActionNooAR extends StatelessWidget {
     required this.idNoo,
   }) : super(key: key);
 
-  final ListNooController controller;
+  final DetailNooController controller;
   final int idNoo;
 
   @override
@@ -17,8 +17,11 @@ class ButtonActionNooAR extends StatelessWidget {
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
         ElevatedButton(
           style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(Colors.green[400]),
-              elevation: MaterialStateProperty.all(0)),
+            backgroundColor: MaterialStateProperty.all(
+              Colors.green[400],
+            ),
+            elevation: MaterialStateProperty.all(0),
+          ),
           onPressed: () {
             Get.bottomSheet(
               Container(
@@ -40,27 +43,40 @@ class ButtonActionNooAR extends StatelessWidget {
                         children: [
                           LabelFormRegisterHalf(nama: 'Masukkan Limit :'),
                           Container(
-                            width: 300,
-                            child: TextFormField(
-                              controller: controller.limit,
-                              keyboardType: TextInputType.number,
-                              decoration: InputDecoration(
-                                hintText: "1000000",
-                                hintStyle: blackFontStyle3.copyWith(
-                                  fontSize: 12,
-                                  color: Colors.grey,
+                              width: 150,
+                              child: TextFormField(
+                                onChanged: (String? string) {
+                                  if (string != null) {
+                                    controller.nominal = string;
+                                  }
+                                  controller.updateManual('currency');
+                                },
+                                controller: controller.limit,
+                                keyboardType: TextInputType.number,
+                                decoration: InputDecoration(
+                                  hintText: "Limit yang diberikan",
+                                  hintStyle: blackFontStyle3.copyWith(
+                                    fontSize: 12,
+                                    color: Colors.grey,
+                                  ),
                                 ),
-                              ),
-                            ),
-                          )
+                              ))
                         ],
                       ),
                       Row(
                         children: [
-                          Text(
-                            "*input tanpa koma atau titik hanya angka",
-                            style: blackFontStyle3.copyWith(color: Colors.grey),
-                          ),
+                          GetBuilder<DetailNooController>(
+                              id: 'currency',
+                              builder: (_) {
+                                return Text(
+                                  (controller.nominal == '')
+                                      ? 'Rp0'
+                                      : (controller
+                                          .formatNumber(controller.nominal)),
+                                  style: blackFontStyle3.copyWith(
+                                      color: Colors.grey),
+                                );
+                              }),
                         ],
                       ),
                       Row(
@@ -68,13 +84,14 @@ class ButtonActionNooAR extends StatelessWidget {
                         children: [
                           ElevatedButton(
                             style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.all(
-                                    Colors.green[400]),
-                                elevation: MaterialStateProperty.all(0)),
+                              backgroundColor:
+                                  MaterialStateProperty.all(Colors.green[400]),
+                              elevation: MaterialStateProperty.all(0),
+                            ),
                             onPressed: () {
                               controller
                                   .confirm(idNoo.toString(),
-                                      limit: controller.limit.text)
+                                      limit: controller.limit!.text)
                                   .then(
                                     (value) => value
                                         ? Get.offAll(() => MainPage())
@@ -139,16 +156,23 @@ class ButtonActionNooAR extends StatelessWidget {
                         children: [
                           LabelFormRegisterHalf(nama: 'Masukkan alasan :'),
                           Container(
-                            width: 300,
-                            child: TextFormField(
-                              controller: controller.alasan,
-                              decoration: InputDecoration(
-                                hintText: 'Alasan',
-                                hintStyle: blackFontStyle3.copyWith(
-                                  fontSize: 12,
-                                  color: Colors.grey,
-                                ),
-                              ),
+                            width: 150,
+                            child: DropDownHalf(
+                              dropdownValue: controller.alasan,
+                              opsi: controller.listAlasan,
+                              function: (String? value) {
+                                if (value != null) {
+                                  controller.alasan = value;
+                                }
+                              },
+                              width: 0.3,
+                              validator: (String? valid) {
+                                if (valid == null) {
+                                  return 'harus pilih';
+                                } else {
+                                  return null;
+                                }
+                              },
                             ),
                           )
                         ],
@@ -163,8 +187,7 @@ class ButtonActionNooAR extends StatelessWidget {
                                 elevation: MaterialStateProperty.all(0)),
                             onPressed: () {
                               controller
-                                  .reject(
-                                      idNoo.toString(), controller.alasan.text)
+                                  .reject(idNoo.toString(), controller.alasan!)
                                   .then((value) => value
                                       ? Get.offAll(() => MainPage())
                                       : print('error'));
