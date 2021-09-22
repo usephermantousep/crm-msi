@@ -48,8 +48,6 @@ class LoginController extends GetxController {
 
       if (result.value != null) {
         user = result.value;
-        SharedPreferences pref = await SharedPreferences.getInstance();
-        pref.setInt('userId', result.value!.id!);
         return true;
       } else {
         showError("ERROR", result.message!);

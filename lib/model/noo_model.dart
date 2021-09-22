@@ -40,6 +40,7 @@ class NooModel extends Equatable {
     this.deletedAt,
     this.createdAt,
     this.updatedAt,
+    this.keterangan,
     this.user,
     this.cluster,
   });
@@ -80,6 +81,7 @@ class NooModel extends Equatable {
   final DateTime? deletedAt;
   final DateTime? createdAt;
   final DateTime? updatedAt;
+  final String? keterangan;
   final UserModel? user;
   final Cluster? cluster;
 
@@ -138,6 +140,7 @@ class NooModel extends Equatable {
         updatedAt: (json["updated_at"] == null)
             ? null
             : DateTime.fromMillisecondsSinceEpoch(json["updated_at"]),
+        keterangan: json['keterangan'],
         user: UserModel.fromJson(json["user"]),
         cluster: Cluster.fromjson(json["cluster"]),
       );
@@ -179,6 +182,7 @@ class NooModel extends Equatable {
         "deleted_at": deletedAt,
         "created_at": createdAt,
         "updated_at": updatedAt,
+        "keterangan": keterangan,
         "user": user!.toJson(),
         "cluster": cluster!.toJson(),
       };
@@ -221,6 +225,7 @@ class NooModel extends Equatable {
         deletedAt,
         createdAt,
         updatedAt,
+        keterangan,
         user,
         cluster,
       ];

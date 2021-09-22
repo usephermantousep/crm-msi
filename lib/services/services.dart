@@ -14,5 +14,5 @@ part 'user_services.dart';
 part 'noo_services.dart';
 part 'plan_visit_services.dart';
 
-String baseUrl = 'http://192.168.1.188:8000/api/';
-String baseFile = 'http://192.168.1.188:8000/storage/';
+String baseUrl = 'http://192.168.1.187:8000/api/';
+String baseFile = 'http://192.168.1.187:8000/storage/';

@@ -1,14 +1,14 @@
 part of 'services.dart';
 
 class NooService extends GetConnect {
-  static Future<ApiReturnValue<List<NooModel>>> bySales(
+  static Future<ApiReturnValue<List<NooModel>>> all(String role,
       {http.Client? client}) async {
     try {
       if (client == null) {
         client = http.Client();
       }
 
-      String url = baseUrl + 'noo';
+      String url = role == 'SALES' ? baseUrl + 'noo' : baseUrl + 'noo/all';
       Uri uri = Uri.parse(url);
 
       var response = await client.get(uri, headers: {
@@ -27,6 +27,7 @@ class NooService extends GetConnect {
           (data['data'] as Iterable).map((e) => NooModel.fromJson(e)).toList();
       return ApiReturnValue(value: value);
     } catch (err) {
+      print(err.toString());
       return ApiReturnValue(value: [], message: err.toString());
     }
   }
@@ -96,9 +97,81 @@ class NooService extends GetConnect {
         return ApiReturnValue(value: false, message: 'Gagal registrasi Noo');
       }
 
-      return ApiReturnValue(value: true, message: 'berhasil');
+      return ApiReturnValue(
+          value: true, message: 'berhasil menambahkan NOO baru');
     } catch (err) {
       return ApiReturnValue(value: false, message: 'Ada kesalahan server');
+    }
+  }
+
+  static Future<ApiReturnValue<bool>> confirm(String id,
+      {String? limit, http.Client? client}) async {
+    try {
+      if (client == null) {
+        client = http.Client();
+      }
+
+      String url = baseUrl + 'noo/confirm';
+      Uri uri = Uri.parse(url);
+      var response;
+
+      if (limit != null) {
+        response = await client.post(uri, headers: {
+          'Accept': 'application/json',
+          'Authorization': 'Bearer ${UserModel.token}'
+        }, body: {
+          'id': id,
+          'status': 'CONFIRMED',
+          'limit': limit,
+        });
+      } else {
+        response = await client.post(uri, headers: {
+          'Accept': 'application/json',
+          'Authorization': 'Bearer ${UserModel.token}'
+        }, body: {
+          'id': id,
+          'status': 'APPROVED',
+        });
+      }
+
+      if (response.statusCode != 200) {
+        var data = jsonDecode(response.body);
+        String message = data['meta']['message'];
+        return ApiReturnValue(value: false, message: message);
+      }
+      return ApiReturnValue(value: true, message: 'Behasil update');
+    } catch (err) {
+      print(err.toString());
+      return ApiReturnValue(value: false, message: err.toString());
+    }
+  }
+
+  static Future<ApiReturnValue<bool>> reject(String id, String alasan,
+      {http.Client? client}) async {
+    try {
+      if (client == null) {
+        client = http.Client();
+      }
+
+      String url = baseUrl + 'noo/reject';
+      Uri uri = Uri.parse(url);
+
+      var response = await client.post(uri, headers: {
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ${UserModel.token}'
+      }, body: {
+        'id': id,
+        'alasan': alasan,
+        'status': 'REJECTED'
+      });
+
+      if (response.statusCode != 200) {
+        return ApiReturnValue(value: false, message: "Gagal update status NOO");
+      }
+
+      return ApiReturnValue(value: true, message: "Berhasil update status NOO");
+    } catch (err) {
+      return ApiReturnValue(value: false, message: err.toString());
     }
   }
 }

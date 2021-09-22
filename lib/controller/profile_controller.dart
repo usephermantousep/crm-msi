@@ -37,6 +37,34 @@ class ProfileController extends GetxController {
     update(['tab', 'outlet']);
   }
 
+  Future<bool> logout() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    ApiReturnValue<bool> result = await UserServices.logout();
+
+    if (result.value != null) {
+      if (result.value!) {
+        pref.remove('role');
+        pref.remove('token');
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
+
+  void showError(String judul, String msg) {
+    Get.snackbar('title', 'message',
+        snackPosition: SnackPosition.TOP,
+        margin: EdgeInsets.all(10),
+        titleText:
+            Text(judul, style: blackFontStyle1.copyWith(color: Colors.white)),
+        messageText:
+            Text(msg, style: blackFontStyle2.copyWith(color: Colors.white)),
+        backgroundColor: "FF3F0A".toColor());
+  }
+
   @override
   void onInit() {
     getDetailUser();

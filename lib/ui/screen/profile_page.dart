@@ -93,6 +93,27 @@ class ProfilePage extends StatelessWidget {
                                     onpress: () {},
                                     mdiIcons: MdiIcons.naturePeople,
                                     count: controller.visit!.length.toString()),
+                                Divider(),
+                                Container(
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      con.logout().then((value) => value
+                                          ? Get.offAll(() => LoginPage())
+                                          : con.showError(
+                                              'gagal', 'logout gagal'));
+                                    },
+                                    child: MenuAccount(
+                                      title: "Log Out",
+                                      mdiIcons: MdiIcons.logout,
+                                      onpress: () {
+                                        con.logout().then((value) => value
+                                            ? Get.offAll(() => LoginPage())
+                                            : con.showError(
+                                                'gagal', 'logout gagal'));
+                                      },
+                                    ),
+                                  ),
+                                )
                               ],
                             ),
                           )

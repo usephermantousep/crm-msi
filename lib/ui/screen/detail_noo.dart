@@ -142,190 +142,57 @@ class DetailNoo extends GetView<ListNooController> {
               ),
             ),
             Divider(),
-            Container(
-              width: double.infinity,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    width: double.infinity,
-                    height: 70,
-                    child: TimelineTile(
-                      indicatorStyle: IndicatorStyle(
-                          height: 50, width: 20, color: Colors.blue[300]!),
-                      afterLineStyle: LineStyle(
-                        thickness: 2,
-                      ),
-                      endChild: Container(
-                        padding: EdgeInsets.only(left: 10, top: 20),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Created by : ${data.user!.namaLengkap!}",
-                              style: blackFontStyle2,
-                            ),
-                            Row(
-                              children: [
-                                Text(
-                                    '${DateFormat('d MMM yyyy HH:mm').format(data.createdAt!)}'),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                      isFirst: true,
-                    ),
-                  ),
-                  SizedBox(
-                    width: double.infinity,
-                    height: 70,
-                    child: TimelineTile(
-                      afterLineStyle: LineStyle(
-                        thickness: 2,
-                      ),
-                      beforeLineStyle: LineStyle(
-                        thickness: 2,
-                      ),
-                      indicatorStyle: IndicatorStyle(
-                          height: 50, width: 20, color: Colors.yellow[300]!),
-                      endChild: Container(
-                        padding: EdgeInsets.only(left: 10, top: 20),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              (data.confirmedBy == null)
-                                  ? 'Confirmed by : -'
-                                  : "Confirmed by :  ${data.confirmedBy}",
-                              style: blackFontStyle2,
-                            ),
-                            Row(
-                              children: [
-                                Text((data.confirmedAt == null)
-                                    ? '-'
-                                    : '${DateFormat('d MMM yyyy HH:mm').format(data.confirmedAt!)}'),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: double.infinity,
-                    height: 70,
-                    child: TimelineTile(
-                      afterLineStyle: LineStyle(
-                        thickness: 2,
-                      ),
-                      beforeLineStyle: LineStyle(
-                        thickness: 2,
-                      ),
-                      indicatorStyle: IndicatorStyle(
-                          height: 50, width: 20, color: Colors.green[300]!),
-                      endChild: Container(
-                        padding: EdgeInsets.only(left: 10, top: 20),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              (data.approvedBy == null)
-                                  ? 'Approved by : -'
-                                  : "Approved by :  ${data.approvedBy}",
-                              style: blackFontStyle2,
-                            ),
-                            Row(
-                              children: [
-                                Text((data.approvedAt == null)
-                                    ? '-'
-                                    : '${DateFormat('d MMM yyyy HH:mm').format(data.approvedAt!)}'),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: double.infinity,
-                    height: 70,
-                    child: TimelineTile(
-                      afterLineStyle: LineStyle(
-                        thickness: 2,
-                      ),
-                      beforeLineStyle: LineStyle(
-                        thickness: 2,
-                      ),
-                      indicatorStyle: IndicatorStyle(
-                          height: 50, width: 20, color: Colors.red[300]!),
-                      endChild: Container(
-                        padding: EdgeInsets.only(left: 10, top: 20),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              (data.rejectedBy == null)
-                                  ? 'Rejected by : -'
-                                  : "Rejected by :  ${data.rejectedBy}",
-                              style: blackFontStyle2,
-                            ),
-                            Row(
-                              children: [
-                                Text((data.rejectedAt == null)
-                                    ? '-'
-                                    : '${DateFormat('d MMM yyyy HH:mm').format(data.rejectedAt!)}'),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                      isLast: true,
-                    ),
-                  ),
-                ],
-              ),
+            GetBuilder<ListNooController>(
+              id: 'timeline',
+              builder: (_) => TimelineNoo(data: data),
             ),
             SizedBox(
               height: defaultMargin,
             ),
-            Container(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      controller.generateLokasi(data.latlong!, data.video!);
-                      Get.to(
-                        () => DetailFotoDanMap(data: data),
-                      );
-                    },
-                    child: Text(
-                      "Foto dan Lokasi",
-                      style: blackFontStyle3.copyWith(color: Colors.white),
-                    ),
-                    style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all("FF3F0A".toColor()),
-                        elevation: MaterialStateProperty.all(0)),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      Get.to(() =>
-                          VideoPlayerScreen(videoUrl: baseFile + data.video!));
-                    },
-                    child: Text(
-                      "Lihat Video",
-                      style: blackFontStyle3.copyWith(color: Colors.white),
-                    ),
-                    style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all("FF3F0A".toColor()),
-                        elevation: MaterialStateProperty.all(0)),
-                  ),
-                ],
-              ),
+            (data.keterangan != null) ? Divider() : SizedBox(),
+            (data.keterangan != null)
+                ? Row(
+                    children: [
+                      LabelFormRegisterHalf(nama: "Alasan ditolak"),
+                      LabelFormRegisterHalf(nama: data.keterangan),
+                    ],
+                  )
+                : SizedBox(),
+            Divider(),
+            Row(
+              children: [
+                LabelFormRegisterHalf(nama: 'Foto dan Video :'),
+              ],
             ),
+            ButtonFotoVideoNoo(controller: controller, data: data),
+            SizedBox(
+              height: defaultMargin,
+            ),
+            (controller.role == 'AR' && title == "STATUS : PENDING")
+                ? Divider()
+                : SizedBox(),
+            (controller.role == 'AR' && title == "STATUS : PENDING")
+                ? Row(
+                    children: [LabelFormRegisterHalf(nama: "Action :")],
+                  )
+                : SizedBox(),
+            (controller.role == 'AR' && title == "STATUS : PENDING")
+                ? ButtonActionNooAR(
+                    controller: controller,
+                    idNoo: data.id!,
+                  )
+                : Container(),
+            (controller.role == 'DSM' && title == "STATUS : CONFIRMED")
+                ? Divider()
+                : SizedBox(),
+            (controller.role == 'DSM' && title == "STATUS : CONFIRMED")
+                ? Row(
+                    children: [LabelFormRegisterHalf(nama: "Action :")],
+                  )
+                : SizedBox(),
+            (controller.role == 'DSM' && title == "STATUS : CONFIRMED")
+                ? ButtonActionNooDsm(controller: controller, idNoo: data.id!)
+                : SizedBox(),
             SizedBox(
               height: defaultMargin,
             ),

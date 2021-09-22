@@ -12,12 +12,10 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:month_picker_dialog/month_picker_dialog.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supercharged/supercharged.dart';
 import 'package:trust_location/trust_location.dart';
 import 'package:video_player/video_player.dart';
 import 'package:dropdown_search/dropdown_search.dart';
-import 'package:timeline_tile/timeline_tile.dart';
 
 part 'gmaps_page.dart';
 part 'chekinout_page.dart';

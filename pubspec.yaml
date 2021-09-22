@@ -22,7 +22,7 @@ dependencies:
   image: ^3.0.2
   image_picker: ^0.8.3+2
   intl: ^0.17.0
-  lint: ^1.5.3
+  lint: ^1.7.2
   location_permissions: ^4.0.0
   material_design_icons_flutter: ^5.0.5955-rc.1
   month_picker_dialog: ^0.4.0
