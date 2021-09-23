@@ -7,10 +7,11 @@ class VisitServices {
     try {
       String url = baseUrl + 'visit';
       Uri uri = Uri.parse(url);
+      SharedPreferences pref = await SharedPreferences.getInstance();
       if (request == null) {
         request = http.MultipartRequest("POST", uri)
           ..headers["Content-Type"] = "application/json"
-          ..headers["Authorization"] = "Bearer ${UserModel.token}";
+          ..headers["Authorization"] = "Bearer ${pref.getString('token')}";
       }
 
       var multiPartFile =
@@ -30,7 +31,6 @@ class VisitServices {
       }
 
       var response = await request.send();
-      print(response.request);
 
       if (response.statusCode != 200) {
         return ApiReturnValue(
@@ -52,10 +52,12 @@ class VisitServices {
     try {
       String url = baseUrl + 'visit';
       Uri uri = Uri.parse(url);
+      SharedPreferences pref = await SharedPreferences.getInstance();
+
 
       var response = await client.get(uri, headers: {
         'Content-Type': "application/json",
-        'Authorization': "Bearer ${UserModel.token!}",
+        'Authorization': "Bearer ${pref.getString('token')}",
       });
       if (response.statusCode != 200) {
         var data = jsonDecode(response.body);
@@ -80,18 +82,18 @@ class VisitServices {
     if (client == null) {
       client = http.Client();
     }
-    print(namaOutlet + checkin.toString());
 
     String url = (checkin)
         ? baseUrl + "visit/check/?nama_outlet=$namaOutlet&check_in=$checkin"
         : baseUrl + "visit/check/?nama_outlet=$namaOutlet";
     Uri uri = Uri.parse(url);
 
+    SharedPreferences pref = await SharedPreferences.getInstance();
+
     var response = await client.get(uri, headers: {
       'Content-Type': "application/json",
-      'Authorization': "Bearer ${UserModel.token!}",
+      'Authorization': "Bearer ${pref.getString('token')}",
     });
-    print(response.statusCode);
 
     if (response.statusCode != 200) {
       var data = jsonDecode(response.body);

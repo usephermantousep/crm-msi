@@ -18,10 +18,11 @@ class PlanVisitServices {
 
     String url = baseUrl + 'planvisit/?tanggal=$tanggal';
     Uri uri = Uri.parse(url);
+    SharedPreferences pref = await SharedPreferences.getInstance();
 
     var response = await client.get(uri, headers: {
       'Content-Type': "application/json",
-      'Authorization': "Bearer ${UserModel.token!}",
+      'Authorization': "Bearer ${pref.getString('token')}",
     });
 
     if (response.statusCode != 200) {
@@ -46,10 +47,11 @@ class PlanVisitServices {
 
     String url = baseUrl + 'planvisit/filter/?tahun=$tahun&bulan=$bulan';
     Uri uri = Uri.parse(url);
+    SharedPreferences pref = await SharedPreferences.getInstance();
 
     var response = await client.get(uri, headers: {
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer ${UserModel.token}'
+      'Authorization': 'Bearer ${pref.getString('token')}'
     });
 
     if (response.statusCode != 200) {
@@ -76,13 +78,15 @@ class PlanVisitServices {
 
       String url = baseUrl + 'planvisit';
       Uri uri = Uri.parse(url);
+    SharedPreferences pref = await SharedPreferences.getInstance();
+
 
       var response = await client.post(uri, body: {
         'tanggal_visit': date,
         'nama_outlet': outlet
       }, headers: {
         'Application': "application/json",
-        'Authorization': "Bearer ${UserModel.token!}",
+        'Authorization': "Bearer ${pref.getString('token')}",
       });
 
       if (response.statusCode != 200) {
@@ -107,10 +111,12 @@ class PlanVisitServices {
     try {
       String url = baseUrl + 'planvisit';
       Uri uri = Uri.parse(url);
+    SharedPreferences pref = await SharedPreferences.getInstance();
+
 
       var response = await client.delete(uri, headers: <String, String>{
         'Application': "application/json",
-        'Authorization': "Bearer ${UserModel.token!}",
+        'Authorization': "Bearer ${pref.getString('token')}",
       }, body: <String, String>{
         'bulan': bulan,
         'tahun': tahun,
@@ -125,7 +131,6 @@ class PlanVisitServices {
 
       return ApiReturnValue(value: true, message: 'Berhasil hapus plan visit');
     } catch (err) {
-      print(err.toString());
       return ApiReturnValue(value: false, message: err.toString());
     }
   }

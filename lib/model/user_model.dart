@@ -20,7 +20,6 @@ class UserModel extends Equatable {
   final String? roles;
   final String? idNotif;
   final String? profilePhotoPath;
-  static String? token;
   @override
   List<Object?> get props => [
         id,

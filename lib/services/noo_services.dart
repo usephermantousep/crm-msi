@@ -8,12 +8,14 @@ class NooService extends GetConnect {
         client = http.Client();
       }
 
-      String url = role == 'SALES' ? baseUrl + 'noo' : baseUrl + 'noo/all';
+      String url = role == 'SALES' ? baseUrl + 'noo/' : baseUrl + 'noo/all';
       Uri uri = Uri.parse(url);
+
+      SharedPreferences pref = await SharedPreferences.getInstance();
 
       var response = await client.get(uri, headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ${UserModel.token}'
+        'Authorization': 'Bearer ${pref.getString('token')}'
       });
 
       if (response.statusCode != 200) {
@@ -27,7 +29,6 @@ class NooService extends GetConnect {
           (data['data'] as Iterable).map((e) => NooModel.fromJson(e)).toList();
       return ApiReturnValue(value: value);
     } catch (err) {
-      print(err.toString());
       return ApiReturnValue(value: [], message: err.toString());
     }
   }
@@ -55,10 +56,11 @@ class NooService extends GetConnect {
     try {
       String url = baseUrl + 'noo';
       Uri uri = Uri.parse(url);
+      SharedPreferences pref = await SharedPreferences.getInstance();
       if (client == null) {
         client = http.MultipartRequest('POST', uri)
           ..headers["Content-Type"] = "application/json"
-          ..headers["Authorization"] = "Bearer ${UserModel.token}"
+          ..headers["Authorization"] = "Bearer ${pref.getString('token')}"
           ..fields['nama_outlet'] = namaOutlet!
           ..fields['nama_pemilik'] = namaPemilik!
           ..fields['ktpnpwp'] = ktpnpwp!
@@ -114,11 +116,12 @@ class NooService extends GetConnect {
       String url = baseUrl + 'noo/confirm';
       Uri uri = Uri.parse(url);
       var response;
+      SharedPreferences pref = await SharedPreferences.getInstance();
 
       if (limit != null) {
         response = await client.post(uri, headers: {
           'Accept': 'application/json',
-          'Authorization': 'Bearer ${UserModel.token}'
+          'Authorization': 'Bearer ${pref.getString('token')}'
         }, body: {
           'id': id,
           'status': 'CONFIRMED',
@@ -127,7 +130,7 @@ class NooService extends GetConnect {
       } else {
         response = await client.post(uri, headers: {
           'Accept': 'application/json',
-          'Authorization': 'Bearer ${UserModel.token}'
+          'Authorization': 'Bearer ${pref.getString('token')}'
         }, body: {
           'id': id,
           'status': 'APPROVED',
@@ -141,7 +144,6 @@ class NooService extends GetConnect {
       }
       return ApiReturnValue(value: true, message: 'Behasil update');
     } catch (err) {
-      print(err.toString());
       return ApiReturnValue(value: false, message: err.toString());
     }
   }
@@ -155,10 +157,12 @@ class NooService extends GetConnect {
 
       String url = baseUrl + 'noo/reject';
       Uri uri = Uri.parse(url);
+      SharedPreferences pref = await SharedPreferences.getInstance();
+
 
       var response = await client.post(uri, headers: {
         'Accept': 'application/json',
-        'Authorization': 'Bearer ${UserModel.token}'
+        'Authorization': 'Bearer ${pref.getString('token')}'
       }, body: {
         'id': id,
         'alasan': alasan,

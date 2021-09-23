@@ -4,7 +4,8 @@ class LoginController extends GetxController {
   TextEditingController? userName;
   UserModel? user;
   TextEditingController? pass;
-  bool islogin = false;
+  var islogin = false.obs;
+  var loadingLogin = false.obs;
 
   var isLoading = false.obs;
 
@@ -56,20 +57,26 @@ class LoginController extends GetxController {
     }
   }
 
-  Future<bool> check() async {
-    if (UserModel.token == null) {
-      return false;
-    } else {
-      ApiReturnValue<bool> result = await UserServices.check();
-      if (result.value != null) {
-        if (result.value!) {
-          islogin = true;
-          return true;
-        } else {
-          return false;
+  void check() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? token = pref.getString('token');
+    if(token == null) {
+      loadingLogin.toggle();
+    }else{
+    await UserServices.check(token).then((value) {
+        if (value.value != null){
+          if (value.value!){
+            loadingLogin.toggle();
+            islogin.toggle();
+          return ApiReturnValue(value: value.value);
+          }
+        }else{
+          return ApiReturnValue(value: value.value);
+
         }
-      }
+    });
+     
     }
-    return false;
-  }
+   
+    }
 }

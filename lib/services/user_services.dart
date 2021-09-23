@@ -27,22 +27,19 @@ class UserServices {
         ),
       );
 
+
       if (response.statusCode != 200) {
         var data = jsonDecode(response.body);
         String message = data['meta']['message'];
         return ApiReturnValue(message: message);
       }
       var data = jsonDecode(response.body);
-      UserModel.token = data['data']['access_token'].toString();
 
       UserModel value = UserModel.fromJson(data['data']['user']);
 
       SharedPreferences pref = await SharedPreferences.getInstance();
-      pref.setString('role', data['data']['user']['roles']);
+      pref.setString('role', data['data']['user']['roles'].toString());
       pref.setString('token', data['data']['access_token'].toString());
-
-      print(pref.getString('role'));
-      print(pref.getString('token'));
 
       return ApiReturnValue(value: value);
     } catch (err) {
@@ -59,10 +56,11 @@ class UserServices {
 
       String url = baseUrl + 'user';
       Uri uri = Uri.parse(url);
+      SharedPreferences pref = await SharedPreferences.getInstance();
 
       var response = await client.get(uri, headers: {
         "Content-Type": "application/json",
-        'Authorization': "Bearer ${UserModel.token!}",
+        'Authorization': "Bearer ${pref.getString('token')}",
       });
 
       if (response.statusCode != 200) {
@@ -79,7 +77,7 @@ class UserServices {
     }
   }
 
-  static Future<ApiReturnValue<bool>> check({http.Client? client}) async {
+  static Future<ApiReturnValue<bool>> check(String? token,{http.Client? client}) async {
     try {
       if (client == null) {
         client = http.Client();
@@ -90,7 +88,7 @@ class UserServices {
 
       var response = await client.get(uri, headers: {
         "Content-Type": "application/json",
-        'Authorization': "Bearer ${UserModel.token!}",
+        'Authorization': "Bearer ${ token }",
       });
 
       if (response.statusCode != 200) {
@@ -112,10 +110,11 @@ class UserServices {
 
       String url = baseUrl + 'logout';
       Uri uri = Uri.parse(url);
+      SharedPreferences pref = await SharedPreferences.getInstance();
 
       var response = await client.post(uri, headers: {
         "Content-Type": "application/json",
-        'Authorization': "Bearer ${UserModel.token!}",
+        'Authorization': "Bearer ${pref.getString('token')}",
       });
 
       if (response.statusCode != 200) {
@@ -123,6 +122,9 @@ class UserServices {
         String message = data['message'];
         return ApiReturnValue(value: false, message: message);
       }
+
+      pref.remove('token');
+      pref.remove('role');
       return ApiReturnValue(value: true);
     } catch (err) {
       return ApiReturnValue(value: false, message: err.toString());

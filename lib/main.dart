@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(scaffoldBackgroundColor: const Color(0xFFEFEFEF)),
       title: 'CRM - MIS',
       debugShowCheckedModeBanner: false,
-      home: (controller.islogin) ? MainPage() : LoginPage(),
+      home: Obx(() => controller.loadingLogin.value ?  controller.islogin.value ? MainPage() : LoginPage() : LoadingFullScreen()) ,
     );
   }
 }

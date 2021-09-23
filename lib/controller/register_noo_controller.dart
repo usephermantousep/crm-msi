@@ -410,7 +410,6 @@ class RegisterNooController extends GetxController {
         images.add(kanan!);
         images.add(kiri!);
         images.add(belakang!);
-        print(images);
         notifLoading('Tunggu', 'Sedang mengirim data');
         Position position = await Geolocator.getCurrentPosition(
             desiredAccuracy: LocationAccuracy.high);

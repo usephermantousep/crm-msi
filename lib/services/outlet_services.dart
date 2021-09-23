@@ -8,10 +8,12 @@ class OutletServices {
 
       String url = baseUrl + 'outlet';
       Uri uri = Uri.parse(url);
+      SharedPreferences pref = await SharedPreferences.getInstance();
+
 
       var response = await client.get(uri, headers: {
         'Content-Type': "application/json",
-        'Authorization': "Bearer ${UserModel.token!}",
+        'Authorization': "Bearer ${pref.getString('token')}",
       });
 
       if (response.statusCode != 200) {
@@ -37,10 +39,12 @@ class OutletServices {
 
       String url = baseUrl + 'outlet/$namaOutlet';
       Uri uri = Uri.parse(url);
+      SharedPreferences pref = await SharedPreferences.getInstance();
+
 
       var response = await http.get(uri, headers: {
         'Content-Type': "application/json",
-        'Authorization': "Bearer ${UserModel.token!}",
+        'Authorization': "Bearer ${pref.getString('token')}",
       });
 
       if (response.statusCode != 200) {

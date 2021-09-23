@@ -74,7 +74,6 @@ class PlanVisitController extends GetxController {
 
   void changeMonth(DateTime value) {
     selectedDateTime = value;
-    print(selectedDateTime);
     selectedMonth = DateFormat("MMMM, y").format(value);
     bulan = DateFormat('MM').format(value);
     tahun = DateFormat('y').format(value);
