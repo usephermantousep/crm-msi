@@ -1,6 +1,6 @@
 part of 'models.dart';
 
-enum NooStatus { pending, confirmed, approved, rejected }
+enum NooStatus { pending, approved, rejected }
 
 class NooModel extends Equatable {
   NooModel({
@@ -31,8 +31,6 @@ class NooModel extends Equatable {
     this.latlong,
     this.limit,
     this.status,
-    this.confirmedAt,
-    this.confirmedBy,
     this.rejectedAt,
     this.rejectedBy,
     this.approvedBy,
@@ -72,8 +70,6 @@ class NooModel extends Equatable {
   final String? latlong;
   final int? limit;
   final NooStatus? status;
-  final DateTime? confirmedAt;
-  final String? confirmedBy;
   final DateTime? rejectedAt;
   final String? rejectedBy;
   final DateTime? approvedAt;
@@ -114,15 +110,9 @@ class NooModel extends Equatable {
         limit: json["limit"],
         status: (json["status"] == 'PENDING')
             ? NooStatus.pending
-            : (json["status"] == 'CONFIRMED')
-                ? NooStatus.confirmed
                 : (json["status"] == 'APPROVED')
                     ? NooStatus.approved
                     : NooStatus.rejected,
-        confirmedAt: (json["confirmed_at"] == null)
-            ? null
-            : DateTime.fromMillisecondsSinceEpoch(json["confirmed_at"]),
-        confirmedBy: json["confirmed_by"],
         rejectedAt: (json["rejected_at"] == null)
             ? null
             : DateTime.fromMillisecondsSinceEpoch(json["rejected_at"]),
@@ -173,8 +163,6 @@ class NooModel extends Equatable {
         "latlong": latlong,
         "limit": limit,
         "status": status,
-        "confirmed_at": confirmedAt,
-        "confirmed_by": confirmedBy,
         "rejected_at": rejectedAt,
         "rejected_by": rejectedBy,
         "approved_at": approvedAt,
@@ -216,8 +204,6 @@ class NooModel extends Equatable {
         latlong,
         limit,
         status,
-        confirmedAt,
-        confirmedBy,
         rejectedAt,
         rejectedBy,
         approvedAt,

@@ -14,6 +14,8 @@ class LoginController extends GetxController {
     userName = TextEditingController();
     pass = TextEditingController();
     await LocationPermissions().requestPermissions();
+    await Permission.camera;
+    await Permission.storage;
     check();
     super.onInit();
   }

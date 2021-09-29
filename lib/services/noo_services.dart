@@ -107,7 +107,7 @@ class NooService extends GetConnect {
   }
 
   static Future<ApiReturnValue<bool>> confirm(String id,
-      {String? limit, http.Client? client}) async {
+      String limit, {http.Client? client}) async {
     try {
       if (client == null) {
         client = http.Client();
@@ -115,27 +115,17 @@ class NooService extends GetConnect {
 
       String url = baseUrl + 'noo/confirm';
       Uri uri = Uri.parse(url);
-      var response;
       SharedPreferences pref = await SharedPreferences.getInstance();
 
-      if (limit != null) {
-        response = await client.post(uri, headers: {
-          'Accept': 'application/json',
-          'Authorization': 'Bearer ${pref.getString('token')}'
-        }, body: {
-          'id': id,
-          'status': 'CONFIRMED',
-          'limit': limit,
-        });
-      } else {
-        response = await client.post(uri, headers: {
+        var response = await client.post(uri, headers: {
           'Accept': 'application/json',
           'Authorization': 'Bearer ${pref.getString('token')}'
         }, body: {
           'id': id,
           'status': 'APPROVED',
+          'limit': limit,
         });
-      }
+      
 
       if (response.statusCode != 200) {
         var data = jsonDecode(response.body);

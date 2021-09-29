@@ -61,8 +61,9 @@ class VisitModel extends Equatable {
         latlongIn: json["latlong_in"],
         latlongOut: json["latlong_out"],
         checkInTime: DateTime.fromMillisecondsSinceEpoch(json["check_in_time"]),
-        checkOutTime:
-            DateTime.fromMillisecondsSinceEpoch(json["check_out_time"]),
+        checkOutTime: (json["check_out_time"] == null)
+            ? null
+            : DateTime.fromMillisecondsSinceEpoch(json["check_out_time"]),
         laporanVisit: json["laporan_visit"],
         durasiVisit: json["durasi_visit"],
         pictureVisitIn: json["picture_visit_in"],

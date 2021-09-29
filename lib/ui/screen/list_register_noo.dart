@@ -16,7 +16,7 @@ class ListNooPage extends StatelessWidget {
                 return CustomTabBar(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   paddingLeft: 0,
-                  titles: ['PENDING', 'CONFIRMED', 'APPROVED', 'REJECTED'],
+                  titles: ['PENDING', 'APPROVED', 'REJECTED'],
                   selectedIndex: controller.selectedIndex,
                   onTap: (index) {
                     controller.changeMenu(index);
@@ -39,14 +39,6 @@ class ListNooPage extends StatelessWidget {
                               .toList()),
                         )
                       : (controller.selectedIndex == 1)
-                          ? ListStatusNoo(
-                              status: "STATUS : CONFIRMED",
-                              noos: (controller.noos
-                                  .where((element) =>
-                                      element.status! == NooStatus.confirmed)
-                                  .toList()),
-                            )
-                          : (controller.selectedIndex == 2)
                               ? ListStatusNoo(
                                   status: "STATUS : APPROVED",
                                   noos: (controller.noos

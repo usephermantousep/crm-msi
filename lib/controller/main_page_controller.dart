@@ -19,9 +19,9 @@ class MainPageController extends GetxController {
   @override
   void onInit() async {
     pageController = PageController(initialPage: selectedPage);
-    update();
     SharedPreferences pref = await SharedPreferences.getInstance();
     role = pref.getString('role');
+    print(role);
     update(['mode']);
     super.onInit();
   }

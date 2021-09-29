@@ -38,13 +38,10 @@ class ProfileController extends GetxController {
   }
 
   Future<bool> logout() async {
-    SharedPreferences pref = await SharedPreferences.getInstance();
     ApiReturnValue<bool> result = await UserServices.logout();
 
     if (result.value != null) {
       if (result.value!) {
-        pref.remove('role');
-        pref.remove('token');
         return true;
       } else {
         return false;

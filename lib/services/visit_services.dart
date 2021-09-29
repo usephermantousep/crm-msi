@@ -54,7 +54,6 @@ class VisitServices {
       Uri uri = Uri.parse(url);
       SharedPreferences pref = await SharedPreferences.getInstance();
 
-
       var response = await client.get(uri, headers: {
         'Content-Type': "application/json",
         'Authorization': "Bearer ${pref.getString('token')}",

@@ -27,8 +27,6 @@ class ListStatusNoo extends GetView<ListNooController> {
                   MdiIcons.storefront,
                   color: (status == 'STATUS : PENDING')
                       ? Colors.grey
-                      : (status == 'STATUS : CONFIRMED')
-                          ? Colors.yellow[300]
                           : (status == 'STATUS : APPROVED')
                               ? Colors.green
                               : Colors.red,

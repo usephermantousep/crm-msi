@@ -90,8 +90,7 @@ class ButtonActionNooAR extends StatelessWidget {
                             ),
                             onPressed: () {
                               controller
-                                  .confirm(idNoo.toString(),
-                                      limit: controller.limit!.text)
+                                  .confirm(idNoo.toString(), controller.limit!.text)
                                   .then(
                                     (value) => value
                                         ? Get.offAll(() => MainPage())
@@ -139,7 +138,7 @@ class ButtonActionNooAR extends StatelessWidget {
             Get.bottomSheet(
               Container(
                 padding: EdgeInsets.all(defaultMargin),
-                height: 200,
+                height: 250,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
@@ -163,6 +162,7 @@ class ButtonActionNooAR extends StatelessWidget {
                               function: (String? value) {
                                 if (value != null) {
                                   controller.alasan = value;
+                                  controller.updateManual('alasan');
                                 }
                               },
                               width: 0.3,
@@ -174,8 +174,37 @@ class ButtonActionNooAR extends StatelessWidget {
                                 }
                               },
                             ),
-                          )
+                          ),
                         ],
+                      ),
+                      GetBuilder<DetailNooController>(
+                        id: 'alasan',
+                        builder: (_) => (controller.alasan == 'lainya') ? Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              LabelFormRegisterHalf(nama: 'Detail alasan :'),
+                              Container(
+                                width: 150,
+                                child: TextFormField(
+                                    onChanged: (String? string) {
+                                      if (string != null) {
+                                        controller.detailAlasan = string;
+                                      }
+                                    },
+                                    controller: controller.alasanText,
+                                    keyboardType: TextInputType.text,
+                                    decoration: InputDecoration(
+                                      hintText: "Jelaskan alasan",
+                                      hintStyle: blackFontStyle3.copyWith(
+                                        fontSize: 12,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  ),
+                              ),
+                            ],
+                          ) :SizedBox(),
+                        
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -187,7 +216,7 @@ class ButtonActionNooAR extends StatelessWidget {
                                 elevation: MaterialStateProperty.all(0)),
                             onPressed: () {
                               controller
-                                  .reject(idNoo.toString(), controller.alasan!)
+                                  .reject(idNoo.toString(), (controller.alasan == 'lainya') ? controller.alasanText!.text : controller.alasan!)
                                   .then((value) => value
                                       ? Get.offAll(() => MainPage())
                                       : print('error'));

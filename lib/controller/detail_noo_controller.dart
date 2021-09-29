@@ -5,16 +5,18 @@ class DetailNooController extends GetxController {
   Marker? lokasi;
   VideoPlayerController? videoController;
   CameraPosition? initialCamera;
-  late TextEditingController? limit;
-  String? alasan;
+  late TextEditingController? limit,alasanText;
+  String? alasan,detailAlasan;
   String? role;
   String nominal = '0';
   static const _locale = 'ID';
+
   List<String> listAlasan = [
     'Tidak ada KTP atau NPWP',
     'Konfirmasi tidak dengan owner',
     '1 owner 2 toko',
-    'Tidak ada kelgnkapan video atau toko'
+    'Tidak ada kelgnkapan video atau toko',
+    'lainya'
   ];
 
   String formatNumber(String s) => NumberFormat.simpleCurrency(
@@ -95,30 +97,32 @@ class DetailNooController extends GetxController {
     update();
   }
 
-  Future<bool> confirm(String id, {String? limit}) async {
+  Future<bool> confirm(String id, String limit) async {
     loading();
-    late ApiReturnValue<bool> result;
-    if (limit != null) {
-      result = await NooService.confirm(id, limit: limit);
-    } else {
-      result = await NooService.confirm(id);
-    }
-
-    if (result.value != null) {
-      if (result.value!) {
-        Get.back();
-        notif('Berhasil', result.message!);
-        return true;
+    if (limit != '' || !limit.isBlank!) {
+      ApiReturnValue<bool>  result = await NooService.confirm(id,limit);
+      if (result.value != null) {
+        if (result.value!) {
+          Get.back();
+          notif('Berhasil', result.message!);
+          return true;
+        } else {
+          Get.back();
+          notif('Gagal', result.message!);
+          return false;
+        }
       } else {
-        Get.back();
-        notif('Gagal', result.message!);
-        return false;
-      }
-    } else {
       Get.back();
       notif('Gagal', result.message!);
       return false;
+      }
+    } else {
+      Get.back();
+      notif("Salah", "Limit harus disi");
+      return false;
     }
+
+    
   }
 
   @override
@@ -127,6 +131,7 @@ class DetailNooController extends GetxController {
     role = pref.getString('role');
     if (role != 'SALES') {
       limit = TextEditingController();
+      alasanText = TextEditingController();
     }
     update(['buttonar']);
     super.onInit();

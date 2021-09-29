@@ -190,25 +190,6 @@ class DetailNoo extends StatelessWidget {
                 ],
               ),
             ),
-            GetBuilder<DetailNooController>(
-              id: 'buttonar',
-              builder: (_) => Column(
-                children: [
-                  (controller.role == 'DSM' && title == "STATUS : CONFIRMED")
-                      ? Divider()
-                      : SizedBox(),
-                  (controller.role == 'DSM' && title == "STATUS : CONFIRMED")
-                      ? Row(
-                          children: [LabelFormRegisterHalf(nama: "Action :")],
-                        )
-                      : SizedBox(),
-                  (controller.role == 'DSM' && title == "STATUS : CONFIRMED")
-                      ? ButtonActionNooDsm(
-                          controller: controller, idNoo: data.id!)
-                      : SizedBox(),
-                ],
-              ),
-            ),
             SizedBox(
               height: defaultMargin,
             ),

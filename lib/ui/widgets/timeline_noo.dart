@@ -56,41 +56,6 @@ class TimelineNoo extends StatelessWidget {
                 thickness: 2,
               ),
               indicatorStyle: IndicatorStyle(
-                  height: 50, width: 20, color: Colors.yellow[300]!),
-              endChild: Container(
-                padding: EdgeInsets.only(left: 10, top: 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      (data.confirmedBy == null)
-                          ? 'Confirmed by : -'
-                          : "Confirmed by :  ${data.confirmedBy}",
-                      style: blackFontStyle2,
-                    ),
-                    Row(
-                      children: [
-                        Text((data.confirmedAt == null)
-                            ? '-'
-                            : '${DateFormat('d MMM yyyy HH:mm').format(data.confirmedAt!)}'),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          SizedBox(
-            width: double.infinity,
-            height: 70,
-            child: TimelineTile(
-              afterLineStyle: LineStyle(
-                thickness: 2,
-              ),
-              beforeLineStyle: LineStyle(
-                thickness: 2,
-              ),
-              indicatorStyle: IndicatorStyle(
                   height: 50, width: 20, color: Colors.green[300]!),
               endChild: Container(
                 padding: EdgeInsets.only(left: 10, top: 20),

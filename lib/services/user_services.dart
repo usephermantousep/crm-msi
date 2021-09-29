@@ -8,6 +8,8 @@ class UserServices {
         client = http.Client();
       }
 
+      print(userName);
+
       final status = await OneSignal.shared.getDeviceState();
       final String? osUserID = status?.userId;
 
@@ -123,8 +125,7 @@ class UserServices {
         return ApiReturnValue(value: false, message: message);
       }
 
-      pref.remove('token');
-      pref.remove('role');
+      await pref.clear();
       return ApiReturnValue(value: true);
     } catch (err) {
       return ApiReturnValue(value: false, message: err.toString());

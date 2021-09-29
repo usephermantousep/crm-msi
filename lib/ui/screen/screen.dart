@@ -1,6 +1,5 @@
 import 'package:crm_msi/controller/controllers.dart';
 import 'package:crm_msi/model/models.dart';
-import 'package:crm_msi/services/services.dart';
 import 'package:crm_msi/shared/share.dart';
 import 'package:crm_msi/ui/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
@@ -33,3 +32,4 @@ part 'detail_foto_map_noo.dart';
 part 'single_poto_noo.dart';
 part 'video_player.dart';
 part 'loading_full_screen.dart';
+part 'detail_foto.dart';

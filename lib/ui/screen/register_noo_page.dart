@@ -75,6 +75,7 @@ class RegisterNoo extends StatelessWidget {
                         nama: 'Cluster*',
                       ),
                       GetBuilder<RegisterNooController>(
+                        id: 'cluster',
                         builder: (_) {
                           return DropDownHalf(
                               validator: controller.validater,

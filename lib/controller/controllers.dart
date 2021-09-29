@@ -11,12 +11,14 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supercharged/supercharged.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:trust_location/trust_location.dart';
 import 'package:video_player/video_player.dart';
 import 'package:location_permissions/location_permissions.dart';
+import 'package:video_compress/video_compress.dart';
 
 part 'app_controller.dart';
 part 'home_page_controller.dart';

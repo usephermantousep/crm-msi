@@ -65,7 +65,10 @@ class ProfilePage extends StatelessWidget {
                   GetBuilder<ProfileController>(
                     id: 'tab',
                     builder: (cons) => CustomTabBar(
-                      titles: ["Outlet", "Noo"],
+                      titles: [
+                        (controller.user == 'SALES') ? "Outlet" : "Menu",
+                        "Noo"
+                      ],
                       selectedIndex: cons.selectedIndex,
                       onTap: (int index) {
                         cons.changePage(index);
@@ -82,47 +85,56 @@ class ProfilePage extends StatelessWidget {
                             id: 'outlet',
                             builder: (_) => Column(
                               children: [
-                                MenuAccount(
-                                  title: "Outlet Total",
-                                  count: con.outlets!.length.toString(),
-                                  onpress: () {},
-                                  mdiIcons: MdiIcons.storefront,
-                                ),
-                                MenuAccount(
-                                    title: "Visited Today",
-                                    onpress: () {},
-                                    mdiIcons: MdiIcons.naturePeople,
-                                    count: controller.visit!.length.toString()),
+                                (controller.user!.roles == 'SALES')
+                                    ? MenuAccount(
+                                        title: "Outlet Total",
+                                        count: con.outlets!.length.toString(),
+                                        onpress: () {},
+                                        mdiIcons: MdiIcons.storefront,
+                                      )
+                                    : Container(),
+                                (controller.user!.roles == 'SALES')
+                                    ? MenuAccount(
+                                        title: "Visited Today",
+                                        onpress: () {},
+                                        mdiIcons: MdiIcons.naturePeople,
+                                        count:
+                                            controller.visit!.length.toString(),
+                                      )
+                                    : SizedBox(),
                                 Divider(),
                                 Container(
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      con.logout().then((value) => value
-                                          ? Get.offAll(() => LoginPage())
-                                          : con.showError(
-                                              'gagal', 'logout gagal'));
+                                  child: MenuAccount(
+                                    title: "Log Out",
+                                    mdiIcons: MdiIcons.logout,
+                                    onpress: () {
+                                      con.logout().then(
+                                        (value) {
+                                          if (value) {
+                                            Get.delete<MainPageController>();
+                                            Get.delete<HomePageController>();
+                                            Get.delete<ProfileController>();
+                                            Get.delete<ListNooController>();
+                                            Get.delete<LoginController>();
+                                            Get.offAll(() => LoginPage());
+                                          } else {
+                                            con.showError(
+                                                'gagal', 'logout gagal');
+                                          }
+                                        },
+                                      );
                                     },
-                                    child: MenuAccount(
-                                      title: "Log Out",
-                                      mdiIcons: MdiIcons.logout,
-                                      onpress: () {
-                                        con.logout().then((value) => value
-                                            ? Get.offAll(() => LoginPage())
-                                            : con.showError(
-                                                'gagal', 'logout gagal'));
-                                      },
-                                    ),
                                   ),
-                                )
+                                ),
                               ],
                             ),
                           )
                         : GetBuilder<ListNooController>(
-                            builder: (connoo) => Column(
+                            builder: (_) => Column(
                               children: [
                                 MenuAccount(
                                   title: "Registered",
-                                  count: connoo.noos
+                                  count: _.noos
                                       .where((element) =>
                                           element.status! == NooStatus.pending)
                                       .toList()
@@ -136,20 +148,8 @@ class ProfilePage extends StatelessWidget {
                                   },
                                 ),
                                 MenuAccount(
-                                  title: "Confirmed",
-                                  count: connoo.noos
-                                      .where((element) =>
-                                          element.status! ==
-                                          NooStatus.confirmed)
-                                      .toList()
-                                      .length
-                                      .toString(),
-                                  mdiIcons: MdiIcons.fileCheck,
-                                  onpress: () {},
-                                ),
-                                MenuAccount(
                                   title: "Approved",
-                                  count: connoo.noos
+                                  count: _.noos
                                       .where((element) =>
                                           element.status! == NooStatus.approved)
                                       .toList()
@@ -160,7 +160,7 @@ class ProfilePage extends StatelessWidget {
                                 ),
                                 MenuAccount(
                                   title: "Rejected",
-                                  count: connoo.noos
+                                  count: _.noos
                                       .where((element) =>
                                           element.status! == NooStatus.rejected)
                                       .toList()

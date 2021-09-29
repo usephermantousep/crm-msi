@@ -62,7 +62,7 @@ class RegisterNooController extends GetxController {
 
   void onChangeCluster(String value) {
     selectedCluster = value;
-    update();
+    update(['cluster']);
   }
 
   void onChangeDigit(String val, String nama) {
@@ -308,12 +308,23 @@ class RegisterNooController extends GetxController {
 
   void getVideo(ImageSource source) async {
     Get.back();
+    notifLoading("Converting", "Sedang memproses video");
     ImagePicker picker = ImagePicker();
 
     XFile? pickedVideo = await picker.pickVideo(source: source);
 
     if (pickedVideo != null) {
-      video = File(pickedVideo.path);
+      File vid = File(pickedVideo.path);
+      await VideoCompress.setLogLevel(0);
+     MediaInfo? info = await VideoCompress.compressVideo(
+      vid.path,
+      quality: VideoQuality.LowQuality,
+      deleteOrigin: true,
+      includeAudio: true,
+    );
+
+    video = info!.file;
+    Get.back();
       videoPlayerController = VideoPlayerController.file(video!)
         ..initialize().then((_) {
           videoPlayerController!.play();
@@ -322,21 +333,16 @@ class RegisterNooController extends GetxController {
     }
   }
 
-  void play() {
-    videoPlayerController!.play();
-  }
+  void play() => videoPlayerController!.play();
 
-  void pause() {
-    videoPlayerController!.pause();
-  }
+  void pause() => videoPlayerController!.pause();
 
   void deleteVideo() {
     video = null;
     update(['video']);
   }
 
-  void notif(String judul, String msg) {
-    Get.snackbar('title', 'message',
+  void notif(String judul, String msg) => Get.snackbar('title', 'message',
         snackPosition: SnackPosition.TOP,
         margin: EdgeInsets.all(10),
         titleText:
@@ -344,12 +350,12 @@ class RegisterNooController extends GetxController {
         messageText:
             Text(msg, style: blackFontStyle2.copyWith(color: Colors.white)),
         backgroundColor: Colors.red[900]);
-  }
+  
 
-  void notifLoading(String title, String subtitle) {
-    Get.defaultDialog(
+  void notifLoading(String title, String subtitle) => Get.defaultDialog(
       title: title,
       middleText: subtitle,
+      barrierDismissible: false,
       actions: [
         Column(
           children: [
@@ -363,10 +369,8 @@ class RegisterNooController extends GetxController {
         ),
       ],
     );
-  }
-
-  void dialogSubmit() {
-    Get.defaultDialog(
+  
+  void dialogSubmit() => Get.defaultDialog(
         actions: [
           ElevatedButton(
             style: ButtonStyle(
@@ -390,8 +394,7 @@ class RegisterNooController extends GetxController {
         middleText: 'Data noo sudah di tambahkan',
         titleStyle: blackFontStyle3.copyWith(fontSize: 14),
         middleTextStyle: blackFontStyle2);
-  }
-
+  
   void submit() async {
     if (submitFormKey.currentState!.validate()) {
       if (video == null ||

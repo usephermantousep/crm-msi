@@ -28,19 +28,7 @@ class DetailFotoDanMap extends GetView<DetailNooController> {
                         padding: EdgeInsets.only(left: defaultMargin),
                         child: LabelFormRegisterHalf(nama: 'Foto Shop Sign'),
                       ),
-                      Container(
-                        height: 250,
-                        width: MediaQuery.of(context).size.width * 0.36,
-                        margin: EdgeInsets.symmetric(horizontal: defaultMargin),
-                        padding: EdgeInsets.symmetric(horizontal: 10),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            border: Border.all(color: Colors.black),
-                            image: DecorationImage(
-                                image:
-                                    NetworkImage(baseFile + data.potoShopSign!),
-                                fit: BoxFit.fill)),
-                      )
+                      BoxFotoDetailNoo(image: data.potoShopSign!),
                     ],
                   ),
                   Column(
@@ -50,19 +38,8 @@ class DetailFotoDanMap extends GetView<DetailNooController> {
                         padding: EdgeInsets.only(left: defaultMargin),
                         child: LabelFormRegisterHalf(nama: 'Foto Etalase'),
                       ),
-                      Container(
-                        height: 250,
-                        width: MediaQuery.of(context).size.width * 0.36,
-                        margin: EdgeInsets.symmetric(horizontal: defaultMargin),
-                        padding: EdgeInsets.symmetric(horizontal: 10),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            border: Border.all(color: Colors.black),
-                            image: DecorationImage(
-                                image:
-                                    NetworkImage(baseFile + data.potoEtalase!),
-                                fit: BoxFit.fill)),
-                      )
+                      BoxFotoDetailNoo(image: data.potoEtalase!),
+
                     ],
                   ),
                 ],
@@ -77,18 +54,8 @@ class DetailFotoDanMap extends GetView<DetailNooController> {
                         padding: EdgeInsets.only(left: defaultMargin),
                         child: LabelFormRegisterHalf(nama: 'Foto Depan'),
                       ),
-                      Container(
-                        height: 250,
-                        width: MediaQuery.of(context).size.width * 0.36,
-                        margin: EdgeInsets.symmetric(horizontal: defaultMargin),
-                        padding: EdgeInsets.symmetric(horizontal: 10),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            border: Border.all(color: Colors.black),
-                            image: DecorationImage(
-                                image: NetworkImage(baseFile + data.potoDepan!),
-                                fit: BoxFit.fill)),
-                      )
+                      BoxFotoDetailNoo(image: data.potoDepan!),
+
                     ],
                   ),
                   Column(
@@ -98,19 +65,8 @@ class DetailFotoDanMap extends GetView<DetailNooController> {
                         padding: EdgeInsets.only(left: defaultMargin),
                         child: LabelFormRegisterHalf(nama: 'Foto Belakang'),
                       ),
-                      Container(
-                        height: 250,
-                        width: MediaQuery.of(context).size.width * 0.36,
-                        margin: EdgeInsets.symmetric(horizontal: defaultMargin),
-                        padding: EdgeInsets.symmetric(horizontal: 10),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            border: Border.all(color: Colors.black),
-                            image: DecorationImage(
-                                image:
-                                    NetworkImage(baseFile + data.potoBelakang!),
-                                fit: BoxFit.fill)),
-                      )
+                      BoxFotoDetailNoo(image: data.potoBelakang!),
+
                     ],
                   ),
                 ],
@@ -125,18 +81,8 @@ class DetailFotoDanMap extends GetView<DetailNooController> {
                         padding: EdgeInsets.only(left: defaultMargin),
                         child: LabelFormRegisterHalf(nama: 'Foto Kanan'),
                       ),
-                      Container(
-                        height: 250,
-                        width: MediaQuery.of(context).size.width * 0.36,
-                        margin: EdgeInsets.symmetric(horizontal: defaultMargin),
-                        padding: EdgeInsets.symmetric(horizontal: 10),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            border: Border.all(color: Colors.black),
-                            image: DecorationImage(
-                                image: NetworkImage(baseFile + data.potoKanan!),
-                                fit: BoxFit.fill)),
-                      )
+                      BoxFotoDetailNoo(image: data.potoDepan!),
+
                     ],
                   ),
                   Column(
@@ -146,18 +92,8 @@ class DetailFotoDanMap extends GetView<DetailNooController> {
                         padding: EdgeInsets.only(left: defaultMargin),
                         child: LabelFormRegisterHalf(nama: 'Foto Kiri'),
                       ),
-                      Container(
-                        height: 250,
-                        width: MediaQuery.of(context).size.width * 0.36,
-                        margin: EdgeInsets.symmetric(horizontal: defaultMargin),
-                        padding: EdgeInsets.symmetric(horizontal: 10),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            border: Border.all(color: Colors.black),
-                            image: DecorationImage(
-                                image: NetworkImage(baseFile + data.potoKiri!),
-                                fit: BoxFit.fill)),
-                      )
+                      BoxFotoDetailNoo(image: data.potoKiri!),
+
                     ],
                   ),
                 ],
@@ -189,3 +125,4 @@ class DetailFotoDanMap extends GetView<DetailNooController> {
     );
   }
 }
+

@@ -38,4 +38,4 @@ part 'box_foto_regitstration_noo.dart';
 part 'timeline_noo.dart';
 part 'button_foto_video_noo.dart';
 part 'button_action_noo_ar.dart';
-part 'button_action_dsm.dart';
+part 'box_foto_detail_noo.dart';
