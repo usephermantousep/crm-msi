@@ -69,21 +69,22 @@ class PlanVisitServices {
     return ApiReturnValue(value: value);
   }
 
-  static Future<ApiReturnValue<bool>> addPlanVisit(String date, String outlet,
+  static Future<ApiReturnValue<bool>> addPlanVisit(
+      String date, String kodeOutlet,
       {http.Client? client}) async {
     try {
       if (client == null) {
         client = http.Client();
       }
+      print(kodeOutlet);
 
       String url = baseUrl + 'planvisit';
       Uri uri = Uri.parse(url);
-    SharedPreferences pref = await SharedPreferences.getInstance();
-
+      SharedPreferences pref = await SharedPreferences.getInstance();
 
       var response = await client.post(uri, body: {
         'tanggal_visit': date,
-        'nama_outlet': outlet
+        'kode_outlet': kodeOutlet
       }, headers: {
         'Application': "application/json",
         'Authorization': "Bearer ${pref.getString('token')}",
@@ -102,7 +103,7 @@ class PlanVisitServices {
   }
 
   static Future<ApiReturnValue<bool>> deletePlanVisit(
-      String namaOutlet, String tahun, String bulan,
+      String kodeOutlet, String tahun, String bulan,
       {http.Client? client}) async {
     if (client == null) {
       client = http.Client();
@@ -111,8 +112,7 @@ class PlanVisitServices {
     try {
       String url = baseUrl + 'planvisit';
       Uri uri = Uri.parse(url);
-    SharedPreferences pref = await SharedPreferences.getInstance();
-
+      SharedPreferences pref = await SharedPreferences.getInstance();
 
       var response = await client.delete(uri, headers: <String, String>{
         'Application': "application/json",
@@ -120,8 +120,10 @@ class PlanVisitServices {
       }, body: <String, String>{
         'bulan': bulan,
         'tahun': tahun,
-        'nama_outlet': namaOutlet,
+        'kode_outlet': kodeOutlet,
       });
+
+      print(response.statusCode);
 
       if (response.statusCode != 200) {
         var data = jsonDecode(response.body);

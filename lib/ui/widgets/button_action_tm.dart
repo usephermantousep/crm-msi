@@ -1,7 +1,7 @@
 part of 'widgets.dart';
 
-class ButtonActionNooAR extends StatelessWidget {
-  const ButtonActionNooAR({
+class ButtonActionTm extends StatelessWidget {
+  const ButtonActionTm({
     Key? key,
     required this.controller,
     required this.idNoo,
@@ -26,7 +26,7 @@ class ButtonActionNooAR extends StatelessWidget {
             Get.bottomSheet(
               Container(
                 padding: EdgeInsets.all(defaultMargin),
-                height: 300,
+                height: 150,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
@@ -38,71 +38,7 @@ class ButtonActionNooAR extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          LabelFormRegisterHalf(
-                            nama: 'Masukkan Limit :',
-                            width: 130,
-                          ),
-                          Container(
-                              width: 180,
-                              child: TextFormField(
-                                onChanged: (String? string) {
-                                  if (string != null) {
-                                    controller.nominal = string;
-                                  }
-                                  controller.updateManual('currency');
-                                },
-                                controller: controller.limit,
-                                keyboardType: TextInputType.number,
-                                decoration: InputDecoration(
-                                  hintText: "Limit yang diberikan",
-                                  hintStyle: blackFontStyle3.copyWith(
-                                    fontSize: 12,
-                                    color: Colors.grey,
-                                  ),
-                                ),
-                              ))
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          LabelFormRegisterHalf(
-                            nama: 'Masukkan Kode Outlet :',
-                            width: 130,
-                          ),
-                          Container(
-                              width: 180,
-                              child: TextFormField(
-                                controller: controller.kodeOutlet,
-                                decoration: InputDecoration(
-                                  hintText: "Masukkan kode outlet",
-                                  hintStyle: blackFontStyle3.copyWith(
-                                    fontSize: 12,
-                                    color: Colors.grey,
-                                  ),
-                                ),
-                              ))
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          GetBuilder<DetailNooController>(
-                              id: 'currency',
-                              builder: (_) {
-                                return Text(
-                                  (controller.nominal == '')
-                                      ? 'Rp0'
-                                      : (controller
-                                          .formatNumber(controller.nominal)),
-                                  style: blackFontStyle3.copyWith(
-                                      color: Colors.grey),
-                                );
-                              }),
-                        ],
-                      ),
+                      Text("Apakah anda setuju ?", style: blackFontStyle1),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
@@ -114,16 +50,13 @@ class ButtonActionNooAR extends StatelessWidget {
                             ),
                             onPressed: () async {
                               await controller
-                                  .confirm(
+                                  .approve(
                                     idNoo.toString(),
-                                    controller.limit!.text,
-                                    controller.kodeOutlet!.text,
                                   )
-                                  .then(
-                                    (value) => value
-                                        ? Get.offAll(() => MainPage())
-                                        : print('error'),
-                                  );
+                                  .then((value) => value
+                                      ? Get.offAll(() => MainPage())
+                                      : controller.notif(
+                                          "Gagal", "Gagal update status NOO"));
                             },
                             child: Text(
                               "OK",
@@ -179,7 +112,7 @@ class ButtonActionNooAR extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       LabelFormRegisterHalf(
-                        nama: 'Pilih Alasan :',
+                        nama: 'Masukkan alasan :',
                         width: 130,
                       ),
                       DropDownHalf(

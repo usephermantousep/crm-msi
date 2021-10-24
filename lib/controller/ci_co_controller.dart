@@ -1,6 +1,9 @@
 part of 'controllers.dart';
 
 class CiCoController extends GetxController {
+  final String? region;
+  final String? divisi;
+  CiCoController({this.region, this.divisi});
   String? selectedOutlet;
   int? outletId;
   double? latOutlet, longOutlet, radius;
@@ -9,6 +12,23 @@ class CiCoController extends GetxController {
   List<String> showList = [];
   var isplaned = false.obs;
   TextEditingController laporanVisit = TextEditingController();
+  String? transaksi;
+
+  List<String> yesNo = [
+    'YES',
+    'NO',
+  ];
+
+  String? validater(String? value) {
+    if (value == null) {
+      return 'wajib di isi';
+    }
+
+    if (value.isEmpty) {
+      return 'wajib di isi';
+    }
+    return null;
+  }
 
   //variable di halaman cico
   CameraPosition? initialCamera;
@@ -26,12 +46,22 @@ class CiCoController extends GetxController {
 
     if (result.value != null) {
       planVisit = result.value!;
-      List<String> namaOutlet =
-          planVisit.map((e) => e.outlet!.namaOutlet!).toList();
+      List<String> namaOutlet = planVisit
+          .map(
+            (e) =>
+                "${e.outlet!.namaOutlet} (${e.outlet!.distric}) ${e.outlet!.kodeOutlet}",
+          )
+          .toList();
       showList = namaOutlet;
       update(['dropdown']);
     }
     update();
+  }
+
+  void changeTrans(String value) {
+    transaksi = value;
+    print(transaksi);
+    update(['transaksi']);
   }
 
   Future<bool> getLatlong(String namaOutlet, bool checkin) async {
@@ -65,7 +95,7 @@ class CiCoController extends GetxController {
       double isInRadius =
           Geolocator.distanceBetween(latOutlet!, longOutlet!, lat, long);
 
-      if (checkin) {
+      if (checkin && radius != 0) {
         if (isInRadius > radius!) {
           notif("Salah", "Anda berada di luar radius outlet ini");
           return false;
@@ -93,10 +123,13 @@ class CiCoController extends GetxController {
   void extraCall() async {
     if (isplaned.value) {
       ApiReturnValue<List<OutletModel>> result =
-          await OutletServices.getOutlet();
+          await OutletServices.getOutlet(divisi: divisi, region: region);
       if (result.value != null) {
-        List<String> outletName =
-            result.value!.map((e) => e.namaOutlet!).toList();
+        List<String> outletName = result.value!
+            .map(
+              (e) => "${e.namaOutlet} (${e.distric}) ${e.kodeOutlet}",
+            )
+            .toList();
         Set setPlan = Set.from(showList);
         Set setOutlet = Set.from(outletName);
 
@@ -207,11 +240,22 @@ class CiCoController extends GetxController {
     return true;
   }
 
-  Future<bool> submit(bool checkin, String tipeVisit, String laporan) async {
+  Future<bool> submit(
+    bool checkin,
+    String tipeVisit, {
+    String? laporan,
+    String? transaksi,
+  }) async {
     if (!checkin && laporan == '') {
       notif("Salah", "Laporan kunjungan harus di lampirkan");
       return false;
     }
+
+    if (!checkin && transaksi == null) {
+      notif("Salah", "Harus pilih transaksi");
+      return false;
+    }
+
     Get.defaultDialog(
         contentPadding: EdgeInsets.all(defaultMargin),
         barrierDismissible: false,
@@ -226,15 +270,53 @@ class CiCoController extends GetxController {
     Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
 
-    ApiReturnValue<bool> result = await VisitServices.submit(selectedOutlet!,
-        '${position.latitude},${position.longitude}', foto!, checkin, tipeVisit,
-        laporan: laporan);
+    ApiReturnValue<bool> result = await VisitServices.submit(
+        selectedOutlet ?? '-',
+        '${position.latitude},${position.longitude}',
+        foto!,
+        checkin,
+        tipeVisit,
+        laporan: laporan,
+        transaksi: transaksi);
     if (result.value!) {
       return true;
     } else {
       notif("Salah", result.message!);
       return false;
     }
+  }
+
+  Future<bool> checkFoto(String outlet) async {
+    ApiReturnValue<OutletModel> result =
+        await OutletServices.getSingleOutlet(outlet);
+
+    if (result.value != null) {
+      if (result.value!.potoBelakang == null ||
+          result.value!.potoDepan == null ||
+          result.value!.potoShopSign == null ||
+          result.value!.potoKiri == null ||
+          result.value!.potoKanan == null ||
+          result.value!.potoEtalase == null) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  void notifUpdateFoto(String namaOutlet) {
+    Get.defaultDialog(
+      title: 'Info',
+      titleStyle: blackFontStyle1,
+      middleText:
+          'Outlet ini belum update foto\nSilahkan upload foto\ndan detail pemilik outlet\nkemudian lanjut Check In',
+      middleTextStyle: blackFontStyle3,
+      barrierDismissible: false,
+      onConfirm: () => Get.to(() => UpdateFotoOutlet(
+            namaOutlet: namaOutlet,
+          )),
+      textConfirm: 'OK',
+      confirmTextColor: Colors.white,
+    );
   }
 
   @override

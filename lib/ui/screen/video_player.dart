@@ -29,15 +29,14 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
+      body: Container(
+        height: double.infinity,
+        width: double.infinity,
+        alignment: Alignment.center,
         child: _controller!.value.isInitialized
-            ? Container(
-                height: Get.width,
-                width: Get.height,
-                child: AspectRatio(
-                  aspectRatio: _controller!.value.aspectRatio,
-                  child: VideoPlayer(_controller!),
-                ),
+            ? AspectRatio(
+                aspectRatio: _controller!.value.aspectRatio,
+                child: VideoPlayer(_controller!),
               )
             : Container(),
       ),

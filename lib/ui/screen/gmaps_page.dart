@@ -3,9 +3,11 @@ part of 'screen.dart';
 class GmapsScreen extends GetView<CiCoController> {
   final String? title;
   final String? tipeVisit;
+  final String? kodeCsa;
   const GmapsScreen({
     required this.title,
     required this.tipeVisit,
+    this.kodeCsa,
   });
 
   @override
@@ -18,8 +20,10 @@ class GmapsScreen extends GetView<CiCoController> {
         Get.back();
       },
       child: Container(
+        height: (title == 'Check In')
+            ? MediaQuery.of(context).size.height - 150
+            : MediaQuery.of(context).size.height - 70,
         color: Colors.white,
-        height: MediaQuery.of(context).size.height - 150,
         child: Column(
           children: [
             Padding(
@@ -106,6 +110,38 @@ class GmapsScreen extends GetView<CiCoController> {
                       hintText: "Laporan hasil kunjungan",
                       icon: Icons.note_rounded),
             ),
+            (title == 'Check Out')
+                ? Padding(
+                    padding: EdgeInsets.all(20.0),
+                    child: Container(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          LabelFormRegisterHalf(
+                            nama: "Outlet Transaksi ?",
+                            width: 150,
+                          ),
+                          GetBuilder<CiCoController>(
+                            id: 'transaksi',
+                            builder: (_) => Container(
+                              child: DropDownHalf(
+                                  dropdownValue: controller.transaksi,
+                                  opsi: controller.yesNo,
+                                  function: (String? value) {
+                                    if (value != null) {
+                                      controller.changeTrans(value);
+                                    }
+                                  },
+                                  width: 0.35,
+                                  validator: controller.validater),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                : SizedBox(),
             Row(
               children: [
                 Container(
@@ -121,7 +157,7 @@ class GmapsScreen extends GetView<CiCoController> {
               ],
             ),
             Container(
-              margin: EdgeInsets.only(top: 20),
+              margin: EdgeInsets.symmetric(vertical: 20),
               child: ElevatedButton(
                   style: ButtonStyle(
                       backgroundColor:
@@ -131,38 +167,66 @@ class GmapsScreen extends GetView<CiCoController> {
                     if (controller.foto == null) {
                       controller.notif("Salah", "Anda belum foto");
                     } else {
-                      controller
-                          .submit(
-                              (title == "Check In") ? true : false,
+                      (title == 'Check In')
+                          ? controller.submit(true, tipeVisit!).then((value) {
+                              if (value) {
+                                Get.defaultDialog(
+                                  title: 'Success',
+                                  titleStyle: blackFontStyle1,
+                                  middleText: '$title Berhasil',
+                                  middleTextStyle: blackFontStyle2,
+                                  confirm: ElevatedButton(
+                                    onPressed: () {
+                                      Get.offAll(() => MainPage());
+                                    },
+                                    child: Text(
+                                      "OK",
+                                      style: blackFontStyle1.copyWith(
+                                          color: Colors.white),
+                                    ),
+                                    style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all(
+                                        "FF3F0A".toColor(),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              }
+                            })
+                          : controller
+                              .submit(
+                              false,
                               tipeVisit!,
-                              (title == "Check In")
-                                  ? ''
-                                  : controller.laporanVisit.text)
-                          .then((value) {
-                        if (value) {
-                          Get.defaultDialog(
-                            title: 'Success',
-                            titleStyle: blackFontStyle1,
-                            middleText: '$title Berhasil',
-                            middleTextStyle: blackFontStyle2,
-                            confirm: ElevatedButton(
-                              onPressed: () {
-                                Get.offAll(() => MainPage());
-                              },
-                              child: Text(
-                                "OK",
-                                style: blackFontStyle1.copyWith(
-                                    color: Colors.white),
-                              ),
-                              style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.all(
-                                  "FF3F0A".toColor(),
-                                ),
-                              ),
-                            ),
-                          );
-                        }
-                      });
+                              laporan: controller.laporanVisit.text,
+                              transaksi: controller.transaksi,
+                            )
+                              .then((value) {
+                              if (value) {
+                                Get.defaultDialog(
+                                  title: 'Success',
+                                  titleStyle: blackFontStyle1,
+                                  middleText: '$title Berhasil',
+                                  middleTextStyle: blackFontStyle2,
+                                  confirm: ElevatedButton(
+                                    onPressed: () {
+                                      Get.offAll(() => MainPage());
+                                    },
+                                    child: Text(
+                                      "OK",
+                                      style: blackFontStyle1.copyWith(
+                                          color: Colors.white),
+                                    ),
+                                    style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all(
+                                        "FF3F0A".toColor(),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              }
+                            });
                     }
                   },
                   child: Text(

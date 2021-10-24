@@ -34,7 +34,7 @@ class OpsiDigitWidget extends StatelessWidget {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 20),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(
             margin: EdgeInsets.only(left: defaultMargin),
@@ -57,14 +57,12 @@ class OpsiDigitWidget extends StatelessWidget {
                         controller.onChangeDigit(val, text1);
                       }
                     },
-                    width: 0.15),
+                    width: 0.2),
               ],
             ),
           ),
           Container(
-            margin: EdgeInsets.only(right: defaultMargin),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   title2,
@@ -82,14 +80,13 @@ class OpsiDigitWidget extends StatelessWidget {
                         controller.onChangeDigit(val, text2);
                       }
                     },
-                    width: 0.15),
+                    width: 0.2),
               ],
             ),
           ),
           Container(
             margin: EdgeInsets.only(right: defaultMargin),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   title3,
@@ -107,7 +104,7 @@ class OpsiDigitWidget extends StatelessWidget {
                         controller.onChangeDigit(val, text3);
                       }
                     },
-                    width: 0.15),
+                    width: 0.2),
               ],
             ),
           )

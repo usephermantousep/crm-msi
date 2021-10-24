@@ -4,19 +4,34 @@ class LoginController extends GetxController {
   TextEditingController? userName;
   UserModel? user;
   TextEditingController? pass;
-  var islogin = false.obs;
-  var loadingLogin = false.obs;
-
-  var isLoading = false.obs;
+  bool islogin = false;
+  bool loadingLogin = true;
+  Rx<bool> loading = false.obs;
+  Rx<bool> obsecure = true.obs;
 
   @override
   void onInit() async {
     userName = TextEditingController();
     pass = TextEditingController();
-    await LocationPermissions().requestPermissions();
-    await Permission.camera;
-    await Permission.storage;
-    check();
+    PermissionStatus status = await Permission.location.request();
+    print(status);
+    // if (status != PermissionStatus.granted) {
+    //   openAppSettings();
+    // }
+    await Permission.camera.request().then((value) => print(value));
+    await Permission.storage.request().then((value) => print(value));
+    await check().then((value) async {
+      if (value) {
+        loadingLogin = false;
+        islogin = true;
+        update(['login']);
+      } else {
+        SharedPreferences pref = await SharedPreferences.getInstance();
+        await pref.clear();
+        loadingLogin = false;
+        update(['login']);
+      }
+    });
     super.onInit();
   }
 
@@ -59,26 +74,23 @@ class LoginController extends GetxController {
     }
   }
 
-  void check() async {
+  void open() {
+    obsecure.toggle();
+    update();
+  }
+
+  Future<bool> check() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString('token');
-    if(token == null) {
-      loadingLogin.toggle();
-    }else{
-    await UserServices.check(token).then((value) {
-        if (value.value != null){
-          if (value.value!){
-            loadingLogin.toggle();
-            islogin.toggle();
-          return ApiReturnValue(value: value.value);
-          }
-        }else{
-          return ApiReturnValue(value: value.value);
-
-        }
-    });
-     
+    if (token == null) {
+      return false;
+    } else {
+      ApiReturnValue<bool> login = await UserServices.check(token);
+      if (login.value!) {
+        return true;
+      } else {
+        return false;
+      }
     }
-   
-    }
+  }
 }

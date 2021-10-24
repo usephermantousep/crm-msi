@@ -30,11 +30,11 @@ class ProfilePage extends StatelessWidget {
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         image: DecorationImage(
-                            image: NetworkImage((controller
-                                        .user!.profilePhotoPath ==
-                                    null)
-                                ? 'https://msis.co.id/wp-content/uploads/2021/08/Logo-MSI-Media-Selular-Indonesia-1024x570.png'
-                                : controller.user!.profilePhotoPath!),
+                            image: AssetImage((controller.badanUsaha == 1)
+                                ? 'assets/msilogo.png'
+                                : (controller.badanUsaha == 2)
+                                    ? 'assets/toplogo.png'
+                                    : 'assets/msilogo.png'),
                             fit: BoxFit.fitWidth),
                       ),
                     ),
@@ -43,11 +43,15 @@ class ProfilePage extends StatelessWidget {
                     height: 10,
                   ),
                   Text(
-                    controller.user!.namaLengkap!,
+                    controller.badanUsaha == 1
+                        ? 'PT.MSI'
+                        : controller.badanUsaha == 1
+                            ? 'CV.TOP'
+                            : 'PT.MSI',
                     style: blackFontStyle1,
                   ),
                   Text(
-                    controller.user!.cluster!.namaCluster!,
+                    'Grosir App V1.0.0',
                     style: greyFontStyle,
                   )
                 ],
@@ -66,7 +70,9 @@ class ProfilePage extends StatelessWidget {
                     id: 'tab',
                     builder: (cons) => CustomTabBar(
                       titles: [
-                        (controller.user == 'SALES') ? "Outlet" : "Menu",
+                        (controller.role == 2 || controller.role == 3)
+                            ? "Outlet"
+                            : "Menu",
                         "Noo"
                       ],
                       selectedIndex: cons.selectedIndex,
@@ -85,7 +91,7 @@ class ProfilePage extends StatelessWidget {
                             id: 'outlet',
                             builder: (_) => Column(
                               children: [
-                                (controller.user!.roles == 'SALES')
+                                (controller.role == 2 || controller.role == 3)
                                     ? MenuAccount(
                                         title: "Outlet Total",
                                         count: con.outlets!.length.toString(),
@@ -93,7 +99,9 @@ class ProfilePage extends StatelessWidget {
                                         mdiIcons: MdiIcons.storefront,
                                       )
                                     : Container(),
-                                (controller.user!.roles == 'SALES')
+                                (controller.role == 1 ||
+                                        controller.role == 2 ||
+                                        controller.role == 3)
                                     ? MenuAccount(
                                         title: "Visited Today",
                                         onpress: () {},
@@ -115,7 +123,6 @@ class ProfilePage extends StatelessWidget {
                                             Get.delete<HomePageController>();
                                             Get.delete<ProfileController>();
                                             Get.delete<ListNooController>();
-                                            Get.delete<LoginController>();
                                             Get.offAll(() => LoginPage());
                                           } else {
                                             con.showError(
@@ -146,6 +153,18 @@ class ProfilePage extends StatelessWidget {
                                       () => MainPage(),
                                     );
                                   },
+                                ),
+                                MenuAccount(
+                                  title: "Confirmed",
+                                  count: _.noos
+                                      .where((element) =>
+                                          element.status! ==
+                                          NooStatus.confirmed)
+                                      .toList()
+                                      .length
+                                      .toString(),
+                                  mdiIcons: MdiIcons.checkAll,
+                                  onpress: () {},
                                 ),
                                 MenuAccount(
                                   title: "Approved",

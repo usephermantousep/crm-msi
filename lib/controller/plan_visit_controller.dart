@@ -1,6 +1,9 @@
 part of 'controllers.dart';
 
 class PlanVisitController extends GetxController {
+  final String? region;
+  final String? divisi;
+  PlanVisitController({this.region, this.divisi});
   String selectedMonth = '-';
   String? selectedOutlet;
   String? bulan;
@@ -49,8 +52,9 @@ class PlanVisitController extends GetxController {
 
   void addPlan(String date) async {
     if (selectedOutlet != null) {
+      String kodeOutlet = selectedOutlet!.split(' ').last;
       ApiReturnValue result =
-          await PlanVisitServices.addPlanVisit(date, selectedOutlet!);
+          await PlanVisitServices.addPlanVisit(date, kodeOutlet);
       if (result.value != null) {
         if (result.value) {
           notif(
@@ -84,10 +88,14 @@ class PlanVisitController extends GetxController {
   }
 
   void getOutlet() async {
-    ApiReturnValue<List<OutletModel>> result = await OutletServices.getOutlet();
+    print('proses');
+    ApiReturnValue<List<OutletModel>> result =
+        await OutletServices.getOutlet(divisi: divisi, region: region);
 
     if (result.value != null) {
-      allOutlet = result.value!.map((e) => e.namaOutlet!).toList();
+      allOutlet = result.value!
+          .map((e) => "${e.namaOutlet} (${e.distric}) ${e.kodeOutlet}")
+          .toList();
       update(['dropdown']);
     }
   }
@@ -98,7 +106,11 @@ class PlanVisitController extends GetxController {
 
     if (plan.value != null) {
       planVisit = plan.value!;
-      plans = plan.value!.map((e) => e.outlet!.namaOutlet!).toSet().toList();
+      plans = plan.value!
+          .map((e) =>
+              "${e.outlet!.namaOutlet} (${e.outlet!.distric}) ${e.outlet!.kodeOutlet}")
+          .toSet()
+          .toList();
       plans.sort();
       update(['list']);
     }
@@ -112,7 +124,8 @@ class PlanVisitController extends GetxController {
   String showDate(String outlet) {
     List<String> tanggal = [];
     for (var plan in planVisit) {
-      if (plan.outlet!.namaOutlet == outlet) {
+      if ("${plan.outlet!.namaOutlet} (${plan.outlet!.distric}) ${plan.outlet!.kodeOutlet}" ==
+          outlet) {
         tanggal.add(DateFormat('d').format(plan.tanggalVisit!));
       }
     }
@@ -148,8 +161,10 @@ class PlanVisitController extends GetxController {
   }
 
   void delete(String namaOutlet, String tahun, String bulan) async {
+    String kodeOutlet = namaOutlet.split(' ').last;
+    print(kodeOutlet);
     ApiReturnValue<bool> result =
-        await PlanVisitServices.deletePlanVisit(namaOutlet, tahun, bulan);
+        await PlanVisitServices.deletePlanVisit(kodeOutlet, tahun, bulan);
 
     if (result.value != null) {
       if (result.value!) {

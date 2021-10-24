@@ -27,6 +27,8 @@ class ListStatusNoo extends GetView<ListNooController> {
                   MdiIcons.storefront,
                   color: (status == 'STATUS : PENDING')
                       ? Colors.grey
+                      : (status == 'STATUS : CONFIRMED')
+                          ? Colors.yellow
                           : (status == 'STATUS : APPROVED')
                               ? Colors.green
                               : Colors.red,
@@ -36,11 +38,8 @@ class ListStatusNoo extends GetView<ListNooController> {
                   noos[i].namaOutlet!,
                   style: blackFontStyle3,
                 ),
-                subtitle: Text(noos[i].region! +
-                    " || " +
-                    noos[i].namaPemilikOutlet! +
-                    " || " +
-                    noos[i].nomerTlpOutlet!),
+                subtitle: Text(
+                    "${noos[i].region!.name!} || ${noos[i].namaPemilikOutlet!} || ${noos[i].nomerTlpOutlet!}"),
               ),
             );
           },

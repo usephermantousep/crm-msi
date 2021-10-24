@@ -2,77 +2,101 @@ part of 'models.dart';
 
 class OutletModel extends Equatable {
   final int? id;
-  final int? userId;
+  final String? kodeOutlet;
+  final BadanUsahaModel? badanUsaha;
   final String? namaOutlet;
   final String? alamatOutlet;
   final String? namaPemilikOutlet;
   final String? nomerTlpOutlet;
-  final String? region;
-  final Cluster? cluster;
+  final String? potoShopSign;
+  final String? potoEtalase;
+  final String? potoDepan;
+  final String? potoKiri;
+  final String? potoKanan;
+  final String? potoBelakang;
+  final String? potoKtp;
+  final String? distric;
+  final int? limit;
+  final RegionModel? region;
+  final ClusterModel? cluster;
+  final DivisiModel? divisi;
   final int? radius;
   final String? latlong;
   final String? statusOutlet;
-  final UserModel? user;
-
-  OutletModel({
-    this.id,
-    this.userId,
-    this.namaOutlet,
-    this.alamatOutlet,
-    this.namaPemilikOutlet,
-    this.nomerTlpOutlet,
-    this.region,
-    this.cluster,
-    this.radius,
-    this.latlong,
-    this.statusOutlet,
-    this.user,
-  });
 
   factory OutletModel.fromJson(Map<String, dynamic> json) => OutletModel(
         id: json["id"],
-        userId: json["user_id"],
+        kodeOutlet: json["kode_outlet"],
         namaOutlet: json["nama_outlet"],
         alamatOutlet: json["alamat_outlet"],
         namaPemilikOutlet: json["nama_pemilik_outlet"],
         nomerTlpOutlet: json["nomer_tlp_outlet"],
-        region: json["region"],
-        cluster: Cluster.fromjson(json["cluster"]),
+        distric: json['distric'],
+        badanUsaha: BadanUsahaModel.fromJson(json["badanusaha"]),
+        potoShopSign: json["poto_shop_sign"],
+        potoEtalase: json["poto_etalase"],
+        potoDepan: json["poto_depan"],
+        potoKiri: json["poto_kiri"],
+        potoKanan: json["poto_kanan"],
+        potoBelakang: json["poto_belakang"],
+        potoKtp: json["poto_ktp"],
+        limit: json["limit"],
         radius: json["radius"],
         latlong: json["latlong"],
         statusOutlet: json["status_outlet"],
-        user: UserModel.fromJson(
-          json["user"],
-        ),
+        cluster: ClusterModel.fromJson(json["cluster"]),
+        region: RegionModel.fromJson(json["region"]),
+        divisi: DivisiModel.fromJson(json["divisi"]),
       );
 
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "user_id": userId,
-        "nama_outlet": namaOutlet,
-        "alamat_outlet": alamatOutlet,
-        "nama_pemilik_outlet": namaPemilikOutlet,
-        "nomer_tlp_outlet": nomerTlpOutlet,
-        "region": region,
-        "cluster": cluster,
-        "radius": radius,
-        "latlong": latlong,
-        "status_outlet": statusOutlet,
-      };
+  OutletModel({
+    this.id,
+    this.kodeOutlet,
+    this.namaOutlet,
+    this.alamatOutlet,
+    this.namaPemilikOutlet,
+    this.nomerTlpOutlet,
+    this.distric,
+    this.badanUsaha,
+    this.potoShopSign,
+    this.potoEtalase,
+    this.potoDepan,
+    this.potoKiri,
+    this.potoKanan,
+    this.potoBelakang,
+    this.potoKtp,
+    this.limit,
+    this.radius,
+    this.latlong,
+    this.divisi,
+    this.statusOutlet,
+    this.cluster,
+    this.region,
+  });
 
   @override
   List<Object?> get props => [
         id,
-        userId,
+        kodeOutlet,
         namaOutlet,
         alamatOutlet,
         namaPemilikOutlet,
         nomerTlpOutlet,
-        region,
-        cluster,
-        latlong,
+        badanUsaha,
+        distric,
+        potoShopSign,
+        potoEtalase,
+        potoDepan,
+        potoKiri,
+        potoKanan,
+        potoBelakang,
+        potoKtp,
+        limit,
         radius,
+        latlong,
+        divisi,
         statusOutlet,
-        user
+        cluster,
+        region,
       ];
 }

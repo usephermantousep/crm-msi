@@ -9,19 +9,26 @@ class ListPlanVisit extends StatelessWidget {
     return Container(
       width: double.infinity,
       padding: EdgeInsets.only(bottom: 10),
-      height: MediaQuery.of(context).size.height - 435,
+      height: MediaQuery.of(context).size.height - 412,
       color: Colors.white,
-      child: ListView.separated(
-          itemBuilder: (_, index) => ListTile(
-                title: Text(
-                  data[index].outlet!.namaOutlet!,
-                  style: blackFontStyle3.copyWith(fontSize: 14),
-                ),
+      child: (data.length != 0)
+          ? ListView.separated(
+              itemBuilder: (_, index) => ListTile(
+                    title: Text(
+                      "${data[index].outlet!.namaOutlet} (${data[index].outlet!.kodeOutlet})",
+                      style: blackFontStyle3.copyWith(fontSize: 14),
+                    ),
+                  ),
+              separatorBuilder: (_, index) => Divider(
+                    thickness: 3,
+                  ),
+              itemCount: data.length)
+          : Center(
+              child: Text(
+                "Tidak ada plan visit hari ini",
+                style: blackFontStyle2,
               ),
-          separatorBuilder: (_, index) => Divider(
-                thickness: 3,
-              ),
-          itemCount: data.length),
+            ),
     );
   }
 }

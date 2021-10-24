@@ -1,7 +1,10 @@
 part of 'screen.dart';
 
 class CheckInOutScreen extends StatelessWidget {
-  final controller = Get.put(CiCoController());
+  final controller = (Get.arguments == null)
+      ? Get.put(CiCoController())
+      : Get.put(CiCoController(
+          divisi: Get.arguments['divisi'], region: Get.arguments['region']));
   @override
   Widget build(BuildContext context) {
     return GeneralPage(
@@ -17,7 +20,7 @@ class CheckInOutScreen extends StatelessWidget {
             Container(
               padding: EdgeInsets.symmetric(horizontal: defaultMargin),
               width: double.infinity,
-              height: 270,
+              height: 285,
               color: Colors.white,
               child: Column(
                 children: [
@@ -68,7 +71,7 @@ class CheckInOutScreen extends StatelessWidget {
                             id: 'dropdown',
                             builder: (_) => DropdownSearch<String>(
                               emptyBuilder: (context, message) => Center(
-                                child: Text("Tidak ada daftar Outlet"),
+                                child: Text("Tidak ada daftar outlet plan"),
                               ),
                               showSearchBox: true,
                               searchBoxStyle: blackFontStyle2,
@@ -79,6 +82,7 @@ class CheckInOutScreen extends StatelessWidget {
                                 child: Text(
                                   item,
                                   style: blackFontStyle2,
+                                  overflow: TextOverflow.ellipsis,
                                 ),
                               ),
                               items: controller.showList,
@@ -116,99 +120,54 @@ class CheckInOutScreen extends StatelessWidget {
                                           "Pilih outlet terlebih dahulu");
                                     }
                                   } else {
-                                    if (controller.foto != null) {
-                                      controller.foto = null;
-                                    }
-                                    if (controller.selectedOutlet != null) {
-                                      controller
-                                          .check(
-                                              controller.selectedOutlet!, true)
-                                          .then(
-                                        (value) {
-                                          if (value) {
-                                            controller
-                                                .getLatlong(
-                                                    controller.selectedOutlet!,
-                                                    true)
-                                                .then(
-                                              (value) {
-                                                if (value) {
-                                                  Get.to(
-                                                    () => GmapsScreen(
-                                                      title: "Check In",
-                                                      tipeVisit: (controller
-                                                              .isplaned.value)
-                                                          ? 'EXTRACALL'
-                                                          : 'PLANNED',
-                                                    ),
-                                                  );
-                                                }
-                                              },
-                                            );
-                                          }
-                                        },
-                                      );
-                                    }
+                                    await controller
+                                        .checkFoto(controller.selectedOutlet!)
+                                        .then((value) {
+                                      if (value) {
+                                        if (controller.foto != null) {
+                                          controller.foto = null;
+                                        }
+                                        if (controller.selectedOutlet != null) {
+                                          controller
+                                              .check(controller.selectedOutlet!,
+                                                  true)
+                                              .then(
+                                            (value) {
+                                              if (value) {
+                                                controller
+                                                    .getLatlong(
+                                                  controller.selectedOutlet!,
+                                                  true,
+                                                )
+                                                    .then(
+                                                  (value) {
+                                                    if (value) {
+                                                      Get.to(
+                                                        () => GmapsScreen(
+                                                          title: "Check In",
+                                                          tipeVisit: (controller
+                                                                  .isplaned
+                                                                  .value)
+                                                              ? 'EXTRACALL'
+                                                              : 'PLANNED',
+                                                        ),
+                                                      );
+                                                    }
+                                                  },
+                                                );
+                                              }
+                                            },
+                                          );
+                                        }
+                                      } else {
+                                        controller.notifUpdateFoto(
+                                            controller.selectedOutlet!);
+                                      }
+                                    });
                                   }
                                 },
                                 child: Text(
                                   "Check In",
-                                  style: blackFontStyle3.copyWith(
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.white,
-                                      letterSpacing: 1.5),
-                                ),
-                              ),
-                            ),
-                            Container(
-                              child: ElevatedButton(
-                                style: ButtonStyle(
-                                  backgroundColor: MaterialStateProperty.all(
-                                      Colors.red[400]),
-                                ),
-                                onPressed: () async {
-                                  if (controller.selectedOutlet == null) {
-                                    {
-                                      controller.notif('Salah',
-                                          "Pilih outlet terlebih dahulu");
-                                    }
-                                  } else {
-                                    if (controller.foto != null) {
-                                      controller.foto = null;
-                                    }
-
-                                    if (controller.selectedOutlet != null) {
-                                      controller
-                                          .check(
-                                              controller.selectedOutlet!, false)
-                                          .then(
-                                        (value) {
-                                          if (value) {
-                                            controller
-                                                .getLatlong(
-                                                    controller.selectedOutlet!,
-                                                    false)
-                                                .then(
-                                                  (value) => (value)
-                                                      ? Get.to(() =>
-                                                          GmapsScreen(
-                                                            title: "Check Out",
-                                                            tipeVisit: (controller
-                                                                    .isplaned
-                                                                    .value)
-                                                                ? 'EXTRACALL'
-                                                                : 'PLANNED',
-                                                          ))
-                                                      : print("object"),
-                                                );
-                                          }
-                                        },
-                                      );
-                                    }
-                                  }
-                                },
-                                child: Text(
-                                  "Check Out",
                                   style: blackFontStyle3.copyWith(
                                       fontWeight: FontWeight.w600,
                                       color: Colors.white,
@@ -234,8 +193,8 @@ class CheckInOutScreen extends StatelessWidget {
               width: double.infinity,
               color: Colors.white,
               child: Text(
-                "Log Visit",
-                style: blackFontStyle1,
+                "Log Visit Today",
+                style: blackFontStyle2,
               ),
             ),
             GetBuilder<CiCoController>(

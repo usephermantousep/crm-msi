@@ -16,7 +16,7 @@ class ListNooPage extends StatelessWidget {
                 return CustomTabBar(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   paddingLeft: 0,
-                  titles: ['PENDING', 'APPROVED', 'REJECTED'],
+                  titles: ['PENDING', 'CONFIRMED', 'APPROVED', 'REJECTED'],
                   selectedIndex: controller.selectedIndex,
                   onTap: (index) {
                     controller.changeMenu(index);
@@ -26,7 +26,7 @@ class ListNooPage extends StatelessWidget {
             ),
             RefreshIndicator(
               onRefresh: () {
-                return controller.getNoo(controller.role!);
+                return controller.getNoo();
               },
               child: GetBuilder<ListNooController>(
                   id: 'listnoo',
@@ -39,13 +39,20 @@ class ListNooPage extends StatelessWidget {
                               .toList()),
                         )
                       : (controller.selectedIndex == 1)
+                          ? ListStatusNoo(
+                              status: "STATUS : CONFIRMED",
+                              noos: (controller.noos
+                                  .where((element) =>
+                                      element.status! == NooStatus.confirmed)
+                                  .toList()),
+                            )
+                          : (controller.selectedIndex == 2)
                               ? ListStatusNoo(
                                   status: "STATUS : APPROVED",
                                   noos: (controller.noos
                                       .where((element) =>
                                           element.status! == NooStatus.approved)
-                                      .toList()),
-                                )
+                                      .toList()))
                               : ListStatusNoo(
                                   status: "STATUS : REJECTED",
                                   noos: (controller.noos

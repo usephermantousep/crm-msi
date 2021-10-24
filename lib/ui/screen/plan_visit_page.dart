@@ -1,12 +1,15 @@
 part of 'screen.dart';
 
 class PlanVisitScreen extends StatelessWidget {
-  final controller = Get.put(PlanVisitController());
+  final controller = (Get.arguments == null)
+      ? Get.put(PlanVisitController())
+      : Get.put(PlanVisitController(
+          divisi: Get.arguments['divisi'], region: Get.arguments['region']));
   @override
   Widget build(BuildContext context) {
     return GeneralPage(
       title: 'Plan Visit',
-      subtitle: 'Form',
+      subtitle: 'Create Plan',
       onBackButtonPressed: () {
         Get.back();
       },
@@ -45,6 +48,7 @@ class PlanVisitScreen extends StatelessWidget {
                   id: 'tanggal',
                   builder: (_) => LabelFormRegisterHalf(
                     nama: controller.selectedMonth,
+                    width: 150,
                   ),
                 )
               ],

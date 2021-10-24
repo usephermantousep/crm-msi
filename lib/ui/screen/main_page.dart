@@ -24,14 +24,20 @@ class MainPage extends StatelessWidget {
               children: [
                 GetBuilder<MainPageController>(
                   id: 'mode',
-                  builder: (_) => (controller.role == 'SALES')
-                      ? HomePage()
-                      : Center(
-                          child: Text(
-                            'Mode Non Sales',
-                            style: blackFontStyle1,
+                  builder: (_) => (controller.role == null)
+                      ? Container(
+                          child: Center(
+                            child: CircularProgressIndicator(),
                           ),
-                        ),
+                        )
+                      : (controller.role! <= 3)
+                          ? HomePage()
+                          : Center(
+                              child: Text(
+                                'Mode Non Area',
+                                style: blackFontStyle1,
+                              ),
+                            ),
                 ),
                 ListNooPage(),
                 ProfilePage(),

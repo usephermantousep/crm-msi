@@ -4,47 +4,35 @@ class RegisterNooController extends GetxController {
   TextEditingController? namaOutlet,
       alamatOutlet,
       daerahOutlet,
-      kotaOutlet,
       namaPemilikOutlet,
       ktpOutlet,
       nomorPemilikOutlet,
-      nomerWakilOutlet;
+      nomerWakilOutlet,
+      distric;
 
-  String? selectedCluster;
+  String? oppo,
+      vivo,
+      realme,
+      samsung,
+      xiaomi,
+      fl,
+      selectedClus,
+      selectedBu,
+      selectedReg,
+      selectedDiv;
 
-  String? oppo, vivo, realme, samsung, xiaomi, fl;
-
+  int? role;
   CameraPosition? initialCamera;
   double? lat, long;
   Marker? lokasi;
-  File? shopSign, etalase, depan, belakang, kanan, kiri, video;
+  File? shopSign, etalase, depan, belakang, kanan, kiri, video, ktp;
   VideoPlayerController? videoPlayerController;
+  List<BadanUsahaModel>? badanUsaha;
+  List<DivisiModel>? div;
+  List<RegionModel>? reg;
+  List<ClusterModel>? clus;
 
   final submitFormKey = GlobalKey<FormState>();
-
-  List<String> opsiCluster = [
-    'CW1',
-    'CW2',
-    'CW3',
-    'CW4',
-    'CW5',
-    'CW6',
-    'CW7',
-    'CW8',
-    'CW9',
-    'CW10',
-    'CJ1',
-    'CJ2',
-    'CJ3',
-    'CJ4',
-    'CJ5',
-    'CJ6',
-    'CJ7',
-    'CJ8',
-    'CJ9',
-    'CJ10',
-    'JABO',
-  ];
 
   List<String> opsiAngka = [
     '0',
@@ -61,8 +49,16 @@ class RegisterNooController extends GetxController {
   ];
 
   void onChangeCluster(String value) {
-    selectedCluster = value;
-    update(['cluster']);
+    selectedClus = value;
+    print(selectedClus);
+    update(['position']);
+  }
+
+  Future<int> getRole() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    role = pref.getInt('role');
+    update(['position']);
+    return role!;
   }
 
   void onChangeDigit(String val, String nama) {
@@ -138,6 +134,11 @@ class RegisterNooController extends GetxController {
           etalase = convert;
           update(['fotoetalase']);
           break;
+        case 'fotoktp':
+          File convert = await convertImage(namaFile, pickedFile);
+          ktp = convert;
+          update(['fotoktp']);
+          break;
         default:
           File convert = await convertImage(namaFile, pickedFile);
           shopSign = convert;
@@ -210,36 +211,6 @@ class RegisterNooController extends GetxController {
     );
   }
 
-  void opsiMediaVideo() {
-    Get.defaultDialog(
-        actions: [
-          ElevatedButton(
-            style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all("FF3F0A".toColor()),
-                elevation: MaterialStateProperty.all(0)),
-            onPressed: () {
-              getVideo(ImageSource.camera);
-            },
-            child: Text("Kamera",
-                style: blackFontStyle3.copyWith(color: Colors.white)),
-          ),
-          ElevatedButton(
-            style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all("FF3F0A".toColor()),
-                elevation: MaterialStateProperty.all(0)),
-            onPressed: () {
-              getVideo(ImageSource.gallery);
-            },
-            child: Text("Galeri",
-                style: blackFontStyle3.copyWith(color: Colors.white)),
-          )
-        ],
-        title: 'Upload Video',
-        middleText: 'Pilih Media :',
-        titleStyle: blackFontStyle3.copyWith(fontSize: 14),
-        middleTextStyle: blackFontStyle2);
-  }
-
   void deleteFoto(String namaFile) {
     switch (namaFile) {
       case 'fotodepan':
@@ -306,25 +277,32 @@ class RegisterNooController extends GetxController {
     return null;
   }
 
-  void getVideo(ImageSource source) async {
-    Get.back();
-    notifLoading("Converting", "Sedang memproses video");
+  void getVideo(BuildContext context) async {
     ImagePicker picker = ImagePicker();
 
-    XFile? pickedVideo = await picker.pickVideo(source: source);
-
+    XFile? pickedVideo = await picker.pickVideo(
+      source: ImageSource.camera,
+      maxDuration: Duration(
+        minutes: 1,
+      ),
+    );
     if (pickedVideo != null) {
-      File vid = File(pickedVideo.path);
-      await VideoCompress.setLogLevel(0);
-     MediaInfo? info = await VideoCompress.compressVideo(
-      vid.path,
-      quality: VideoQuality.LowQuality,
-      deleteOrigin: true,
-      includeAudio: true,
+      compressvideo(context, pickedVideo);
+    }
+  }
+
+  Future compressvideo(BuildContext context, XFile pickedVideo) async {
+    showDialog(
+        context: context,
+        builder: (context) => Dialog(child: ProgressDialogWidget()),
+        barrierDismissible: false);
+    final info = await VideoCompressApi.compressVideo(
+      File(pickedVideo.path),
     );
 
-    video = info!.file;
-    Get.back();
+    if (info != null) {
+      video = info.file;
+      Get.back();
       videoPlayerController = VideoPlayerController.file(video!)
         ..initialize().then((_) {
           videoPlayerController!.play();
@@ -339,62 +317,128 @@ class RegisterNooController extends GetxController {
 
   void deleteVideo() {
     video = null;
-    update(['video']);
+    update(['video', 'butvid']);
   }
 
   void notif(String judul, String msg) => Get.snackbar('title', 'message',
-        snackPosition: SnackPosition.TOP,
-        margin: EdgeInsets.all(10),
-        titleText:
-            Text(judul, style: blackFontStyle1.copyWith(color: Colors.white)),
-        messageText:
-            Text(msg, style: blackFontStyle2.copyWith(color: Colors.white)),
-        backgroundColor: Colors.red[900]);
-  
+      snackPosition: SnackPosition.TOP,
+      margin: EdgeInsets.all(10),
+      titleText:
+          Text(judul, style: blackFontStyle1.copyWith(color: Colors.white)),
+      messageText:
+          Text(msg, style: blackFontStyle2.copyWith(color: Colors.white)),
+      backgroundColor: Colors.red[900]);
 
   void notifLoading(String title, String subtitle) => Get.defaultDialog(
-      title: title,
-      middleText: subtitle,
-      barrierDismissible: false,
-      actions: [
-        Column(
-          children: [
-            Center(
-              child: CircularProgressIndicator(),
-            ),
-            SizedBox(
-              height: 50,
-            ),
-          ],
-        ),
-      ],
-    );
-  
-  void dialogSubmit() => Get.defaultDialog(
+        title: title,
+        middleText: subtitle,
+        barrierDismissible: false,
         actions: [
-          ElevatedButton(
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(
-                "FF3F0A".toColor(),
+          Column(
+            children: [
+              Center(
+                child: CircularProgressIndicator(),
               ),
-              elevation: MaterialStateProperty.all(0),
-            ),
-            onPressed: () {
-              Get.offAll(() => MainPage());
-            },
-            child: Text(
-              "OK",
-              style: blackFontStyle3.copyWith(
-                color: Colors.white,
+              SizedBox(
+                height: 50,
               ),
-            ),
+            ],
           ),
         ],
-        title: 'Berhasil',
-        middleText: 'Data noo sudah di tambahkan',
-        titleStyle: blackFontStyle3.copyWith(fontSize: 14),
-        middleTextStyle: blackFontStyle2);
-  
+      );
+
+  void dialogSubmit() => Get.defaultDialog(
+          actions: [
+            ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(
+                  "FF3F0A".toColor(),
+                ),
+                elevation: MaterialStateProperty.all(0),
+              ),
+              onPressed: () {
+                Get.offAll(() => MainPage());
+              },
+              child: Text(
+                "OK",
+                style: blackFontStyle3.copyWith(
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ],
+          title: 'Berhasil',
+          middleText: 'Data noo sudah di tambahkan',
+          titleStyle: blackFontStyle3.copyWith(fontSize: 14),
+          middleTextStyle: blackFontStyle2);
+
+  Future<List<BadanUsahaModel>> getBu() async {
+    ApiReturnValue<List<BadanUsahaModel>> result = await NooService.getBu();
+
+    return result.value!;
+  }
+
+  void onChangeTmBu(String val) async {
+    selectedBu = null;
+    selectedDiv = null;
+    selectedReg = null;
+    selectedClus = null;
+    div = [];
+    reg = [];
+    clus = [];
+    selectedBu = val;
+    await getDiv(val).then((value) => div = value);
+    update(['position']);
+  }
+
+  void onChangeTmDiv(String val) async {
+    selectedDiv = null;
+    selectedReg = null;
+    selectedClus = null;
+    reg = [];
+    clus = [];
+    selectedDiv = val;
+    await getReg(selectedBu!, val).then((value) => reg = value);
+    update(['position']);
+  }
+
+  void onChangeTmReg(String val) async {
+    selectedReg = null;
+    selectedClus = null;
+    clus = [];
+    selectedReg = val;
+    await getCluster(bu: selectedBu, div: selectedDiv, reg: selectedReg)
+        .then((value) => clus = value);
+    update(['position']);
+  }
+
+  void onChangeTmClus(String val) async {
+    selectedClus = null;
+    selectedClus = val;
+    print("${selectedBu} - ${selectedDiv} - ${selectedReg} - ${selectedClus}");
+    update(['position']);
+  }
+
+  Future<List<DivisiModel>> getDiv(String bu) async {
+    ApiReturnValue<List<DivisiModel>> result = await NooService.getDiv(bu);
+
+    return result.value!;
+  }
+
+  Future<List<RegionModel>> getReg(String bu, String div) async {
+    ApiReturnValue<List<RegionModel>> result = await NooService.getReg(bu, div);
+
+    return result.value!;
+  }
+
+  Future<List<ClusterModel>> getCluster(
+      {String? bu, String? div, String? reg, int? role}) async {
+    ApiReturnValue<List<ClusterModel>> result =
+        await NooService.getClus(bu: bu, div: div, reg: reg, role: role);
+
+    return result.value!;
+  }
+
   void submit() async {
     if (submitFormKey.currentState!.validate()) {
       if (video == null ||
@@ -403,8 +447,10 @@ class RegisterNooController extends GetxController {
           depan == null ||
           kanan == null ||
           kiri == null ||
-          belakang == null) {
-        notif("Salah", 'Data belum lengkap silahkan cek kembali');
+          belakang == null ||
+          ktp == null) {
+        notif("Salah",
+            'Data belum lengkap silahkan cek kembali dan lengkapi data');
       } else {
         List<File> images = [];
         images.add(shopSign!);
@@ -413,6 +459,7 @@ class RegisterNooController extends GetxController {
         images.add(kanan!);
         images.add(kiri!);
         images.add(belakang!);
+        images.add(ktp!);
         notifLoading('Tunggu', 'Sedang mengirim data');
         Position position = await Geolocator.getCurrentPosition(
             desiredAccuracy: LocationAccuracy.high);
@@ -421,21 +468,24 @@ class RegisterNooController extends GetxController {
         ApiReturnValue<bool> result = await NooService.submit(
           images,
           video!,
-          namaOutlet: namaOutlet!.text,
-          alamat: alamatOutlet!.text,
-          namaPemilik: namaPemilikOutlet!.text,
-          ktpnpwp: ktpOutlet!.text,
-          nomerPemilik: nomorPemilikOutlet!.text,
-          nomerPerwakilan: nomerWakilOutlet!.text,
-          cluster: selectedCluster,
-          kota: kotaOutlet!.text,
-          oppo: oppo,
-          vivo: vivo,
-          samsung: samsung,
-          realme: realme,
-          xiaomi: xiaomi,
-          fl: fl,
-          latlong: latlong,
+          namaOutlet!.text,
+          namaPemilikOutlet!.text,
+          ktpOutlet!.text,
+          alamatOutlet!.text,
+          nomorPemilikOutlet!.text,
+          nomerWakilOutlet!.text,
+          distric!.text,
+          oppo!,
+          vivo!,
+          samsung!,
+          realme!,
+          xiaomi!,
+          fl!,
+          latlong,
+          bu: selectedBu,
+          div: selectedDiv,
+          reg: selectedReg,
+          clus: selectedClus,
         );
         if (result.value != null) {
           Get.back();
@@ -447,21 +497,28 @@ class RegisterNooController extends GetxController {
         }
       }
     } else {
-      notif("Salah", 'Data belum lengkap silahkan cek kembali');
+      notif(
+          "Salah", 'Data belum lengkap silahkan cek kembali dan lengkapi data');
     }
   }
 
   @override
-  void onInit() {
+  void onInit() async {
     namaOutlet = TextEditingController();
     alamatOutlet = TextEditingController();
     daerahOutlet = TextEditingController();
-    kotaOutlet = TextEditingController();
     namaPemilikOutlet = TextEditingController();
     ktpOutlet = TextEditingController();
     nomorPemilikOutlet = TextEditingController();
     nomerWakilOutlet = TextEditingController();
+    distric = TextEditingController();
     getCurrentPosition();
+    await getRole().then((value) async => (value == 1)
+        ? await getBu().then((value) => badanUsaha = value)
+        : (value == 2)
+            ? await getCluster(role: value).then((value) => clus = value)
+            : print("skip"));
+    update(['position']);
     super.onInit();
   }
 
@@ -470,10 +527,10 @@ class RegisterNooController extends GetxController {
     namaOutlet!.dispose();
     alamatOutlet!.dispose();
     daerahOutlet!.dispose();
-    kotaOutlet!.dispose();
     namaPemilikOutlet!.dispose();
     ktpOutlet!.dispose();
     nomorPemilikOutlet!.dispose();
+    distric!.dispose();
     super.onClose();
   }
 }

@@ -55,54 +55,215 @@ class RegisterNoo extends StatelessWidget {
                 validator: controller.validater,
               ),
               LabelFormRegister(
-                nama: 'Nomor Perwakilan Outlet / FL*',
+                nama: 'Nomor Wakil Outlet',
               ),
               FormRegisterNoo(
-                nama: "Isi Nomor Perwakilan Outlet / FL",
+                nama: "Isi Nomor Wakil Outlet",
                 controller: controller.nomerWakilOutlet!,
+                validator: (String? value) => null,
+              ),
+              LabelFormRegister(
+                nama: 'Kota/Distric*',
+              ),
+              FormRegisterNoo(
+                nama: "Isi Nama Kota/Distric",
+                controller: controller.distric!,
                 validator: controller.validater,
               ),
               SizedBox(
-                height: 10,
+                height: defaultMargin,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      LabelFormRegisterHalf(
-                        nama: 'Cluster*',
-                      ),
-                      GetBuilder<RegisterNooController>(
-                        id: 'cluster',
-                        builder: (_) {
-                          return DropDownHalf(
-                              validator: controller.validater,
-                              dropdownValue: controller.selectedCluster,
-                              opsi: controller.opsiCluster,
-                              function: (String? val) {
-                                if (val != null) {
-                                  controller.onChangeCluster(val);
-                                }
-                              },
-                              width: 0.36);
-                        },
+              GetBuilder<RegisterNooController>(
+                id: 'position',
+                builder: (_) => (controller.role == 1)
+                    ? Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: defaultMargin),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Divider(),
+                            SizedBox(
+                              height: defaultMargin,
+                            ),
+                            Text("Outlet Mapping", style: blackFontStyle2),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      LabelFormRegisterHalf(
+                                        nama: 'Badan Usaha',
+                                        width: 100,
+                                      ),
+                                      DropDownHalf(
+                                          dropdownValue: controller.selectedBu,
+                                          opsi: (controller.badanUsaha == null)
+                                              ? []
+                                              : controller.badanUsaha!
+                                                  .map((e) => e.name!)
+                                                  .toList(),
+                                          width: 0.4,
+                                          validator: controller.validater,
+                                          function: (String? val) {
+                                            if (val != null) {
+                                              controller.onChangeTmBu(val);
+                                            }
+                                          })
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      LabelFormRegisterHalf(
+                                        nama: 'Divisi',
+                                        width: 100,
+                                      ),
+                                      DropDownHalf(
+                                          dropdownValue: controller.selectedDiv,
+                                          opsi: (controller.div == null)
+                                              ? []
+                                              : controller.div!
+                                                  .map((e) => e.name!)
+                                                  .toList(),
+                                          width: 0.4,
+                                          validator: controller.validater,
+                                          function: (String? val) {
+                                            if (val != null) {
+                                              controller.onChangeTmDiv(val);
+                                            }
+                                          })
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      LabelFormRegisterHalf(
+                                        nama: 'Region',
+                                        width: 100,
+                                      ),
+                                      DropDownHalf(
+                                          dropdownValue: controller.selectedReg,
+                                          opsi: (controller.reg == null)
+                                              ? []
+                                              : controller.reg!
+                                                  .map((e) => e.name!)
+                                                  .toList(),
+                                          width: 0.4,
+                                          validator: controller.validater,
+                                          function: (String? val) {
+                                            if (val != null) {
+                                              controller.onChangeTmReg(val);
+                                            }
+                                          })
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      LabelFormRegisterHalf(
+                                        nama: 'Cluster',
+                                        width: 100,
+                                      ),
+                                      DropDownHalf(
+                                          dropdownValue:
+                                              controller.selectedClus,
+                                          opsi: (controller.clus == null)
+                                              ? []
+                                              : controller.clus!
+                                                  .map((e) => e.name!)
+                                                  .toList(),
+                                          width: 0.4,
+                                          validator: controller.validater,
+                                          function: (String? val) {
+                                            if (val != null) {
+                                              controller.onChangeTmClus(val);
+                                            }
+                                          })
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       )
-                    ],
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      LabelFormRegisterHalf(nama: "Kota*"),
-                      FormRegisterHalf(
-                          validator: controller.validater,
-                          controller: controller.kotaOutlet!,
-                          nama: "Isi Kota"),
-                    ],
-                  ),
-                ],
+                    : (controller.role == 2)
+                        ? Column(
+                            children: [
+                              Divider(),
+                              SizedBox(
+                                height: defaultMargin,
+                              ),
+                              Container(
+                                padding: EdgeInsets.only(left: defaultMargin),
+                                child: Row(
+                                  children: [
+                                    Text("Outlet Cluster",
+                                        style: blackFontStyle2),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: defaultMargin),
+                                child: Row(
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        LabelFormRegisterHalf(
+                                          nama: "Cluster*",
+                                          width: 150,
+                                        ),
+                                        DropDownHalf(
+                                            validator: controller.validater,
+                                            dropdownValue:
+                                                controller.selectedClus,
+                                            opsi: controller.clus!
+                                                .map((e) => e.name!)
+                                                .toList(),
+                                            function: (String? val) {
+                                              if (val != null) {
+                                                controller.onChangeCluster(val);
+                                              }
+                                            },
+                                            width: 0.36)
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          )
+                        : SizedBox(),
               ),
+              SizedBox(
+                height: defaultMargin,
+              ),
+              Divider(),
               SizedBox(
                 height: defaultMargin,
               ),
@@ -150,6 +311,13 @@ class RegisterNoo extends StatelessWidget {
                   );
                 },
               ),
+              SizedBox(
+                height: defaultMargin,
+              ),
+              Divider(),
+              SizedBox(
+                height: defaultMargin,
+              ),
               Container(
                 padding:
                     EdgeInsets.fromLTRB(defaultMargin, 10, 0, defaultMargin),
@@ -191,7 +359,7 @@ class RegisterNoo extends StatelessWidget {
                       id: 'butvid',
                       builder: (_) => ElevatedButton(
                         onPressed: () {
-                          controller.opsiMediaVideo();
+                          controller.getVideo(context);
                         },
                         child: Text(
                           "Upload Video",
@@ -241,39 +409,44 @@ class RegisterNoo extends StatelessWidget {
                               )));
                   }),
               Container(
-                  width: double.infinity,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      IconButton(
-                        onPressed: () {
-                          if (controller.video != null) {
-                            controller.play();
-                          }
-                        },
-                        icon: Icon(MdiIcons.play),
-                        iconSize: 30,
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          if (controller.video != null) {
-                            controller.pause();
-                          }
-                        },
-                        icon: Icon(MdiIcons.pause),
-                        iconSize: 30,
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          if (controller.video != null) {
-                            controller.deleteVideo();
-                          }
-                        },
-                        icon: Icon(MdiIcons.delete),
-                        iconSize: 30,
-                      ),
-                    ],
-                  )),
+                width: double.infinity,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        if (controller.video != null) {
+                          controller.play();
+                        }
+                      },
+                      icon: Icon(MdiIcons.play),
+                      iconSize: 30,
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        if (controller.video != null) {
+                          controller.pause();
+                        }
+                      },
+                      icon: Icon(MdiIcons.pause),
+                      iconSize: 30,
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        if (controller.video != null) {
+                          controller.deleteVideo();
+                        }
+                      },
+                      icon: Icon(MdiIcons.delete),
+                      iconSize: 30,
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: defaultMargin,
+              ),
+              Divider(),
               Container(
                 padding: EdgeInsets.fromLTRB(
                     defaultMargin, 10, defaultMargin, defaultMargin),
@@ -320,6 +493,7 @@ class RegisterNoo extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: () {
                     controller.submit();
+                    controller.pause();
                   },
                   style: ButtonStyle(
                       backgroundColor:

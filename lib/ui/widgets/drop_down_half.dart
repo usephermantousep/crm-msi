@@ -36,7 +36,10 @@ class DropDownHalf extends StatelessWidget {
             .map<DropdownMenuItem<String>>(
                 (String value) => DropdownMenuItem<String>(
                       value: value,
-                      child: Text(value),
+                      child: Text(
+                        value,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ))
             .toList(),
       ),

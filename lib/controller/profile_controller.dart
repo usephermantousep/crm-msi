@@ -2,17 +2,10 @@ part of 'controllers.dart';
 
 class ProfileController extends GetxController {
   int selectedIndex = 0;
-  UserModel? user;
   List<VisitModel>? visit;
   List<OutletModel>? outlets;
-
-  Future<void> getDetailUser() async {
-    ApiReturnValue<UserModel> result = await UserServices.getSingleUser();
-    if (result.value != null) {
-      user = result.value;
-      update(['outlet']);
-    }
-  }
+  int? badanUsaha;
+  int? role;
 
   Future<void> getDataOutlet() async {
     ApiReturnValue<List<OutletModel>> result = await OutletServices.getOutlet();
@@ -30,6 +23,13 @@ class ProfileController extends GetxController {
       visit = result.value!;
       update(['outlet']);
     }
+  }
+
+  Future<void> load() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    badanUsaha = pref.getInt('badanusaha');
+    role = pref.getInt('role');
+    update();
   }
 
   void changePage(int index) {
@@ -64,9 +64,9 @@ class ProfileController extends GetxController {
 
   @override
   void onInit() {
-    getDetailUser();
     getDataOutlet();
     getVisited();
+    load();
     super.onInit();
   }
 }

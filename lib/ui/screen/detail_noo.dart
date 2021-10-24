@@ -26,79 +26,175 @@ class DetailNoo extends StatelessWidget {
           children: [
             Row(
               children: [
-                LabelFormRegisterHalf(nama: "Nama Outlet"),
-                LabelFormRegisterHalf(nama: data.namaOutlet),
-              ],
-            ),
-            Divider(),
-            Row(
-              children: [
-                LabelFormRegisterHalf(nama: "Nama Pemilik"),
-                LabelFormRegisterHalf(nama: data.namaPemilikOutlet),
-              ],
-            ),
-            Divider(),
-            Row(
-              children: [
-                LabelFormRegisterHalf(nama: "Alamat Outlet"),
-                LabelFormRegisterHalf(nama: data.alamatOutlet),
-              ],
-            ),
-            Divider(),
-            Row(
-              children: [
-                LabelFormRegisterHalf(nama: "KTP/NPWP Pemilik"),
-                LabelFormRegisterHalf(nama: data.ktpOutlet),
-              ],
-            ),
-            Divider(),
-            Row(
-              children: [
-                LabelFormRegisterHalf(nama: "Nomer Pemilik"),
-                LabelFormRegisterHalf(nama: data.nomerTlpOutlet),
-              ],
-            ),
-            Divider(),
-            Row(
-              children: [
-                LabelFormRegisterHalf(nama: "Nomer Perwakilan"),
-                LabelFormRegisterHalf(nama: data.nomerWakilOutlet),
-              ],
-            ),
-            Divider(),
-            Row(
-              children: [
-                LabelFormRegisterHalf(nama: "Kota"),
-                LabelFormRegisterHalf(nama: data.kota),
-              ],
-            ),
-            Divider(),
-            Row(
-              children: [
-                LabelFormRegisterHalf(nama: "Region"),
-                LabelFormRegisterHalf(nama: data.region),
-              ],
-            ),
-            Divider(),
-            Row(
-              children: [
-                LabelFormRegisterHalf(nama: "Cluster"),
-                LabelFormRegisterHalf(nama: data.cluster!.namaCluster),
-              ],
-            ),
-            Divider(),
-            Row(
-              children: [
-                LabelFormRegisterHalf(nama: "Limit"),
                 LabelFormRegisterHalf(
-                    nama: (title == "STATUS : APPROVED" ||
-                            title == "STATUS : CONFIRMED")
-                        ? NumberFormat.currency(
-                                locale: 'id-ID',
-                                symbol: 'Rp ',
-                                decimalDigits: 0)
-                            .format(data.limit)
-                        : '-'),
+                  nama: "Nama Outlet",
+                  width: 150,
+                ),
+                LabelFormRegisterHalf(
+                  nama: data.namaOutlet,
+                  width: 150,
+                ),
+              ],
+            ),
+            Divider(),
+            Row(
+              children: [
+                LabelFormRegisterHalf(
+                  nama: "Kode Outlet",
+                  width: 150,
+                ),
+                LabelFormRegisterHalf(
+                  nama: data.kodeOutlet ?? '-',
+                  width: 150,
+                ),
+              ],
+            ),
+            Divider(),
+            Row(
+              children: [
+                LabelFormRegisterHalf(
+                  nama: "Badan Usaha",
+                  width: 150,
+                ),
+                LabelFormRegisterHalf(
+                  nama: data.badanUsaha!.name ?? '-',
+                  width: 150,
+                ),
+              ],
+            ),
+            Divider(),
+            Row(
+              children: [
+                LabelFormRegisterHalf(
+                  nama: "Divisi",
+                  width: 150,
+                ),
+                LabelFormRegisterHalf(
+                  nama: data.divisi!.name ?? '-',
+                  width: 150,
+                ),
+              ],
+            ),
+            Divider(),
+            Row(
+              children: [
+                LabelFormRegisterHalf(
+                  nama: "Nama Pemilik",
+                  width: 150,
+                ),
+                LabelFormRegisterHalf(
+                  nama: data.namaPemilikOutlet,
+                  width: 150,
+                ),
+              ],
+            ),
+            Divider(),
+            Row(
+              children: [
+                LabelFormRegisterHalf(
+                  nama: "Alamat Outlet",
+                  width: 150,
+                ),
+                LabelFormRegisterHalf(
+                  nama: data.alamatOutlet,
+                  width: 150,
+                ),
+              ],
+            ),
+            Divider(),
+            Row(
+              children: [
+                LabelFormRegisterHalf(
+                  nama: "KTP/NPWP Pemilik",
+                  width: 150,
+                ),
+                LabelFormRegisterHalf(
+                  nama: data.ktpOutlet,
+                  width: 150,
+                ),
+              ],
+            ),
+            Divider(),
+            Row(
+              children: [
+                LabelFormRegisterHalf(
+                  nama: "Nomer Pemilik",
+                  width: 150,
+                ),
+                LabelFormRegisterHalf(
+                  nama: data.nomerTlpOutlet,
+                  width: 150,
+                ),
+              ],
+            ),
+            Divider(),
+            Row(
+              children: [
+                LabelFormRegisterHalf(
+                  nama: "Nomer Perwakilan",
+                  width: 150,
+                ),
+                LabelFormRegisterHalf(
+                  nama: data.nomerWakilOutlet ?? '-',
+                  width: 150,
+                ),
+              ],
+            ),
+            Divider(),
+            Row(
+              children: [
+                LabelFormRegisterHalf(
+                  nama: "distric",
+                  width: 150,
+                ),
+                LabelFormRegisterHalf(
+                  nama: data.distric,
+                  width: 150,
+                ),
+              ],
+            ),
+            Divider(),
+            Row(
+              children: [
+                LabelFormRegisterHalf(
+                  nama: "Region",
+                  width: 150,
+                ),
+                LabelFormRegisterHalf(
+                  nama: data.region!.name,
+                  width: 150,
+                ),
+              ],
+            ),
+            Divider(),
+            Row(
+              children: [
+                LabelFormRegisterHalf(
+                  nama: "Cluster",
+                  width: 150,
+                ),
+                LabelFormRegisterHalf(
+                  nama: data.cluster!.name,
+                  width: 150,
+                ),
+              ],
+            ),
+            Divider(),
+            Row(
+              children: [
+                LabelFormRegisterHalf(
+                  nama: "Limit",
+                  width: 150,
+                ),
+                LabelFormRegisterHalf(
+                  nama: (title == "STATUS : APPROVED" ||
+                          title == "STATUS : CONFIRMED")
+                      ? NumberFormat.currency(
+                              locale: 'id-ID', symbol: 'Rp ', decimalDigits: 0)
+                          .format(data.limit)
+                      : '-',
+                  width: 150,
+                ),
               ],
             ),
             Divider(),
@@ -154,15 +250,24 @@ class DetailNoo extends StatelessWidget {
             (data.keterangan != null)
                 ? Row(
                     children: [
-                      LabelFormRegisterHalf(nama: "Alasan ditolak"),
-                      LabelFormRegisterHalf(nama: data.keterangan),
+                      LabelFormRegisterHalf(
+                        nama: "Alasan ditolak",
+                        width: 150,
+                      ),
+                      LabelFormRegisterHalf(
+                        nama: data.keterangan,
+                        width: 150,
+                      ),
                     ],
                   )
                 : SizedBox(),
             Divider(),
             Row(
               children: [
-                LabelFormRegisterHalf(nama: 'Foto dan Video :'),
+                LabelFormRegisterHalf(
+                  nama: 'Foto dan Video :',
+                  width: 150,
+                ),
               ],
             ),
             ButtonFotoVideoNoo(controller: controller, data: data),
@@ -173,16 +278,47 @@ class DetailNoo extends StatelessWidget {
               id: 'buttonar',
               builder: (_) => Column(
                 children: [
-                  (controller.role == 'AR' && title == "STATUS : PENDING")
+                  (controller.role == 4 && title == "STATUS : PENDING")
                       ? Divider()
                       : SizedBox(),
-                  (controller.role == 'AR' && title == "STATUS : PENDING")
+                  (controller.role == 4 && title == "STATUS : PENDING")
                       ? Row(
-                          children: [LabelFormRegisterHalf(nama: "Action :")],
+                          children: [
+                            LabelFormRegisterHalf(
+                              nama: "Action :",
+                              width: 150,
+                            )
+                          ],
                         )
                       : SizedBox(),
-                  (controller.role == 'AR' && title == "STATUS : PENDING")
+                  (controller.role == 4 && title == "STATUS : PENDING")
                       ? ButtonActionNooAR(
+                          controller: controller,
+                          idNoo: data.id!,
+                        )
+                      : Container(),
+                ],
+              ),
+            ),
+            GetBuilder<DetailNooController>(
+              id: 'buttontm',
+              builder: (_) => Column(
+                children: [
+                  (controller.role == 1 && title == "STATUS : CONFIRMED")
+                      ? Divider()
+                      : SizedBox(),
+                  (controller.role == 1 && title == "STATUS : CONFIRMED")
+                      ? Row(
+                          children: [
+                            LabelFormRegisterHalf(
+                              nama: "Action :",
+                              width: 150,
+                            )
+                          ],
+                        )
+                      : SizedBox(),
+                  (controller.role == 1 && title == "STATUS : CONFIRMED")
+                      ? ButtonActionTm(
                           controller: controller,
                           idNoo: data.id!,
                         )

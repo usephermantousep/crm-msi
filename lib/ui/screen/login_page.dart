@@ -12,12 +12,18 @@ class LoginPage extends StatelessWidget {
           children: [
             LabelFormRegister(nama: "User Name"),
             FormRegisterFull(
-                nama: "Masukkan User Name", controller: controller.userName!),
+              con: controller.userName!,
+              isPassword: false,
+              nama: "Masukkan User Name",
+            ),
             LabelFormRegister(nama: "Password"),
-            FormRegisterFull(
-              nama: "Masukkan Password",
-              controller: controller.pass!,
-              obsecure: true,
+            GetBuilder<LoginController>(
+              id: 'password',
+              builder: (_) => FormRegisterFull(
+                isPassword: true,
+                nama: "Masukkan Password",
+                con: controller.pass!,
+              ),
             ),
             Container(
               padding: EdgeInsets.symmetric(horizontal: 20),
@@ -32,16 +38,16 @@ class LoginPage extends StatelessWidget {
                     controller.showError('Salah !',
                         'isi username dan password dengan benar dan lengkap');
                   } else {
-                    controller.isLoading.toggle();
+                    controller.loading.toggle();
                     controller
                         .signIn(
                             controller.userName!.text, controller.pass!.text)
                         .then((value) async {
                       if (value) {
-                        controller.isLoading.toggle();
+                        controller.loading.toggle();
                         Get.offAll(() => MainPage());
                       } else {
-                        controller.isLoading.toggle();
+                        controller.loading.toggle();
                       }
                     });
                   }
@@ -51,7 +57,7 @@ class LoginPage extends StatelessWidget {
                         MaterialStateProperty.all("FF3F0A".toColor()),
                     elevation: MaterialStateProperty.all(0)),
                 child: Obx(
-                  () => (controller.isLoading.value)
+                  () => (controller.loading.value)
                       ? loadingIndicator
                       : Text(
                           "LOGIN",

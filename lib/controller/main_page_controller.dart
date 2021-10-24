@@ -3,7 +3,7 @@ part of 'controllers.dart';
 class MainPageController extends GetxController {
   int selectedPage = 0;
   PageController? pageController;
-  String? role;
+  int? role;
 
   void swipePage(int index) {
     selectedPage = index;
@@ -20,8 +20,8 @@ class MainPageController extends GetxController {
   void onInit() async {
     pageController = PageController(initialPage: selectedPage);
     SharedPreferences pref = await SharedPreferences.getInstance();
-    role = pref.getString('role');
-    print(role);
+    role = pref.getInt('role');
+    print('ini role ${role}');
     update(['mode']);
     super.onInit();
   }

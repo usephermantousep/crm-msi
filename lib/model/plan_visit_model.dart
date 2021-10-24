@@ -37,10 +37,4 @@ class PlanVisitModel extends Equatable {
             DateTime.fromMillisecondsSinceEpoch(json['tanggal_visit']),
         outlet: OutletModel.fromJson(json["outlet"]),
       );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "tanggal_visit": tanggalVisit.toString(),
-        "outlet": outlet!.toJson(),
-      };
 }

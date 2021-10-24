@@ -7,10 +7,8 @@ class BoxFotoRegistrationNoo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 250,
-      width: MediaQuery.of(context).size.width * 0.37,
-      margin: EdgeInsets.symmetric(horizontal: defaultMargin),
-      padding: EdgeInsets.symmetric(horizontal: 10),
+      height: 300,
+      margin: EdgeInsets.symmetric(horizontal: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
         border: Border.all(color: Colors.black),

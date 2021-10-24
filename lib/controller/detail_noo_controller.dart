@@ -5,9 +5,9 @@ class DetailNooController extends GetxController {
   Marker? lokasi;
   VideoPlayerController? videoController;
   CameraPosition? initialCamera;
-  late TextEditingController? limit,alasanText;
-  String? alasan,detailAlasan;
-  String? role;
+  late TextEditingController? limit, alasanText, kodeOutlet;
+  String? alasan, detailAlasan;
+  int? role;
   String nominal = '0';
   static const _locale = 'ID';
 
@@ -15,7 +15,7 @@ class DetailNooController extends GetxController {
     'Tidak ada KTP atau NPWP',
     'Konfirmasi tidak dengan owner',
     '1 owner 2 toko',
-    'Tidak ada kelgnkapan video atau toko',
+    'Tidak ada kelengkapan video atau foko',
     'lainya'
   ];
 
@@ -97,10 +97,20 @@ class DetailNooController extends GetxController {
     update();
   }
 
-  Future<bool> confirm(String id, String limit) async {
+  Future<bool> approve(String id) async {
+    ApiReturnValue<bool> result = await NooService.approved(id);
+
+    return result.value!;
+  }
+
+  Future<bool> confirm(String id, String limit, String kodeOutlet) async {
     loading();
-    if (limit != '' || !limit.isBlank!) {
-      ApiReturnValue<bool>  result = await NooService.confirm(id,limit);
+    if (limit != '' &&
+        !limit.isBlank! &&
+        kodeOutlet != '' &&
+        !kodeOutlet.isBlank!) {
+      ApiReturnValue<bool> result =
+          await NooService.confirm(id, limit, kodeOutlet);
       if (result.value != null) {
         if (result.value!) {
           Get.back();
@@ -112,28 +122,30 @@ class DetailNooController extends GetxController {
           return false;
         }
       } else {
-      Get.back();
-      notif('Gagal', result.message!);
-      return false;
+        Get.back();
+        notif('Gagal', result.message!);
+        return false;
       }
     } else {
       Get.back();
-      notif("Salah", "Limit harus disi");
+      notif("Salah", "Limit dan kode outlet harus disi");
       return false;
     }
-
-    
   }
 
   @override
   void onInit() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
-    role = pref.getString('role');
-    if (role != 'SALES') {
+    role = pref.getInt('role');
+    if (role == 4) {
       limit = TextEditingController();
       alasanText = TextEditingController();
+      kodeOutlet = TextEditingController();
     }
-    update(['buttonar']);
+    if (role == 1) {
+      alasanText = TextEditingController();
+    }
+    update(['buttonar', 'buttontm']);
     super.onInit();
   }
 }

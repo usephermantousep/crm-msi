@@ -1,5 +1,7 @@
 import 'dart:io';
+import 'package:crm_msi/helpers/compress_video.dart';
 import 'package:crm_msi/ui/screen/screen.dart';
+import 'package:crm_msi/ui/widgets/progressDialogWidget.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:image/image.dart' as Img;
 import 'package:crm_msi/model/models.dart';
@@ -17,7 +19,6 @@ import 'package:supercharged/supercharged.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:trust_location/trust_location.dart';
 import 'package:video_player/video_player.dart';
-import 'package:location_permissions/location_permissions.dart';
 import 'package:video_compress/video_compress.dart';
 
 part 'app_controller.dart';
@@ -30,3 +31,4 @@ part 'profile_controller.dart';
 part 'plan_visit_controller.dart';
 part 'register_noo_controller.dart';
 part 'detail_noo_controller.dart';
+part 'update_foto_controller.dart';

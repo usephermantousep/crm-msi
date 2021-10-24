@@ -20,35 +20,56 @@ class HomePage extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "MEDIA SELULAR INDONESIA",
-                            softWrap: false,
-                            style: (MediaQuery.of(context).size.width < 1000)
-                                ? blackFontStyle2
-                                : blackFontStyle1,
-                          ),
-                          Text(
-                            "Grosir App",
-                            style: greyFontStyle.copyWith(
-                                fontWeight: FontWeight.w300),
-                          ),
-                        ],
-                      ),
-                      Container(
-                        width: 50,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          image: DecorationImage(
-                              image: NetworkImage(
-                                  'https://msis.co.id/wp-content/uploads/2021/08/Logo-MSI-Media-Selular-Indonesia-1024x570.png'),
-                              fit: BoxFit.fitWidth),
+                      GetBuilder<HomePageController>(
+                        id: 'profile',
+                        builder: (_) => Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              controller.user == null
+                                  ? '-'
+                                  : controller.user!.namaLengkap!.toUpperCase(),
+                              softWrap: false,
+                              style: blackFontStyle1,
+                            ),
+                            Text(
+                              controller.user == null
+                                  ? '-'
+                                  : (controller.user!.roles!.id == 3)
+                                      ? "${controller.user!.divisi!.name!.toUpperCase()} - ${controller.user!.region!.name!.toUpperCase()} - ${controller.user!.cluster!.name!.toUpperCase()} - ${controller.user!.roles!.name!.toUpperCase()}"
+                                      : (controller.user!.roles!.id == 2)
+                                          ? "${controller.user!.divisi!.name!.toUpperCase()} - ${controller.user!.region!.name!.toUpperCase()} - ${controller.user!.roles!.name!.toUpperCase()}"
+                                          : "${controller.user!.roles!.name!.toUpperCase()}",
+                              style: greyFontStyle.copyWith(
+                                  fontWeight: FontWeight.w300),
+                            ),
+                          ],
                         ),
-                      )
+                      ),
+                      GetBuilder<HomePageController>(
+                        id: 'logo',
+                        builder: (_) => (controller.user == null)
+                            ? SizedBox()
+                            : Container(
+                                width: 50,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                  image: DecorationImage(
+                                      image: AssetImage(
+                                          (controller.user!.badanUsaha!.name ==
+                                                  'PT.MSI')
+                                              ? 'assets/msilogo.png'
+                                              : (controller.user!.badanUsaha!
+                                                          .name ==
+                                                      'PT.MSI')
+                                                  ? 'assets/toplogo.png'
+                                                  : 'assets/msilogo.png'),
+                                      fit: BoxFit.fitWidth),
+                                ),
+                              ),
+                      ),
                     ],
                   ),
                 ),
@@ -65,22 +86,33 @@ class HomePage extends StatelessWidget {
                         children: [
                           GestureDetector(
                             onTap: () async {
-                              bool isMockLocation =
-                                  await TrustLocation.isMockLocation;
-                              if (isMockLocation) {
-                                Get.defaultDialog(
-                                    title: 'PERINGATAN',
-                                    titleStyle: blackFontStyle1,
-                                    middleText:
-                                        'Anda menggunakan aplikasi fake GPS harap hapus terlebih dahulu',
-                                    middleTextStyle: blackFontStyle2,
-                                    confirm: ElevatedButton(
-                                      onPressed: () => Get.back(),
-                                      child: Text("OK"),
-                                    ));
-                              } else {
-                                Get.to(() => CheckInOutScreen());
-                              }
+                              TrustLocation.isMockLocation.then((value) async {
+                                if (await value) {
+                                  Get.defaultDialog(
+                                      title: 'PERINGATAN',
+                                      titleStyle: blackFontStyle1,
+                                      middleText:
+                                          'Coba sekali lagi jika tetap muncul ada indikasi penggunaan fake GPS',
+                                      middleTextStyle: blackFontStyle2,
+                                      confirm: ElevatedButton(
+                                        onPressed: () => Get.back(),
+                                        child: Text("OK"),
+                                      ));
+                                } else {
+                                  if (controller.user!.roles!.id == 1) {
+                                    Get.bottomSheet(
+                                      GetBuilder<HomePageController>(
+                                        id: 'dropdown',
+                                        builder: (_) => TmBottomSheet(
+                                            isVisit: true,
+                                            controller: controller),
+                                      ),
+                                    );
+                                  } else {
+                                    Get.to(() => CheckInOutScreen());
+                                  }
+                                }
+                              });
                             },
                             child: Container(
                               height: 100,
@@ -112,7 +144,17 @@ class HomePage extends StatelessWidget {
                         children: [
                           GestureDetector(
                             onTap: () {
-                              Get.to(() => PlanVisitScreen());
+                              if (controller.user!.roles!.id == 1) {
+                                Get.bottomSheet(
+                                  GetBuilder<HomePageController>(
+                                    id: 'dropdown',
+                                    builder: (_) => TmBottomSheet(
+                                        isVisit: false, controller: controller),
+                                  ),
+                                );
+                              } else {
+                                Get.to(() => PlanVisitScreen());
+                              }
                             },
                             child: Container(
                               height: 100,
@@ -151,7 +193,7 @@ class HomePage extends StatelessWidget {
                                   title: 'PERINGATAN',
                                   titleStyle: blackFontStyle1,
                                   middleText:
-                                      'Anda menggunakan aplikasi\n FAKE GPS \nharap hapus terlebih dahulu',
+                                      'Coba sekali lagi jika tetap muncul ada indikasi penggunaan fake GPS',
                                   middleTextStyle: blackFontStyle2,
                                   confirm: ElevatedButton(
                                     style: ButtonStyle(
@@ -206,15 +248,15 @@ class HomePage extends StatelessWidget {
                       CustomTabBar(
                         titles: ["Plan Visit"],
                         selectedIndex: 0,
-                        onTap: (index) {},
-                      ),
-                      SizedBox(
-                        height: 16,
+                        onTap: (int index) {},
                       ),
                       GetBuilder<HomePageController>(
                         id: 'planvisit',
-                        builder: (con) => ListPlanVisit(
-                          data: con.listPlan,
+                        builder: (con) => RefreshIndicator(
+                          onRefresh: () => con.getPlanVisit(),
+                          child: ListPlanVisit(
+                            data: con.listPlan,
+                          ),
                         ),
                       )
                     ],

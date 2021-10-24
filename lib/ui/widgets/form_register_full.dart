@@ -1,14 +1,15 @@
 part of 'widgets.dart';
 
-class FormRegisterFull extends StatelessWidget {
-  final String? nama;
-  final TextEditingController controller;
-  final bool obsecure;
-  const FormRegisterFull({
-    @required this.nama,
+class FormRegisterFull extends GetView<LoginController> {
+  final String nama;
+  final bool isPassword;
+  final TextEditingController con;
+
+  FormRegisterFull({
+    required this.nama,
+    required this.isPassword,
     Key? key,
-    required this.controller,
-    this.obsecure = false,
+    required this.con,
   }) : super(key: key);
 
   @override
@@ -21,13 +22,36 @@ class FormRegisterFull extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
         border: Border.all(color: Colors.black),
       ),
-      child: TextField(
-        obscureText: obsecure,
-        controller: controller,
-        textInputAction: TextInputAction.next,
-        decoration: InputDecoration(
-            border: InputBorder.none, hintStyle: greyFontStyle, hintText: nama),
-      ),
+      child: isPassword
+          ? Obx(() => TextField(
+                obscureText: controller.obsecure.value,
+                controller: con,
+                textInputAction: TextInputAction.next,
+                decoration: InputDecoration(
+                    suffixIcon: IconButton(
+                      onPressed: () => controller.obsecure.toggle(),
+                      icon: controller.obsecure.value
+                          ? Icon(
+                              MdiIcons.eye,
+                              color: Colors.blue,
+                            )
+                          : Icon(
+                              MdiIcons.eyeOff,
+                              color: Colors.red,
+                            ),
+                    ),
+                    border: InputBorder.none,
+                    hintStyle: greyFontStyle,
+                    hintText: nama),
+              ))
+          : TextField(
+              controller: con,
+              textInputAction: TextInputAction.next,
+              decoration: InputDecoration(
+                  border: InputBorder.none,
+                  hintStyle: greyFontStyle,
+                  hintText: nama),
+            ),
     );
   }
 }

@@ -1,10 +1,10 @@
 part of 'models.dart';
 
-class ClusterModel extends Equatable {
+class BadanUsahaModel extends Equatable {
   final int? id;
   final String? name;
 
-  ClusterModel({this.id, this.name});
+  BadanUsahaModel({this.id, this.name});
 
   @override
   List<Object?> get props => [
@@ -12,7 +12,8 @@ class ClusterModel extends Equatable {
         name,
       ];
 
-  factory ClusterModel.fromJson(Map<String, dynamic> json) => ClusterModel(
+  factory BadanUsahaModel.fromJson(Map<String, dynamic> json) =>
+      BadanUsahaModel(
         id: json['id'],
         name: json["name"],
       );

@@ -26,7 +26,10 @@ class DetailFotoDanMap extends GetView<DetailNooController> {
                     children: [
                       Padding(
                         padding: EdgeInsets.only(left: defaultMargin),
-                        child: LabelFormRegisterHalf(nama: 'Foto Shop Sign'),
+                        child: LabelFormRegisterHalf(
+                          nama: 'Foto Shop Sign',
+                          width: 150,
+                        ),
                       ),
                       BoxFotoDetailNoo(image: data.potoShopSign!),
                     ],
@@ -36,10 +39,12 @@ class DetailFotoDanMap extends GetView<DetailNooController> {
                     children: [
                       Padding(
                         padding: EdgeInsets.only(left: defaultMargin),
-                        child: LabelFormRegisterHalf(nama: 'Foto Etalase'),
+                        child: LabelFormRegisterHalf(
+                          nama: 'Foto Etalase',
+                          width: 150,
+                        ),
                       ),
                       BoxFotoDetailNoo(image: data.potoEtalase!),
-
                     ],
                   ),
                 ],
@@ -52,10 +57,12 @@ class DetailFotoDanMap extends GetView<DetailNooController> {
                     children: [
                       Padding(
                         padding: EdgeInsets.only(left: defaultMargin),
-                        child: LabelFormRegisterHalf(nama: 'Foto Depan'),
+                        child: LabelFormRegisterHalf(
+                          nama: 'Foto Depan',
+                          width: 150,
+                        ),
                       ),
                       BoxFotoDetailNoo(image: data.potoDepan!),
-
                     ],
                   ),
                   Column(
@@ -63,10 +70,12 @@ class DetailFotoDanMap extends GetView<DetailNooController> {
                     children: [
                       Padding(
                         padding: EdgeInsets.only(left: defaultMargin),
-                        child: LabelFormRegisterHalf(nama: 'Foto Belakang'),
+                        child: LabelFormRegisterHalf(
+                          nama: 'Foto Belakang',
+                          width: 150,
+                        ),
                       ),
                       BoxFotoDetailNoo(image: data.potoBelakang!),
-
                     ],
                   ),
                 ],
@@ -79,10 +88,12 @@ class DetailFotoDanMap extends GetView<DetailNooController> {
                     children: [
                       Padding(
                         padding: EdgeInsets.only(left: defaultMargin),
-                        child: LabelFormRegisterHalf(nama: 'Foto Kanan'),
+                        child: LabelFormRegisterHalf(
+                          nama: 'Foto Kanan',
+                          width: 150,
+                        ),
                       ),
                       BoxFotoDetailNoo(image: data.potoDepan!),
-
                     ],
                   ),
                   Column(
@@ -90,10 +101,27 @@ class DetailFotoDanMap extends GetView<DetailNooController> {
                     children: [
                       Padding(
                         padding: EdgeInsets.only(left: defaultMargin),
-                        child: LabelFormRegisterHalf(nama: 'Foto Kiri'),
+                        child: LabelFormRegisterHalf(
+                          nama: 'Foto Kiri',
+                          width: 150,
+                        ),
                       ),
                       BoxFotoDetailNoo(image: data.potoKiri!),
-
+                    ],
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      LabelFormRegisterHalf(
+                        nama: 'Foto KTP/NPWP',
+                        width: 150,
+                      ),
+                      BoxFotoDetailNoo(image: data.potoKtp!),
                     ],
                   ),
                 ],
@@ -125,4 +153,3 @@ class DetailFotoDanMap extends GetView<DetailNooController> {
     );
   }
 }
-

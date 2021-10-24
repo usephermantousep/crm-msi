@@ -70,21 +70,4 @@ class VisitModel extends Equatable {
         pictureVisitOut: json["picture_visit_out"],
         outlet: OutletModel.fromJson(json["outlet"]),
       );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "tanggal_visit": tanggalVisit,
-        "user_id": userId,
-        "outlet_id": outletId,
-        "tipe_visit": tipeVisit,
-        "latlong_in": latlongIn,
-        "latlong_out": latlongOut,
-        "check_in_time": checkInTime,
-        "check_out_time": checkOutTime,
-        "laporan_visit": laporanVisit,
-        "durasi_visit": durasiVisit,
-        "picture_visit_in": pictureVisitIn,
-        "picture_visit_out": pictureVisitOut,
-        "outlet": outlet!.toJson(),
-      };
 }
