@@ -20,7 +20,7 @@ class PlanVisitScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                  margin: EdgeInsets.fromLTRB(defaultMargin, 16, 0, 20),
+                  margin: EdgeInsets.fromLTRB(defaultMargin, 5, 0, 20),
                   child: ElevatedButton(
                       style: ButtonStyle(
                         backgroundColor:
@@ -55,12 +55,13 @@ class PlanVisitScreen extends StatelessWidget {
             ),
             GetBuilder<PlanVisitController>(
               id: 'button',
-              builder: (_) => (controller.selectedMonth != '-' &&
-                      DateTime.now().isBefore(
-                        controller.selectedDateTime.add(
+              builder: (_) => controller.selectedMonth != '-' &&
+                      DateTime.now().isAfter(
+                        controller.selectedDateTime!.subtract(
                           Duration(days: 5),
                         ),
-                      ))
+                      ) &&
+                      DateTime.now().isBefore(controller.selectedDateTime!)
                   ? Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -84,7 +85,10 @@ class PlanVisitScreen extends StatelessWidget {
                                     horizontal: 20, vertical: 10),
                                 child: Text(
                                   item,
-                                  style: blackFontStyle2,
+                                  style: (controller.plans.contains(item))
+                                      ? blackFontStyle2.copyWith(
+                                          color: Colors.grey[400])
+                                      : blackFontStyle2,
                                 ),
                               ),
                               items: controller.allOutlet,
@@ -93,6 +97,7 @@ class PlanVisitScreen extends StatelessWidget {
                                   controller.changeOutlet(value);
                                 }
                               },
+                              selectedItem: controller.selectedOutlet,
                               searchBoxDecoration: InputDecoration(
                                 hintText: "Cari Outlet ...",
                                 border: OutlineInputBorder(
@@ -125,7 +130,7 @@ class PlanVisitScreen extends StatelessWidget {
               height: 30,
             ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
+              padding: EdgeInsets.symmetric(horizontal: 15),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -143,17 +148,19 @@ class PlanVisitScreen extends StatelessWidget {
                   ),
                   GetBuilder<PlanVisitController>(
                       id: 'list',
-                      builder: (_) => (DateTime.now().isBefore(
-                            controller.selectedDateTime.add(
-                              Duration(days: 5),
-                            ),
-                          ))
-                              ? Container(
-                                  alignment: Alignment.centerRight,
-                                  width: 80,
-                                  child: Text("Hapus", style: blackFontStyle2),
-                                )
-                              : SizedBox()),
+                      builder: (_) => controller.selectedMonth != '-' &&
+                              DateTime.now().isAfter(
+                                controller.selectedDateTime!.subtract(
+                                  Duration(days: 5),
+                                ),
+                              ) &&
+                              DateTime.now()
+                                  .isBefore(controller.selectedDateTime!)
+                          ? Container(
+                              width: 60,
+                              child: Text("Hapus", style: blackFontStyle2),
+                            )
+                          : SizedBox()),
                 ],
               ),
             ),
@@ -161,13 +168,7 @@ class PlanVisitScreen extends StatelessWidget {
             GetBuilder<PlanVisitController>(
               id: 'list',
               builder: (_) => Container(
-                height: ((DateTime.now().isBefore(
-                  controller.selectedDateTime.add(
-                    Duration(days: 5),
-                  ),
-                )))
-                    ? MediaQuery.of(context).size.height - 350
-                    : MediaQuery.of(context).size.height - 300,
+                height: MediaQuery.of(context).size.height - 300,
                 child: ListView.separated(
                   itemBuilder: (_, i) => (controller.plans.length > 0)
                       ? ListTile(
@@ -191,14 +192,16 @@ class PlanVisitScreen extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              (DateTime.now().isBefore(
-                                controller.selectedDateTime.add(
-                                  Duration(days: 5),
-                                ),
-                              ))
+                              controller.selectedMonth != '-' &&
+                                      DateTime.now().isAfter(
+                                        controller.selectedDateTime!.subtract(
+                                          Duration(days: 5),
+                                        ),
+                                      ) &&
+                                      DateTime.now().isBefore(
+                                          controller.selectedDateTime!)
                                   ? Container(
-                                      alignment: Alignment.center,
-                                      width: 80,
+                                      width: 60,
                                       child: IconButton(
                                         onPressed: () {
                                           controller.confirmDelete(

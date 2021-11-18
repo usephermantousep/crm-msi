@@ -7,8 +7,8 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.CAMERA"/>
    <application
-        android:label="Grosir App"
-        android:icon="@drawable/msilogo"
+        android:label="SAM"
+        android:icon="@drawable/samsam"
         android:requestLegacyExternalStorage="true"
         android:usesCleartextTraffic="true">        
         <activity

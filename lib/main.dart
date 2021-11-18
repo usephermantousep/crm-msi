@@ -22,7 +22,6 @@ void main() async {
 class MyApp extends GetView<LoginController> {
   @override
   Widget build(BuildContext context) {
-    Get.put(LoginController());
     return GetMaterialApp(
       theme: ThemeData(scaffoldBackgroundColor: const Color(0xFFEFEFEF)),
       title: 'CRM - MIS',

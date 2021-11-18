@@ -122,6 +122,17 @@ class CiCoController extends GetxController {
 
   void extraCall() async {
     if (isplaned.value) {
+      Get.defaultDialog(
+          contentPadding: EdgeInsets.all(defaultMargin),
+          barrierDismissible: false,
+          title: "Loading ....",
+          titleStyle: blackFontStyle1,
+          middleText: 'Mengambil data Outlet',
+          actions: [
+            Center(
+              child: CircularProgressIndicator(),
+            )
+          ]);
       ApiReturnValue<List<OutletModel>> result =
           await OutletServices.getOutlet(divisi: divisi, region: region);
       if (result.value != null) {
@@ -136,6 +147,8 @@ class CiCoController extends GetxController {
         List<String> data = List.from(setOutlet.difference(setPlan));
         showList = data;
       }
+
+      Get.back();
     }
     update(['dropdown']);
   }
@@ -291,12 +304,10 @@ class CiCoController extends GetxController {
         await OutletServices.getSingleOutlet(outlet);
 
     if (result.value != null) {
-      if (result.value!.potoBelakang == null ||
-          result.value!.potoDepan == null ||
+      if (result.value!.potoDepan == null ||
           result.value!.potoShopSign == null ||
           result.value!.potoKiri == null ||
-          result.value!.potoKanan == null ||
-          result.value!.potoEtalase == null) {
+          result.value!.potoKanan == null) {
         return false;
       }
     }

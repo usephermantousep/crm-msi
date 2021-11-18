@@ -8,7 +8,7 @@ class PlanVisitController extends GetxController {
   String? selectedOutlet;
   String? bulan;
   String? tahun;
-  DateTime selectedDateTime = DateTime.now();
+  DateTime? selectedDateTime;
   List<String> plans = [];
   List<String> allOutlet = [];
   List<PlanVisitModel> planVisit = [];
@@ -25,8 +25,8 @@ class PlanVisitController extends GetxController {
       SfDateRangePicker(
         selectionMode: DateRangePickerSelectionMode.multiple,
         initialDisplayDate: selectedDateTime,
-        maxDate: DateTime(2030, 12, 31),
-        minDate: DateTime.now().subtract(Duration(days: 5)),
+        maxDate: selectedDateTime!.add(Duration(days: 31)),
+        minDate: DateTime(selectedDateTime!.year, selectedDateTime!.month),
         backgroundColor: Colors.white,
         cancelText: "CANCEL",
         confirmText: "OK",
@@ -35,16 +35,24 @@ class PlanVisitController extends GetxController {
         },
         showActionButtons: true,
         onSubmit: (Object? value) {
-          if (value != null) {
-            List datas = (value as List).map((e) => e).toList();
-            datas.sort();
-            for (var data in datas) {
-              addPlan(DateFormat("yyyy-MM-dd").format(data));
+          if (selectedOutlet == null) {
+            Get.back();
+            Future.delayed(Duration(milliseconds: 400))
+                .then((value) => notif('Salah', 'Pilih outlet dahulu'));
+          } else {
+            if (value != null) {
+              List datas = (value as List).map((e) => e).toList();
+              datas.sort();
+              for (var data in datas) {
+                addPlan(DateFormat("yyyy-MM-dd").format(data));
+              }
             }
+            Future.delayed(Duration(seconds: 1))
+                .then((value) => getPlanByMonth(tahun!, bulan!));
+            selectedOutlet = null;
+            update(['dropdown']);
+            Get.back();
           }
-          Future.delayed(Duration(seconds: 1))
-              .then((value) => getPlanByMonth(tahun!, bulan!));
-          Get.back();
         },
       ),
     );

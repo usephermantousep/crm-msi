@@ -47,20 +47,22 @@ class RegisterNoo extends StatelessWidget {
                 validator: controller.validater,
               ),
               LabelFormRegister(
-                nama: 'Nomor Pemilik Outlet*',
+                nama: 'Nomor Telepon Pemilik Outlet*',
               ),
               FormRegisterNoo(
-                nama: "Isi Nomor Pemilik Outlet",
+                nama: "Isi Telepon Nomor Pemilik Outlet",
                 controller: controller.nomorPemilikOutlet!,
                 validator: controller.validater,
+                type: TextInputType.number,
               ),
               LabelFormRegister(
-                nama: 'Nomor Wakil Outlet',
+                nama: 'Email Pemilik Outlet*',
               ),
               FormRegisterNoo(
-                nama: "Isi Nomor Wakil Outlet",
+                nama: "Isi Email Pemilik Outlet",
                 controller: controller.nomerWakilOutlet!,
-                validator: (String? value) => null,
+                validator: controller.validater,
+                type: TextInputType.emailAddress,
               ),
               LabelFormRegister(
                 nama: 'Kota/Distric*',
@@ -345,10 +347,8 @@ class RegisterNoo extends StatelessWidget {
                             backgroundColor: MaterialStateProperty.all(
                               (controller.shopSign == null ||
                                       controller.depan == null ||
-                                      controller.belakang == null ||
                                       controller.kanan == null ||
-                                      controller.kiri == null ||
-                                      controller.etalase == null)
+                                      controller.kiri == null)
                                   ? "FF3F0A".toColor()
                                   : Colors.green[400],
                             ),
@@ -500,7 +500,7 @@ class RegisterNoo extends StatelessWidget {
                           MaterialStateProperty.all("FF3F0A".toColor()),
                       elevation: MaterialStateProperty.all(0)),
                   child: Text(
-                    "Submit",
+                    "Kirim",
                     style: GoogleFonts.poppins(
                         color: Colors.white, fontWeight: FontWeight.w500),
                   ),

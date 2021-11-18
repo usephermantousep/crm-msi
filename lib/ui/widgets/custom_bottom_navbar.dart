@@ -1,7 +1,6 @@
 part of 'widgets.dart';
 
-class CustomBottomNavBar extends StatelessWidget {
-  final controller = Get.find<MainPageController>();
+class CustomBottomNavBar extends GetView<MainPageController> {
   final Function(int index)? onTap;
 
   CustomBottomNavBar({this.onTap});
@@ -11,8 +10,6 @@ class CustomBottomNavBar extends StatelessWidget {
       height: 45,
       width: double.infinity,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(10), topRight: Radius.circular(10)),
         color: "FF3F0A".toColor(),
       ),
       child: Row(
@@ -25,8 +22,8 @@ class CustomBottomNavBar extends StatelessWidget {
               }
             },
             child: Container(
-              width: 32,
-              height: 32,
+              width: 26,
+              height: 26,
               decoration: BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage(
@@ -46,8 +43,8 @@ class CustomBottomNavBar extends StatelessWidget {
               }
             },
             child: Container(
-              width: 32,
-              height: 32,
+              width: 26,
+              height: 26,
               margin: EdgeInsets.symmetric(horizontal: 100),
               decoration: BoxDecoration(
                 image: DecorationImage(
@@ -68,8 +65,8 @@ class CustomBottomNavBar extends StatelessWidget {
               }
             },
             child: Container(
-              width: 32,
-              height: 32,
+              width: 26,
+              height: 26,
               decoration: BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage(

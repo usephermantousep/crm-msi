@@ -1,7 +1,7 @@
 part of 'controllers.dart';
 
 class UpdateFotoOutletController extends GetxController {
-  File? shopSign, etalase, depan, belakang, kanan, kiri, ktp, video;
+  File? shopSign, depan, kanan, kiri, ktp, video;
   TextEditingController namaPemilikOutlet = TextEditingController();
   TextEditingController nomorPemilikOutlet = TextEditingController();
   final submitFormKey = GlobalKey<FormState>();
@@ -137,10 +137,6 @@ class UpdateFotoOutletController extends GetxController {
         depan = null;
         update(['fotodepan']);
         break;
-      case 'fotobelakang':
-        belakang = null;
-        update(['fotobelakang']);
-        break;
       case 'fotokanan':
         kanan = null;
         update(['fotokanan']);
@@ -148,10 +144,6 @@ class UpdateFotoOutletController extends GetxController {
       case 'fotokiri':
         kiri = null;
         update(['fotokiri']);
-        break;
-      case 'fotoetalase':
-        etalase = null;
-        update(['fotoetalase']);
         break;
       case 'fotoktp':
         ktp = null;
@@ -194,11 +186,6 @@ class UpdateFotoOutletController extends GetxController {
           depan = convert;
           update(['fotodepan']);
           break;
-        case 'fotobelakang':
-          File convert = await convertImage(namaFile, pickedFile);
-          belakang = convert;
-          update(['fotobelakang']);
-          break;
         case 'fotokanan':
           File convert = await convertImage(namaFile, pickedFile);
           kanan = convert;
@@ -208,11 +195,6 @@ class UpdateFotoOutletController extends GetxController {
           File convert = await convertImage(namaFile, pickedFile);
           kiri = convert;
           update(['fotokiri']);
-          break;
-        case 'fotoetalase':
-          File convert = await convertImage(namaFile, pickedFile);
-          etalase = convert;
-          update(['fotoetalase']);
           break;
         case 'fotoktp':
           File convert = await convertImage(namaFile, pickedFile);
@@ -255,24 +237,17 @@ class UpdateFotoOutletController extends GetxController {
     String kodeOutlet = namaOutlet.split(' ').last;
     List<File> images = [];
     if (ktp == null) {
-      if (shopSign == null ||
-          etalase == null ||
-          depan == null ||
-          kanan == null ||
-          kiri == null ||
-          belakang == null) {
+      if (shopSign == null || depan == null || kanan == null || kiri == null) {
         notif('Salah', 'Foto belum lengkap');
         return false;
       } else {
-        images.addAll([shopSign!, etalase!, depan!, kanan!, kiri!, belakang!]);
+        images.addAll([shopSign!, depan!, kanan!, kiri!]);
       }
     } else {
       if (shopSign == null ||
-          etalase == null ||
           depan == null ||
           kanan == null ||
           kiri == null ||
-          belakang == null ||
           ktp == null) {
         notif('Salah', 'Foto belum lengkap');
         return false;
@@ -281,8 +256,7 @@ class UpdateFotoOutletController extends GetxController {
           notif('Salah', 'Video belum lengkap');
           return false;
         } else {
-          images.addAll(
-              [shopSign!, etalase!, depan!, kanan!, kiri!, belakang!, ktp!]);
+          images.addAll([shopSign!, depan!, kanan!, kiri!, ktp!]);
         }
       }
     }

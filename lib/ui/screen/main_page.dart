@@ -1,7 +1,9 @@
 part of 'screen.dart';
 
 class MainPage extends StatelessWidget {
-  final controller = Get.put(MainPageController());
+  final controller = Get.arguments == null
+      ? Get.put(MainPageController())
+      : Get.put(MainPageController(initAfter: Get.arguments));
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,22 +25,16 @@ class MainPage extends StatelessWidget {
               },
               children: [
                 GetBuilder<MainPageController>(
-                  id: 'mode',
-                  builder: (_) => (controller.role == null)
-                      ? Container(
-                          child: Center(
-                            child: CircularProgressIndicator(),
-                          ),
-                        )
-                      : (controller.role! <= 3)
-                          ? HomePage()
-                          : Center(
-                              child: Text(
-                                'Mode Non Area',
-                                style: blackFontStyle1,
-                              ),
+                    id: 'mode',
+                    builder: (_) => (controller.role == null)
+                        ? Container(
+                            child: Center(
+                              child: CircularProgressIndicator(),
                             ),
-                ),
+                          )
+                        : (controller.role! <= 3)
+                            ? HomePage()
+                            : ArHomeScreen()),
                 ListNooPage(),
                 ProfilePage(),
               ],

@@ -9,11 +9,9 @@ class OutletModel extends Equatable {
   final String? namaPemilikOutlet;
   final String? nomerTlpOutlet;
   final String? potoShopSign;
-  final String? potoEtalase;
   final String? potoDepan;
   final String? potoKiri;
   final String? potoKanan;
-  final String? potoBelakang;
   final String? potoKtp;
   final String? distric;
   final int? limit;
@@ -34,11 +32,9 @@ class OutletModel extends Equatable {
         distric: json['distric'],
         badanUsaha: BadanUsahaModel.fromJson(json["badanusaha"]),
         potoShopSign: json["poto_shop_sign"],
-        potoEtalase: json["poto_etalase"],
         potoDepan: json["poto_depan"],
         potoKiri: json["poto_kiri"],
         potoKanan: json["poto_kanan"],
-        potoBelakang: json["poto_belakang"],
         potoKtp: json["poto_ktp"],
         limit: json["limit"],
         radius: json["radius"],
@@ -59,11 +55,9 @@ class OutletModel extends Equatable {
     this.distric,
     this.badanUsaha,
     this.potoShopSign,
-    this.potoEtalase,
     this.potoDepan,
     this.potoKiri,
     this.potoKanan,
-    this.potoBelakang,
     this.potoKtp,
     this.limit,
     this.radius,
@@ -85,11 +79,9 @@ class OutletModel extends Equatable {
         badanUsaha,
         distric,
         potoShopSign,
-        potoEtalase,
         potoDepan,
         potoKiri,
         potoKanan,
-        potoBelakang,
         potoKtp,
         limit,
         radius,

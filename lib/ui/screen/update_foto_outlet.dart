@@ -29,12 +29,13 @@ class UpdateFotoOutlet extends StatelessWidget {
                     validator: controller.validater,
                   ),
                   LabelFormRegister(
-                    nama: 'Nomor Pemilik Outlet*',
+                    nama: 'Nomor Telepon Pemilik Outlet*',
                   ),
                   FormRegisterNoo(
-                    nama: "Isi Nomor Pemilik Outlet",
+                    nama: "Isi Nomor Telepon Pemilik Outlet",
                     controller: controller.nomorPemilikOutlet,
                     validator: controller.validater,
+                    type: TextInputType.number,
                   ),
                 ],
               ),
@@ -106,62 +107,6 @@ class UpdateFotoOutlet extends StatelessWidget {
                             child: Row(
                               children: [
                                 LabelFormRegisterHalf(
-                                  nama: 'Foto Etalase',
-                                  width: 130,
-                                ),
-                                GetBuilder<UpdateFotoOutletController>(
-                                  id: 'fotoetalase',
-                                  builder: (_) {
-                                    return (controller.etalase == null)
-                                        ? SizedBox()
-                                        : IconButton(
-                                            onPressed: () {
-                                              controller
-                                                  .deleteFoto('fotoetalase');
-                                            },
-                                            iconSize: defaultMargin,
-                                            color: Colors.red,
-                                            icon: Icon(MdiIcons.closeBox),
-                                          );
-                                  },
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                      GetBuilder<UpdateFotoOutletController>(
-                        id: 'fotoetalase',
-                        builder: (_) {
-                          return (controller.etalase == null)
-                              ? BoxFotoRegistration(
-                                  function: () {
-                                    controller.opsiMediaFoto('fotoetalase');
-                                  },
-                                )
-                              : BoxFotoRegistrationNoo(
-                                  foto: controller.etalase!,
-                                );
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                Container(
-                  width: MediaQuery.of(context).size.width / 2,
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Container(
-                            padding: EdgeInsets.only(left: 8),
-                            child: Row(
-                              children: [
-                                LabelFormRegisterHalf(
                                   nama: 'Foto Depan',
                                   width: 130,
                                 ),
@@ -199,58 +144,6 @@ class UpdateFotoOutlet extends StatelessWidget {
                                 )
                               : BoxFotoRegistrationNoo(
                                   foto: controller.depan!,
-                                );
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width / 2,
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Container(
-                            padding: EdgeInsets.only(left: 8),
-                            child: Row(
-                              children: [
-                                LabelFormRegisterHalf(
-                                  nama: 'Foto Belakang',
-                                  width: 130,
-                                ),
-                                GetBuilder<UpdateFotoOutletController>(
-                                  id: 'fotobelakang',
-                                  builder: (_) {
-                                    return (controller.belakang == null)
-                                        ? SizedBox()
-                                        : IconButton(
-                                            onPressed: () {
-                                              controller
-                                                  .deleteFoto('fotobelakang');
-                                            },
-                                            iconSize: defaultMargin,
-                                            color: Colors.red,
-                                            icon: Icon(MdiIcons.closeBox),
-                                          );
-                                  },
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                      GetBuilder<UpdateFotoOutletController>(
-                        id: 'fotobelakang',
-                        builder: (_) {
-                          return (controller.belakang == null)
-                              ? BoxFotoRegistration(
-                                  function: () {
-                                    controller.opsiMediaFoto('fotobelakang');
-                                  },
-                                )
-                              : BoxFotoRegistrationNoo(
-                                  foto: controller.belakang!,
                                 );
                         },
                       ),
@@ -543,7 +436,7 @@ class UpdateFotoOutlet extends StatelessWidget {
                         MaterialStateProperty.all("FF3F0A".toColor()),
                     elevation: MaterialStateProperty.all(0)),
                 child: Text(
-                  "Submits",
+                  "Submit",
                   style: GoogleFonts.poppins(
                       color: Colors.white, fontWeight: FontWeight.w500),
                 ),

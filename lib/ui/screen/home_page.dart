@@ -57,15 +57,7 @@ class HomePage extends StatelessWidget {
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(8),
                                   image: DecorationImage(
-                                      image: AssetImage(
-                                          (controller.user!.badanUsaha!.name ==
-                                                  'PT.MSI')
-                                              ? 'assets/msilogo.png'
-                                              : (controller.user!.badanUsaha!
-                                                          .name ==
-                                                      'PT.MSI')
-                                                  ? 'assets/toplogo.png'
-                                                  : 'assets/msilogo.png'),
+                                      image: AssetImage('assets/sam.png'),
                                       fit: BoxFit.fitWidth),
                                 ),
                               ),
@@ -246,7 +238,7 @@ class HomePage extends StatelessWidget {
                   child: Column(
                     children: [
                       CustomTabBar(
-                        titles: ["Plan Visit"],
+                        titles: ["PLAN VISIT"],
                         selectedIndex: 0,
                         onTap: (int index) {},
                       ),

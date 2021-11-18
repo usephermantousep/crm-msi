@@ -34,3 +34,4 @@ part 'video_player.dart';
 part 'loading_full_screen.dart';
 part 'detail_foto.dart';
 part 'update_foto_outlet.dart';
+part 'ar_home_screen.dart';

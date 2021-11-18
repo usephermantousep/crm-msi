@@ -60,6 +60,7 @@ class OutletServices {
       OutletModel value = OutletModel.fromJson(data['data'][0]);
       return ApiReturnValue(value: value);
     } catch ($err) {
+      print($err);
       return ApiReturnValue(message: $err.toString());
     }
   }
@@ -107,6 +108,7 @@ class OutletServices {
       print(response.statusCode);
 
       if (response.statusCode != 200) {
+        print(response.statusCode);
         return ApiReturnValue(value: false, message: "Gagal Upload Foto");
       }
 

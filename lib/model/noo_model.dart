@@ -15,11 +15,9 @@ class NooModel extends Equatable {
     this.distric,
     this.region,
     this.potoShopSign,
-    this.potoEtalase,
     this.potoDepan,
     this.potoKiri,
     this.potoKanan,
-    this.potoBelakang,
     this.potoKtp,
     this.video,
     this.oppo,
@@ -58,11 +56,9 @@ class NooModel extends Equatable {
   final String? distric;
   final RegionModel? region;
   final String? potoShopSign;
-  final String? potoEtalase;
   final String? potoDepan;
   final String? potoKiri;
   final String? potoKanan;
-  final String? potoBelakang;
   final String? potoKtp;
   final String? video;
   final String? oppo;
@@ -101,11 +97,9 @@ class NooModel extends Equatable {
         distric: json["distric"],
         region: RegionModel.fromJson(json["region"]),
         potoShopSign: json["poto_shop_sign"],
-        potoEtalase: json["poto_etalase"],
         potoDepan: json["poto_depan"],
         potoKiri: json["poto_kiri"],
         potoKanan: json["poto_kanan"],
-        potoBelakang: json["poto_belakang"],
         potoKtp: json['poto_ktp'],
         video: json["video"],
         oppo: json["oppo"],
@@ -164,11 +158,9 @@ class NooModel extends Equatable {
         distric,
         region,
         potoShopSign,
-        potoEtalase,
         potoDepan,
         potoKiri,
         potoKanan,
-        potoBelakang,
         potoKtp,
         video,
         oppo,

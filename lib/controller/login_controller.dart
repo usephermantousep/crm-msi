@@ -1,9 +1,8 @@
 part of 'controllers.dart';
 
 class LoginController extends GetxController {
-  TextEditingController? userName;
+  TextEditingController? userName, pass;
   UserModel? user;
-  TextEditingController? pass;
   bool islogin = false;
   bool loadingLogin = true;
   Rx<bool> loading = false.obs;
@@ -15,9 +14,6 @@ class LoginController extends GetxController {
     pass = TextEditingController();
     PermissionStatus status = await Permission.location.request();
     print(status);
-    // if (status != PermissionStatus.granted) {
-    //   openAppSettings();
-    // }
     await Permission.camera.request().then((value) => print(value));
     await Permission.storage.request().then((value) => print(value));
     await check().then((value) async {

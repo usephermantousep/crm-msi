@@ -22,7 +22,7 @@ class GmapsScreen extends GetView<CiCoController> {
       child: Container(
         height: (title == 'Check In')
             ? MediaQuery.of(context).size.height - 150
-            : MediaQuery.of(context).size.height - 70,
+            : MediaQuery.of(context).size.height,
         color: Colors.white,
         child: Column(
           children: [

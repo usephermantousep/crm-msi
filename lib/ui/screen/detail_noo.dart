@@ -118,7 +118,7 @@ class DetailNoo extends StatelessWidget {
             Row(
               children: [
                 LabelFormRegisterHalf(
-                  nama: "Nomer Pemilik",
+                  nama: "Telepon Pemilik",
                   width: 150,
                 ),
                 LabelFormRegisterHalf(
@@ -131,7 +131,7 @@ class DetailNoo extends StatelessWidget {
             Row(
               children: [
                 LabelFormRegisterHalf(
-                  nama: "Nomer Perwakilan",
+                  nama: "Email Pemilik Outlet",
                   width: 150,
                 ),
                 LabelFormRegisterHalf(

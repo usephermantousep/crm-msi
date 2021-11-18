@@ -11,14 +11,14 @@ class ProfilePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Container(
-              height: 232,
+              height: 212,
               width: double.infinity,
               decoration: BoxDecoration(color: Colors.white),
               child: Column(
                 children: [
                   Container(
-                    width: 110,
-                    height: 110,
+                    width: 90,
+                    height: 90,
                     margin: EdgeInsets.only(top: 28),
                     padding: EdgeInsets.all(10),
                     decoration: BoxDecoration(
@@ -28,14 +28,10 @@ class ProfilePage extends StatelessWidget {
                         color: Colors.white),
                     child: Container(
                       decoration: BoxDecoration(
-                        shape: BoxShape.circle,
+                        // shape: BoxShape.circle,
                         image: DecorationImage(
-                            image: AssetImage((controller.badanUsaha == 1)
-                                ? 'assets/msilogo.png'
-                                : (controller.badanUsaha == 2)
-                                    ? 'assets/toplogo.png'
-                                    : 'assets/msilogo.png'),
-                            fit: BoxFit.fitWidth),
+                          image: AssetImage('assets/sam.png'),
+                        ),
                       ),
                     ),
                   ),
@@ -43,15 +39,12 @@ class ProfilePage extends StatelessWidget {
                     height: 10,
                   ),
                   Text(
-                    controller.badanUsaha == 1
-                        ? 'PT.MSI'
-                        : controller.badanUsaha == 1
-                            ? 'CV.TOP'
-                            : 'PT.MSI',
-                    style: blackFontStyle1,
+                    'Sales Assistant Mobile',
+                    style: blackFontStyle1.copyWith(fontSize: 20),
                   ),
+                  SizedBox(height: 5),
                   Text(
-                    'Grosir App V1.0.0',
+                    'V1.0.0',
                     style: greyFontStyle,
                   )
                 ],
@@ -71,9 +64,9 @@ class ProfilePage extends StatelessWidget {
                     builder: (cons) => CustomTabBar(
                       titles: [
                         (controller.role == 2 || controller.role == 3)
-                            ? "Outlet"
-                            : "Menu",
-                        "Noo"
+                            ? "OUTLET"
+                            : "MENU",
+                        "NOO"
                       ],
                       selectedIndex: cons.selectedIndex,
                       onTap: (int index) {

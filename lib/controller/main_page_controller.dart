@@ -1,6 +1,8 @@
 part of 'controllers.dart';
 
 class MainPageController extends GetxController {
+  MainPageController({this.initAfter});
+  final int? initAfter;
   int selectedPage = 0;
   PageController? pageController;
   int? role;
@@ -18,7 +20,7 @@ class MainPageController extends GetxController {
 
   @override
   void onInit() async {
-    pageController = PageController(initialPage: selectedPage);
+    pageController = PageController(initialPage: initAfter ?? selectedPage);
     SharedPreferences pref = await SharedPreferences.getInstance();
     role = pref.getInt('role');
     print('ini role ${role}');

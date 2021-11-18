@@ -25,7 +25,7 @@ class RegisterNooController extends GetxController {
   CameraPosition? initialCamera;
   double? lat, long;
   Marker? lokasi;
-  File? shopSign, etalase, depan, belakang, kanan, kiri, video, ktp;
+  File? shopSign, depan, kanan, kiri, video, ktp;
   VideoPlayerController? videoPlayerController;
   List<BadanUsahaModel>? badanUsaha;
   List<DivisiModel>? div;
@@ -114,11 +114,6 @@ class RegisterNooController extends GetxController {
           depan = convert;
           update(['fotodepan']);
           break;
-        case 'fotobelakang':
-          File convert = await convertImage(namaFile, pickedFile);
-          belakang = convert;
-          update(['fotobelakang']);
-          break;
         case 'fotokanan':
           File convert = await convertImage(namaFile, pickedFile);
           kanan = convert;
@@ -128,11 +123,6 @@ class RegisterNooController extends GetxController {
           File convert = await convertImage(namaFile, pickedFile);
           kiri = convert;
           update(['fotokiri']);
-          break;
-        case 'fotoetalase':
-          File convert = await convertImage(namaFile, pickedFile);
-          etalase = convert;
-          update(['fotoetalase']);
           break;
         case 'fotoktp':
           File convert = await convertImage(namaFile, pickedFile);
@@ -217,10 +207,6 @@ class RegisterNooController extends GetxController {
         depan = null;
         update(['fotodepan']);
         break;
-      case 'fotobelakang':
-        belakang = null;
-        update(['fotobelakang']);
-        break;
       case 'fotokanan':
         kanan = null;
         update(['fotokanan']);
@@ -228,10 +214,6 @@ class RegisterNooController extends GetxController {
       case 'fotokiri':
         kiri = null;
         update(['fotokiri']);
-        break;
-      case 'fotoetalase':
-        etalase = null;
-        update(['fotoetalase']);
         break;
       default:
         shopSign = null;
@@ -313,7 +295,8 @@ class RegisterNooController extends GetxController {
 
   void play() => videoPlayerController!.play();
 
-  void pause() => videoPlayerController!.pause();
+  void pause() =>
+      videoPlayerController != null ? videoPlayerController!.pause() : null;
 
   void deleteVideo() {
     video = null;
@@ -357,7 +340,7 @@ class RegisterNooController extends GetxController {
                 elevation: MaterialStateProperty.all(0),
               ),
               onPressed: () {
-                Get.offAll(() => MainPage());
+                Get.offAll(() => MainPage(), arguments: 0);
               },
               child: Text(
                 "OK",
@@ -443,22 +426,18 @@ class RegisterNooController extends GetxController {
     if (submitFormKey.currentState!.validate()) {
       if (video == null ||
           shopSign == null ||
-          etalase == null ||
           depan == null ||
           kanan == null ||
           kiri == null ||
-          belakang == null ||
           ktp == null) {
-        notif("Salah",
-            'Data belum lengkap silahkan cek kembali dan lengkapi data');
+        notif(
+            "Salah", 'Data belum lengkap silahkan cek pada bagian foto/video');
       } else {
         List<File> images = [];
         images.add(shopSign!);
-        images.add(etalase!);
         images.add(depan!);
         images.add(kanan!);
         images.add(kiri!);
-        images.add(belakang!);
         images.add(ktp!);
         notifLoading('Tunggu', 'Sedang mengirim data');
         Position position = await Geolocator.getCurrentPosition(
@@ -497,8 +476,8 @@ class RegisterNooController extends GetxController {
         }
       }
     } else {
-      notif(
-          "Salah", 'Data belum lengkap silahkan cek kembali dan lengkapi data');
+      notif("Salah",
+          'Data belum lengkap pada kolom bertuliskan wajib isi, cek kembali dan lengkapi data');
     }
   }
 

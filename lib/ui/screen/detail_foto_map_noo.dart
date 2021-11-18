@@ -40,42 +40,11 @@ class DetailFotoDanMap extends GetView<DetailNooController> {
                       Padding(
                         padding: EdgeInsets.only(left: defaultMargin),
                         child: LabelFormRegisterHalf(
-                          nama: 'Foto Etalase',
-                          width: 150,
-                        ),
-                      ),
-                      BoxFotoDetailNoo(image: data.potoEtalase!),
-                    ],
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: defaultMargin),
-                        child: LabelFormRegisterHalf(
                           nama: 'Foto Depan',
                           width: 150,
                         ),
                       ),
                       BoxFotoDetailNoo(image: data.potoDepan!),
-                    ],
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: defaultMargin),
-                        child: LabelFormRegisterHalf(
-                          nama: 'Foto Belakang',
-                          width: 150,
-                        ),
-                      ),
-                      BoxFotoDetailNoo(image: data.potoBelakang!),
                     ],
                   ),
                 ],

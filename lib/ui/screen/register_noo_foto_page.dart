@@ -79,62 +79,6 @@ class RegisterFotoNoo extends GetView<RegisterNooController> {
                             child: Row(
                               children: [
                                 LabelFormRegisterHalf(
-                                  nama: 'Foto Etalase',
-                                  width: 130,
-                                ),
-                                GetBuilder<RegisterNooController>(
-                                  id: 'fotoetalase',
-                                  builder: (_) {
-                                    return (controller.etalase == null)
-                                        ? SizedBox()
-                                        : IconButton(
-                                            onPressed: () {
-                                              controller
-                                                  .deleteFoto('fotoetalase');
-                                            },
-                                            iconSize: defaultMargin,
-                                            color: Colors.red,
-                                            icon: Icon(MdiIcons.closeBox),
-                                          );
-                                  },
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                      GetBuilder<RegisterNooController>(
-                        id: 'fotoetalase',
-                        builder: (_) {
-                          return (controller.etalase == null)
-                              ? BoxFotoRegistration(
-                                  function: () {
-                                    controller.opsiMediaFoto('fotoetalase');
-                                  },
-                                )
-                              : BoxFotoRegistrationNoo(
-                                  foto: controller.etalase!,
-                                );
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                Container(
-                  width: MediaQuery.of(context).size.width / 2,
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Container(
-                            padding: EdgeInsets.only(left: 8),
-                            child: Row(
-                              children: [
-                                LabelFormRegisterHalf(
                                   nama: 'Foto Depan',
                                   width: 130,
                                 ),
@@ -172,58 +116,6 @@ class RegisterFotoNoo extends GetView<RegisterNooController> {
                                 )
                               : BoxFotoRegistrationNoo(
                                   foto: controller.depan!,
-                                );
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width / 2,
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Container(
-                            padding: EdgeInsets.only(left: 8),
-                            child: Row(
-                              children: [
-                                LabelFormRegisterHalf(
-                                  nama: 'Foto Belakang',
-                                  width: 130,
-                                ),
-                                GetBuilder<RegisterNooController>(
-                                  id: 'fotobelakang',
-                                  builder: (_) {
-                                    return (controller.belakang == null)
-                                        ? SizedBox()
-                                        : IconButton(
-                                            onPressed: () {
-                                              controller
-                                                  .deleteFoto('fotobelakang');
-                                            },
-                                            iconSize: defaultMargin,
-                                            color: Colors.red,
-                                            icon: Icon(MdiIcons.closeBox),
-                                          );
-                                  },
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                      GetBuilder<RegisterNooController>(
-                        id: 'fotobelakang',
-                        builder: (_) {
-                          return (controller.belakang == null)
-                              ? BoxFotoRegistration(
-                                  function: () {
-                                    controller.opsiMediaFoto('fotobelakang');
-                                  },
-                                )
-                              : BoxFotoRegistrationNoo(
-                                  foto: controller.belakang!,
                                 );
                         },
                       ),
@@ -411,7 +303,7 @@ class RegisterFotoNoo extends GetView<RegisterNooController> {
                         MaterialStateProperty.all("FF3F0A".toColor()),
                     elevation: MaterialStateProperty.all(0)),
                 child: Text(
-                  "Kembali",
+                  "Simpan",
                   style: GoogleFonts.poppins(
                       color: Colors.white, fontWeight: FontWeight.w500),
                 ),
