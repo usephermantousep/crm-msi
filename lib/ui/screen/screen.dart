@@ -1,5 +1,6 @@
 import 'package:crm_msi/controller/controllers.dart';
 import 'package:crm_msi/model/models.dart';
+import 'package:crm_msi/services/services.dart';
 import 'package:crm_msi/shared/share.dart';
 import 'package:crm_msi/ui/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
@@ -15,6 +16,7 @@ import 'package:supercharged/supercharged.dart';
 import 'package:trust_location/trust_location.dart';
 import 'package:video_player/video_player.dart';
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 part 'gmaps_page.dart';
 part 'chekinout_page.dart';
@@ -35,3 +37,7 @@ part 'loading_full_screen.dart';
 part 'detail_foto.dart';
 part 'update_foto_outlet.dart';
 part 'ar_home_screen.dart';
+part 'detail_outlet.dart';
+part 'list_outlet.dart';
+part 'detail_foto_outlet.dart';
+part 'list_monitor_visit.dart';

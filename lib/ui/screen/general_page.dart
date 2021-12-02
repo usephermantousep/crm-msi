@@ -70,10 +70,11 @@ class GeneralPage extends StatelessWidget {
                               Text(
                                 subtitle!,
                                 style: GoogleFonts.poppins(
-                                  fontSize: 22,
+                                  fontSize: 20,
                                   fontWeight: FontWeight.w300,
                                   color: "8D92A3".toColor(),
                                 ),
+                                overflow: TextOverflow.clip,
                               ),
                             ],
                           )

@@ -119,4 +119,40 @@ class VisitServices {
       return ApiReturnValue(value: false, message: err.toString());
     }
   }
+
+  static Future<ApiReturnValue<List<VisitModel>>> getMonitorVisit(
+      {http.Client? client}) async {
+    try {
+      if (client == null) {
+        client = http.Client();
+      }
+
+      String url = baseUrl + "visit/monitor";
+      Uri uri = Uri.parse(url);
+
+      SharedPreferences pref = await SharedPreferences.getInstance();
+
+      var response = await client.get(uri, headers: {
+        'Content-Type': "application/json",
+        'Authorization': "Bearer ${pref.getString('token')}",
+      });
+
+      if (response.statusCode != 200) {
+        var data = jsonDecode(response.body);
+        String message = data['meta']['message'];
+        return ApiReturnValue(value: [], message: message);
+      }
+
+      print(response.statusCode);
+      var data = jsonDecode(response.body);
+
+      List<VisitModel> value = (data['data'] as Iterable)
+          .map((e) => VisitModel.fromJson(e))
+          .toList();
+
+      return ApiReturnValue(value: value);
+    } catch (e) {
+      return ApiReturnValue(value: [], message: e.toString());
+    }
+  }
 }

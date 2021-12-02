@@ -37,6 +37,8 @@ class UserServices {
       UserModel value = UserModel.fromJson(data['data']['user']);
 
       SharedPreferences pref = await SharedPreferences.getInstance();
+
+      pref.setString('username', value.username!);
       pref.setInt(
         'role',
         value.roles!.id!,
@@ -121,12 +123,6 @@ class UserServices {
         return ApiReturnValue(value: false, message: message);
       }
 
-      int? region = pref.getInt('region');
-      int? cluster = pref.getInt('cluster');
-      int? role = pref.getInt('role');
-      int? divisi = pref.getInt('divisi');
-      int? badanUsaha = pref.getInt('badanusaha');
-
       var data = jsonDecode(response.body);
 
       UserModel user = UserModel.fromJson(data['data']['user']);
@@ -136,12 +132,25 @@ class UserServices {
       int roleApi = user.roles!.id!;
       int divisiApi = user.divisi!.id!;
       int badanUsahaApi = user.badanUsaha!.id!;
+      String usernameApi = user.username!;
+      int? region = pref.getInt('region');
+      int? cluster = pref.getInt('cluster');
+      int? role = pref.getInt('role');
+      int? divisi = pref.getInt('divisi');
+      int? badanUsaha = pref.getInt('badanusaha');
+      String? username = pref.getString('username');
+
+      if (username == null) {
+        pref.clear();
+        return ApiReturnValue(value: false);
+      }
 
       if (region != regionApi ||
           cluster != clusterApi ||
           role != roleApi ||
           divisi != divisiApi ||
-          badanUsaha != badanUsahaApi) {
+          badanUsaha != badanUsahaApi ||
+          username != usernameApi) {
         pref.clear();
         return ApiReturnValue(value: false);
       }

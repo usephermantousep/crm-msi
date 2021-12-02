@@ -10,46 +10,7 @@ class ProfilePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Container(
-              height: 212,
-              width: double.infinity,
-              decoration: BoxDecoration(color: Colors.white),
-              child: Column(
-                children: [
-                  Container(
-                    width: 90,
-                    height: 90,
-                    margin: EdgeInsets.only(top: 28),
-                    padding: EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage('assets/photo_border.png'),
-                        ),
-                        color: Colors.white),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        // shape: BoxShape.circle,
-                        image: DecorationImage(
-                          image: AssetImage('assets/sam.png'),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    'Sales Assistant Mobile',
-                    style: blackFontStyle1.copyWith(fontSize: 20),
-                  ),
-                  SizedBox(height: 5),
-                  Text(
-                    'V1.0.0',
-                    style: greyFontStyle,
-                  )
-                ],
-              ),
-            ),
+            _header(),
             SizedBox(
               height: 20,
             ),
@@ -87,11 +48,24 @@ class ProfilePage extends StatelessWidget {
                                 (controller.role == 2 || controller.role == 3)
                                     ? MenuAccount(
                                         title: "Outlet Total",
-                                        count: con.outlets!.length.toString(),
-                                        onpress: () {},
+                                        count: (con.outlets == null)
+                                            ? ''
+                                            : con.outlets!.length.toString(),
+                                        onpress: () {
+                                          Get.to(() => ListOutlet());
+                                        },
                                         mdiIcons: MdiIcons.storefront,
                                       )
-                                    : Container(),
+                                    : (controller.role == 1)
+                                        ? MenuAccount(
+                                            onpress: () {
+                                              _bottomSheet(context);
+                                            },
+                                            title: "All Outlet",
+                                            count: "",
+                                            mdiIcons: MdiIcons.storefront,
+                                          )
+                                        : Container(),
                                 (controller.role == 1 ||
                                         controller.role == 2 ||
                                         controller.role == 3)
@@ -103,7 +77,26 @@ class ProfilePage extends StatelessWidget {
                                             controller.visit!.length.toString(),
                                       )
                                     : SizedBox(),
-                                Divider(),
+                                (controller.role == 1 || controller.role == 2)
+                                    ? GetBuilder<ProfileController>(
+                                        id: 'monitor',
+                                        builder: (_) => MenuAccount(
+                                          onpress: () {
+                                            Get.to(
+                                              () => ListMonitorVisit(
+                                                  visits:
+                                                      controller.visitMonitor!),
+                                            );
+                                          },
+                                          title: 'Monitoring Visit',
+                                          mdiIcons: MdiIcons.map,
+                                          count:
+                                              (controller.visitMonitor == null)
+                                                  ? '0'
+                                                  : '',
+                                        ),
+                                      )
+                                    : SizedBox(),
                                 Container(
                                   child: MenuAccount(
                                     title: "Log Out",
@@ -189,6 +182,201 @@ class ProfilePage extends StatelessWidget {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  _header() {
+    return Container(
+      height: 212,
+      width: double.infinity,
+      decoration: BoxDecoration(color: Colors.white),
+      child: Column(
+        children: [
+          Container(
+            width: 90,
+            height: 90,
+            margin: EdgeInsets.only(top: 28),
+            padding: EdgeInsets.all(10),
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/photo_border.png'),
+                ),
+                color: Colors.white),
+            child: Container(
+              decoration: BoxDecoration(
+                // shape: BoxShape.circle,
+                image: DecorationImage(
+                  image: AssetImage('assets/sam.png'),
+                ),
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Text(
+            'Sales Assistant Mobile',
+            style: blackFontStyle1.copyWith(fontSize: 20),
+          ),
+          SizedBox(height: 5),
+          Text(
+            'V1.0.1',
+            style: greyFontStyle,
+          )
+        ],
+      ),
+    );
+  }
+
+  _bottomSheet(BuildContext context) {
+    return Get.bottomSheet(
+      GetBuilder<ProfileController>(
+        id: 'dropdown',
+        builder: (_) => Container(
+          padding: EdgeInsets.all(10),
+          height: MediaQuery.of(context).size.height / 2,
+          color: Colors.white,
+          child: Column(
+            children: [
+              Container(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    LabelFormRegisterHalf(
+                      nama: "Pilih Divisi Outlet",
+                      width: double.infinity,
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.5,
+                      child: DropdownSearch<String>(
+                        emptyBuilder: (context, message) => Center(
+                          child: Text("Tidak ada daftar"),
+                        ),
+                        showSearchBox: true,
+                        searchBoxStyle: blackFontStyle2,
+                        hint: "Cari Divisi....",
+                        items: controller.divisi!.map((e) => e.name!).toList(),
+                        popupItemBuilder: (_, item, __) => Container(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 10),
+                          child: Text(
+                            item,
+                            style: blackFontStyle2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        onChanged: (String? value) async {
+                          if (value != null) {
+                            controller.selectedDivisi = null;
+                            controller.selectedRegion = null;
+                            controller.region = [];
+                            controller.selectedDivisi = value;
+                            await controller
+                                .getRegion(controller.selectedDivisi!)
+                                .then((value) => controller.region = value);
+
+                            controller.updateManual();
+                          }
+                        },
+                        searchBoxDecoration: InputDecoration(
+                          hintText: "Cari Divisi ...",
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                          contentPadding: EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 15),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    LabelFormRegisterHalf(
+                      nama: "Pilih Region Outlet",
+                      width: double.infinity,
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.5,
+                      child: DropdownSearch<String>(
+                        emptyBuilder: (context, message) => Center(
+                          child: Text("Tidak ada daftar"),
+                        ),
+                        showSearchBox: true,
+                        searchBoxStyle: blackFontStyle2,
+                        hint: "Cari Region....",
+                        items: (controller.region != null)
+                            ? controller.region!.map((e) => e.name!).toList()
+                            : [],
+                        popupItemBuilder: (_, item, __) => Container(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 10),
+                          child: Text(
+                            item,
+                            style: blackFontStyle2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        onChanged: (String? value) async {
+                          if (value != null) {
+                            controller.selectedRegion = null;
+                            controller.selectedRegion = value;
+                            controller.updateManual();
+                          }
+                        },
+                        searchBoxDecoration: InputDecoration(
+                          hintText: "Cari Region ...",
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                          contentPadding: EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 15),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              ElevatedButton(
+                style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all("FF3F0A".toColor()),
+                    elevation: MaterialStateProperty.all(0)),
+                onPressed: () async {
+                  if (controller.selectedDivisi != null &&
+                      controller.selectedRegion != null) {
+                    Get.back();
+                    controller.loading();
+                    await controller
+                        .getDataOutlet(
+                      region: controller.selectedRegion,
+                      divisi: controller.selectedDivisi,
+                    )
+                        .then(
+                      (value) async {
+                        Get.back();
+                        if (value) {
+                          Get.to(() => ListOutlet());
+                        }
+                        ;
+                      },
+                    );
+                    controller.selectedDivisi = null;
+                    controller.selectedRegion = null;
+                  } else {
+                    controller.notif("Salah", "pilih divisi dan region dahulu");
+                  }
+                },
+                child: Text(
+                  'OK',
+                  style: blackFontStyle3.copyWith(color: Colors.white),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

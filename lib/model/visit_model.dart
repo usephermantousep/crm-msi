@@ -15,6 +15,8 @@ class VisitModel extends Equatable {
   final String? pictureVisitIn;
   final String? pictureVisitOut;
   final OutletModel? outlet;
+  final UserModel? user;
+  final String? transaksi;
 
   VisitModel({
     this.id,
@@ -31,6 +33,8 @@ class VisitModel extends Equatable {
     this.pictureVisitOut,
     this.durasiVisit,
     this.outlet,
+    this.user,
+    this.transaksi,
   });
 
   @override
@@ -49,6 +53,8 @@ class VisitModel extends Equatable {
         pictureVisitOut,
         durasiVisit,
         outlet,
+        user,
+        transaksi,
       ];
 
   factory VisitModel.fromJson(Map<String, dynamic> json) => VisitModel(
@@ -69,5 +75,20 @@ class VisitModel extends Equatable {
         pictureVisitIn: json["picture_visit_in"],
         pictureVisitOut: json["picture_visit_out"],
         outlet: OutletModel.fromJson(json["outlet"]),
+        user: UserModel.fromJson(json["user"]),
+        transaksi: json["transaksi"],
       );
 }
+
+List<VisitModel> mockMonitor = [
+  VisitModel(
+    tanggalVisit: DateTime(2021, 11, 29),
+    user: UserModel(namaLengkap: 'Usep Hermanto'),
+    outlet: OutletModel(
+      namaOutlet: "outlet ini",
+      region: RegionModel(name: 'SWJ'),
+      cluster: ClusterModel(name: 'CSW1'),
+    ),
+    checkInTime: DateTime.now(),
+  ),
+];

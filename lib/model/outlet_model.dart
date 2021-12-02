@@ -14,6 +14,7 @@ class OutletModel extends Equatable {
   final String? potoKanan;
   final String? potoKtp;
   final String? distric;
+  final String? video;
   final int? limit;
   final RegionModel? region;
   final ClusterModel? cluster;
@@ -39,6 +40,7 @@ class OutletModel extends Equatable {
         limit: json["limit"],
         radius: json["radius"],
         latlong: json["latlong"],
+        video: json["video"],
         statusOutlet: json["status_outlet"],
         cluster: ClusterModel.fromJson(json["cluster"]),
         region: RegionModel.fromJson(json["region"]),
@@ -59,6 +61,7 @@ class OutletModel extends Equatable {
     this.potoKiri,
     this.potoKanan,
     this.potoKtp,
+    this.video,
     this.limit,
     this.radius,
     this.latlong,
@@ -85,6 +88,7 @@ class OutletModel extends Equatable {
         potoKtp,
         limit,
         radius,
+        video,
         latlong,
         divisi,
         statusOutlet,
