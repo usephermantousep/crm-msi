@@ -83,9 +83,7 @@ class ProfilePage extends StatelessWidget {
                                         builder: (_) => MenuAccount(
                                           onpress: () {
                                             Get.to(
-                                              () => ListMonitorVisit(
-                                                  visits:
-                                                      controller.visitMonitor!),
+                                              () => ListMonitorVisit(),
                                             );
                                           },
                                           title: 'Monitoring Visit',
@@ -222,7 +220,7 @@ class ProfilePage extends StatelessWidget {
           ),
           SizedBox(height: 5),
           Text(
-            'V1.0.1',
+            'V1.0.2',
             style: greyFontStyle,
           )
         ],
