@@ -6,7 +6,7 @@ class RegisterNoo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GeneralPage(
-      title: "Register NOO",
+      title: "Register",
       subtitle: "Detail Outlet",
       backColor: Colors.black,
       onBackButtonPressed: () {
@@ -74,6 +74,23 @@ class RegisterNoo extends StatelessWidget {
               ),
               SizedBox(
                 height: defaultMargin,
+              ),
+              Divider(),
+              LabelFormRegister(
+                nama: 'Jenis Outlet*',
+              ),
+              GetBuilder<RegisterNooController>(
+                id: 'jenis',
+                builder: (_) => DropDownHalf(
+                    dropdownValue: controller.selectedJenis,
+                    opsi: controller.jenis,
+                    width: 0.3,
+                    validator: controller.validater,
+                    function: (String? val) {
+                      if (val != null) {
+                        controller.onChangeJenis(val);
+                      }
+                    }),
               ),
               GetBuilder<RegisterNooController>(
                 id: 'position',

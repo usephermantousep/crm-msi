@@ -3,7 +3,7 @@ part of 'controllers.dart';
 class ListNooController extends GetxController {
   int selectedIndex = 0;
   List<NooModel> noos = [];
-
+  List<NooModel> lead = [];
   int? role;
 
   void changeMenu(int index) {
@@ -16,8 +16,8 @@ class ListNooController extends GetxController {
 
     if (result.value != null) {
       noos = result.value!;
-
-      update(['listnoo', 'timeline']);
+      lead = noos.where((e) => e.status == NooStatus.lead).toList();
+      update(['listnoo', 'timeline', 'listlead']);
     }
   }
 

@@ -55,10 +55,11 @@ class NooService {
     String? div,
     String? reg,
     String? clus,
+    String? jenis,
     http.MultipartRequest? client,
   }) async {
     try {
-      String url = baseUrl + 'noo';
+      String url = "$baseUrl${(jenis == "NOO") ? 'noo' : 'lead'}";
       Uri uri = Uri.parse(url);
       SharedPreferences pref = await SharedPreferences.getInstance();
 

@@ -223,7 +223,7 @@ class HomePage extends StatelessWidget {
                             width: 100,
                             child: Center(
                                 child: Text(
-                              "Register NOO",
+                              "Register",
                               style: blackFontStyle3,
                             )),
                           )

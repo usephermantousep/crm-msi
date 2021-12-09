@@ -95,6 +95,21 @@ class ProfilePage extends StatelessWidget {
                                         ),
                                       )
                                     : SizedBox(),
+                                GetBuilder<ListNooController>(
+                                  id: 'listlead',
+                                  builder: (con) => MenuAccount(
+                                    onpress: () =>
+                                        Get.to(() => LeadListScreen()),
+                                    title: 'Lead',
+                                    mdiIcons: MdiIcons.storeMinus,
+                                    count: con.noos
+                                        .where((element) =>
+                                            element.status == NooStatus.lead)
+                                        .toList()
+                                        .length
+                                        .toString(),
+                                  ),
+                                ),
                                 Container(
                                   child: MenuAccount(
                                     title: "Log Out",
@@ -124,7 +139,7 @@ class ProfilePage extends StatelessWidget {
                             builder: (_) => Column(
                               children: [
                                 MenuAccount(
-                                  title: "Registered",
+                                  title: "Pending",
                                   count: _.noos
                                       .where((element) =>
                                           element.status! == NooStatus.pending)

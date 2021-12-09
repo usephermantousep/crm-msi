@@ -19,7 +19,8 @@ class RegisterNooController extends GetxController {
       selectedClus,
       selectedBu,
       selectedReg,
-      selectedDiv;
+      selectedDiv,
+      selectedJenis;
 
   int? role;
   CameraPosition? initialCamera;
@@ -46,6 +47,11 @@ class RegisterNooController extends GetxController {
     '8',
     '9',
     '10',
+  ];
+
+  List<String> jenis = [
+    'NOO',
+    'LEAD',
   ];
 
   void onChangeCluster(String value) {
@@ -330,7 +336,7 @@ class RegisterNooController extends GetxController {
         ],
       );
 
-  void dialogSubmit() => Get.defaultDialog(
+  void dialogSubmit(String jenis) => Get.defaultDialog(
           actions: [
             ElevatedButton(
               style: ButtonStyle(
@@ -351,7 +357,7 @@ class RegisterNooController extends GetxController {
             ),
           ],
           title: 'Berhasil',
-          middleText: 'Data noo sudah di tambahkan',
+          middleText: 'Data $jenis sudah di tambahkan',
           titleStyle: blackFontStyle3.copyWith(fontSize: 14),
           middleTextStyle: blackFontStyle2);
 
@@ -372,6 +378,12 @@ class RegisterNooController extends GetxController {
     selectedBu = val;
     await getDiv(val).then((value) => div = value);
     update(['position']);
+  }
+
+  void onChangeJenis(String val) {
+    selectedJenis = null;
+    selectedJenis = val;
+    update(['jenis']);
   }
 
   void onChangeTmDiv(String val) async {
@@ -422,57 +434,82 @@ class RegisterNooController extends GetxController {
     return result.value!;
   }
 
+  void send(String jenis) async {
+    List<File> images = [];
+    if (jenis == "NOO") {
+      images.add(shopSign!);
+      images.add(depan!);
+      images.add(kanan!);
+      images.add(kiri!);
+      images.add(ktp!);
+    } else {
+      images.add(shopSign!);
+      images.add(depan!);
+      images.add(kanan!);
+      images.add(kiri!);
+    }
+    notifLoading('Tunggu', 'Sedang mengirim data');
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+
+    String latlong = '${position.latitude},${position.longitude}';
+    ApiReturnValue<bool> result = await NooService.submit(
+      images,
+      video!,
+      namaOutlet!.text,
+      namaPemilikOutlet!.text,
+      ktpOutlet!.text,
+      alamatOutlet!.text,
+      nomorPemilikOutlet!.text,
+      nomerWakilOutlet!.text,
+      distric!.text,
+      oppo!,
+      vivo!,
+      samsung!,
+      realme!,
+      xiaomi!,
+      fl!,
+      latlong,
+      bu: selectedBu,
+      div: selectedDiv,
+      reg: selectedReg,
+      clus: selectedClus,
+      jenis: jenis,
+    );
+    if (result.value != null) {
+      Get.back();
+      if (result.value!) {
+        dialogSubmit(jenis);
+      } else {
+        notif("Gagal", result.message!);
+      }
+    }
+  }
+
   void submit() async {
     if (submitFormKey.currentState!.validate()) {
-      if (video == null ||
-          shopSign == null ||
-          depan == null ||
-          kanan == null ||
-          kiri == null ||
-          ktp == null) {
-        notif(
-            "Salah", 'Data belum lengkap silahkan cek pada bagian foto/video');
+      if (selectedJenis == 'NOO') {
+        if (video == null ||
+            shopSign == null ||
+            depan == null ||
+            kanan == null ||
+            kiri == null ||
+            ktp == null) {
+          notif("Registrasi NOO",
+              "Data belum lengkap silahkan cek pada bagian foto/video \nMode NOO wajib KTP/NPWP");
+        } else {
+          send(selectedJenis!);
+        }
       } else {
-        List<File> images = [];
-        images.add(shopSign!);
-        images.add(depan!);
-        images.add(kanan!);
-        images.add(kiri!);
-        images.add(ktp!);
-        notifLoading('Tunggu', 'Sedang mengirim data');
-        Position position = await Geolocator.getCurrentPosition(
-            desiredAccuracy: LocationAccuracy.high);
-
-        String latlong = '${position.latitude},${position.longitude}';
-        ApiReturnValue<bool> result = await NooService.submit(
-          images,
-          video!,
-          namaOutlet!.text,
-          namaPemilikOutlet!.text,
-          ktpOutlet!.text,
-          alamatOutlet!.text,
-          nomorPemilikOutlet!.text,
-          nomerWakilOutlet!.text,
-          distric!.text,
-          oppo!,
-          vivo!,
-          samsung!,
-          realme!,
-          xiaomi!,
-          fl!,
-          latlong,
-          bu: selectedBu,
-          div: selectedDiv,
-          reg: selectedReg,
-          clus: selectedClus,
-        );
-        if (result.value != null) {
-          Get.back();
-          if (result.value!) {
-            dialogSubmit();
-          } else {
-            notif("Gagal", result.message!);
-          }
+        if (video == null ||
+            shopSign == null ||
+            depan == null ||
+            kanan == null ||
+            kiri == null) {
+          notif("Registrasi LEAD",
+              "Data belum lengkap silahkan cek pada bagian foto/video");
+        } else {
+          send(selectedJenis!);
         }
       }
     } else {

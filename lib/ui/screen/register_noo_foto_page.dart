@@ -4,7 +4,7 @@ class RegisterFotoNoo extends GetView<RegisterNooController> {
   @override
   Widget build(BuildContext context) {
     return GeneralPage(
-      title: "Register NOO",
+      title: "Register",
       subtitle: "Upload Foto",
       onBackButtonPressed: () {
         Get.back();

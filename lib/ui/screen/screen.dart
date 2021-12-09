@@ -41,3 +41,4 @@ part 'detail_outlet.dart';
 part 'list_outlet.dart';
 part 'detail_foto_outlet.dart';
 part 'list_monitor_visit.dart';
+part 'lead_list_screen.dart';

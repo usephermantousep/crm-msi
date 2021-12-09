@@ -1,6 +1,6 @@
 part of 'models.dart';
 
-enum NooStatus { pending, confirmed, approved, rejected }
+enum NooStatus { lead, pending, confirmed, approved, rejected }
 
 class NooModel extends Equatable {
   NooModel({
@@ -110,13 +110,15 @@ class NooModel extends Equatable {
         fl: json["fl"],
         latlong: json["latlong"],
         limit: json["limit"],
-        status: (json["status"] == 'PENDING')
+        status: (json["status"] == 'PENDING' && json['keterangan'] == null)
             ? NooStatus.pending
             : (json["status"] == "CONFIRMED")
                 ? NooStatus.confirmed
                 : (json["status"] == 'APPROVED')
                     ? NooStatus.approved
-                    : NooStatus.rejected,
+                    : (json["status"] == 'REJECTED')
+                        ? NooStatus.rejected
+                        : NooStatus.lead,
         rejectedAt: (json["rejected_at"] == null)
             ? null
             : DateTime.fromMillisecondsSinceEpoch(json["rejected_at"]),
