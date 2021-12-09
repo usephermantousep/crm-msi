@@ -2,14 +2,16 @@ part of 'screen.dart';
 
 class DetailFotoDanMap extends GetView<DetailNooController> {
   final NooModel data;
+  final bool isNoo;
 
   DetailFotoDanMap({
     required this.data,
+    this.isNoo = true,
   });
   @override
   Widget build(BuildContext context) {
     return GeneralPage(
-      title: 'Foto dan Lokasi',
+      title: isNoo ? "Foto dan Lokasi" : "Foto",
       subtitle: "Detail Outlet",
       onBackButtonPressed: () {
         Get.back();
@@ -80,38 +82,42 @@ class DetailFotoDanMap extends GetView<DetailNooController> {
                   ),
                 ],
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      LabelFormRegisterHalf(
-                        nama: 'Foto KTP/NPWP',
-                        width: 150,
-                      ),
-                      BoxFotoDetailNoo(image: data.potoKtp!),
-                    ],
-                  ),
-                ],
-              ),
+              isNoo
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            LabelFormRegisterHalf(
+                              nama: 'Foto KTP/NPWP',
+                              width: 150,
+                            ),
+                            BoxFotoDetailNoo(image: data.potoKtp!),
+                          ],
+                        ),
+                      ],
+                    )
+                  : SizedBox(),
               SizedBox(
                 height: defaultMargin,
               ),
-              Container(
-                width: double.infinity,
-                margin: EdgeInsets.symmetric(horizontal: defaultMargin),
-                height: 280,
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black),
-                ),
-                child: GoogleMap(
-                  initialCameraPosition: controller.initialCamera!,
-                  myLocationButtonEnabled: false,
-                  zoomControlsEnabled: false,
-                  markers: {controller.lokasi!},
-                ),
-              ),
+              isNoo
+                  ? Container(
+                      width: double.infinity,
+                      margin: EdgeInsets.symmetric(horizontal: defaultMargin),
+                      height: 280,
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.black),
+                      ),
+                      child: GoogleMap(
+                        initialCameraPosition: controller.initialCamera!,
+                        myLocationButtonEnabled: false,
+                        zoomControlsEnabled: false,
+                        markers: {controller.lokasi!},
+                      ),
+                    )
+                  : SizedBox(),
             ],
           ),
           SizedBox(

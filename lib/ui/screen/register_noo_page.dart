@@ -19,6 +19,22 @@ class RegisterNoo extends StatelessWidget {
           child: Column(
             children: [
               LabelFormRegister(
+                nama: 'Jenis Outlet*',
+              ),
+              GetBuilder<RegisterNooController>(
+                id: 'jenis',
+                builder: (_) => DropDownHalf(
+                    dropdownValue: controller.selectedJenis,
+                    opsi: controller.jenis,
+                    width: 0.3,
+                    validator: controller.validater,
+                    function: (String? val) {
+                      if (val != null) {
+                        controller.onChangeJenis(val);
+                      }
+                    }),
+              ),
+              LabelFormRegister(
                 nama: "Nama Outlet*",
               ),
               FormRegisterNoo(
@@ -34,12 +50,21 @@ class RegisterNoo extends StatelessWidget {
                 controller: controller.namaPemilikOutlet!,
                 validator: controller.validater,
               ),
-              LabelFormRegister(nama: 'KTP/NPWP Outlet*'),
-              FormRegisterNoo(
-                nama: "KTP/NPWP Outlet",
-                controller: controller.ktpOutlet!,
-                validator: controller.validater,
+              GetBuilder<RegisterNooController>(
+                id: 'jenis',
+                builder: (_) => (controller.selectedJenis == "NOO")
+                    ? LabelFormRegister(nama: 'KTP/NPWP Outlet*')
+                    : SizedBox(),
               ),
+              GetBuilder<RegisterNooController>(
+                  id: 'jenis',
+                  builder: (_) => (controller.selectedJenis == "NOO")
+                      ? FormRegisterNoo(
+                          nama: "KTP/NPWP Outlet",
+                          controller: controller.ktpOutlet!,
+                          validator: controller.validater,
+                        )
+                      : SizedBox()),
               LabelFormRegister(nama: 'Alamat Outlet*'),
               FormRegisterNoo(
                 nama: "Isi Alamat Outlet",
@@ -72,26 +97,7 @@ class RegisterNoo extends StatelessWidget {
                 controller: controller.distric!,
                 validator: controller.validater,
               ),
-              SizedBox(
-                height: defaultMargin,
-              ),
               Divider(),
-              LabelFormRegister(
-                nama: 'Jenis Outlet*',
-              ),
-              GetBuilder<RegisterNooController>(
-                id: 'jenis',
-                builder: (_) => DropDownHalf(
-                    dropdownValue: controller.selectedJenis,
-                    opsi: controller.jenis,
-                    width: 0.3,
-                    validator: controller.validater,
-                    function: (String? val) {
-                      if (val != null) {
-                        controller.onChangeJenis(val);
-                      }
-                    }),
-              ),
               GetBuilder<RegisterNooController>(
                 id: 'position',
                 builder: (_) => (controller.role == 1)

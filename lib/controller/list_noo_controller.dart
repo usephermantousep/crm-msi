@@ -5,10 +5,22 @@ class ListNooController extends GetxController {
   List<NooModel> noos = [];
   List<NooModel> lead = [];
   int? role;
+  TextEditingController ktp = TextEditingController();
 
   void changeMenu(int index) {
     selectedIndex = index;
     update(['menutab', 'listnoo']);
+  }
+
+  String? validater(String? value) {
+    if (value == null) {
+      return 'wajib di isi';
+    }
+
+    if (value.isEmpty) {
+      return 'wajib di isi';
+    }
+    return null;
   }
 
   Future<void> getNoo() async {

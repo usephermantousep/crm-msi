@@ -236,56 +236,52 @@ class RegisterFotoNoo extends GetView<RegisterNooController> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                  width: MediaQuery.of(context).size.width / 2,
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Container(
-                            padding: EdgeInsets.only(left: 8),
-                            child: Row(
-                              children: [
-                                LabelFormRegisterHalf(
-                                  nama: 'Foto KTP/NPWP',
-                                  width: 130,
-                                ),
-                                GetBuilder<RegisterNooController>(
-                                  id: 'fotoktp',
-                                  builder: (_) {
-                                    return (controller.ktp == null)
-                                        ? SizedBox()
-                                        : IconButton(
-                                            onPressed: () {
-                                              controller.deleteFoto('fotoktp');
-                                            },
-                                            iconSize: defaultMargin,
-                                            color: Colors.red,
-                                            icon: Icon(MdiIcons.closeBox),
-                                          );
-                                  },
-                                ),
-                              ],
-                            ),
+                GetBuilder<RegisterNooController>(
+                  id: 'fotoktp',
+                  builder: (_) => (controller.selectedJenis == "NOO")
+                      ? Container(
+                          width: MediaQuery.of(context).size.width / 2,
+                          child: Column(
+                            children: [
+                              Row(
+                                children: [
+                                  Container(
+                                    padding: EdgeInsets.only(left: 8),
+                                    child: Row(
+                                      children: [
+                                        LabelFormRegisterHalf(
+                                          nama: 'Foto KTP/NPWP',
+                                          width: 130,
+                                        ),
+                                        (controller.ktp == null)
+                                            ? SizedBox()
+                                            : IconButton(
+                                                onPressed: () {
+                                                  controller
+                                                      .deleteFoto('fotoktp');
+                                                },
+                                                iconSize: defaultMargin,
+                                                color: Colors.red,
+                                                icon: Icon(MdiIcons.closeBox),
+                                              ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              (controller.ktp == null)
+                                  ? BoxFotoRegistration(
+                                      function: () {
+                                        controller.opsiMediaFoto('fotoktp');
+                                      },
+                                    )
+                                  : BoxFotoRegistrationNoo(
+                                      foto: controller.ktp!,
+                                    ),
+                            ],
                           ),
-                        ],
-                      ),
-                      GetBuilder<RegisterNooController>(
-                        id: 'fotoktp',
-                        builder: (_) {
-                          return (controller.ktp == null)
-                              ? BoxFotoRegistration(
-                                  function: () {
-                                    controller.opsiMediaFoto('fotoktp');
-                                  },
-                                )
-                              : BoxFotoRegistrationNoo(
-                                  foto: controller.ktp!,
-                                );
-                        },
-                      ),
-                    ],
-                  ),
+                        )
+                      : SizedBox(),
                 ),
               ],
             ),

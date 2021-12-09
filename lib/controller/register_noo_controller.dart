@@ -383,7 +383,7 @@ class RegisterNooController extends GetxController {
   void onChangeJenis(String val) {
     selectedJenis = null;
     selectedJenis = val;
-    update(['jenis']);
+    update(['jenis', 'fotoktp']);
   }
 
   void onChangeTmDiv(String val) async {
