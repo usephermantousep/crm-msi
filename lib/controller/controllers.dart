@@ -32,3 +32,4 @@ part 'plan_visit_controller.dart';
 part 'register_noo_controller.dart';
 part 'detail_noo_controller.dart';
 part 'update_foto_controller.dart';
+part 'lead_list_controller.dart';

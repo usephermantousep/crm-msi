@@ -121,7 +121,7 @@ class CheckInOutScreen extends StatelessWidget {
                                     }
                                   } else {
                                     await controller
-                                        .checkFoto(controller.selectedOutlet!)
+                                        .check(controller.selectedOutlet!, true)
                                         .then((value) {
                                       if (value) {
                                         if (controller.foto != null) {
@@ -129,8 +129,8 @@ class CheckInOutScreen extends StatelessWidget {
                                         }
                                         if (controller.selectedOutlet != null) {
                                           controller
-                                              .check(controller.selectedOutlet!,
-                                                  true)
+                                              .checkFoto(
+                                                  controller.selectedOutlet!)
                                               .then(
                                             (value) {
                                               if (value) {
@@ -155,13 +155,13 @@ class CheckInOutScreen extends StatelessWidget {
                                                     }
                                                   },
                                                 );
+                                              } else {
+                                                controller.notifUpdateFoto(
+                                                    controller.selectedOutlet!);
                                               }
                                             },
                                           );
                                         }
-                                      } else {
-                                        controller.notifUpdateFoto(
-                                            controller.selectedOutlet!);
                                       }
                                     });
                                   }

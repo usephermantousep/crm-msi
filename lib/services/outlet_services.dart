@@ -65,13 +65,8 @@ class OutletServices {
     }
   }
 
-  static Future<ApiReturnValue<bool>> updateOutlet(
-      List<File> images,
-      String namaOutlet,
-      String namaPemilik,
-      String nomerPemilik,
-      String latlong,
-      File video,
+  static Future<ApiReturnValue<bool>> updateOutlet(String namaOutlet,
+      String namaPemilik, String nomerPemilik, String latlong, File video,
       {http.MultipartRequest? client}) async {
     try {
       SharedPreferences pref = await SharedPreferences.getInstance();
@@ -86,18 +81,6 @@ class OutletServices {
           ..fields['nama_pemilik_outlet'] = namaPemilik
           ..fields['nomer_tlp_outlet'] = nomerPemilik
           ..fields['latlong'] = latlong;
-      }
-
-      for (int i = 0; i < images.length; i++) {
-        String fileName = images[i].path.split('/').last;
-        var stream = new http.ByteStream(images[i].openRead());
-
-        var length = await images[i].length();
-
-        var multiPartImage = new http.MultipartFile('photo$i', stream, length,
-            filename: fileName);
-
-        client.files.add(multiPartImage);
       }
 
       var multiPartFileVideo =

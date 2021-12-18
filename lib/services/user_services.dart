@@ -23,6 +23,7 @@ class UserServices {
             'username': userName,
             'password': pass,
             'notif_id': osUserID!,
+            'version': '1.0.3',
           },
         ),
       );

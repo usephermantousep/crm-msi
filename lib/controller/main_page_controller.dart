@@ -23,7 +23,6 @@ class MainPageController extends GetxController {
     pageController = PageController(initialPage: initAfter ?? selectedPage);
     SharedPreferences pref = await SharedPreferences.getInstance();
     role = pref.getInt('role');
-    print('ini role ${role}');
     update(['mode']);
     super.onInit();
   }

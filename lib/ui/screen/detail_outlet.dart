@@ -165,19 +165,22 @@ class DetailOutlet extends GetView<ProfileController> {
                           ),
                         ]
                       : [
-                          ElevatedButton(
-                            style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.all(
-                                    "FF3F0A".toColor()),
-                                elevation: MaterialStateProperty.all(0)),
-                            onPressed: () =>
-                                Get.to(() => DetailFotoOutlet(data: outlet)),
-                            child: Text(
-                              "Lihat Foto",
-                              style:
-                                  blackFontStyle3.copyWith(color: Colors.white),
-                            ),
-                          ),
+                          (outlet.potoShopSign == null)
+                              ? SizedBox()
+                              : ElevatedButton(
+                                  style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all(
+                                              "FF3F0A".toColor()),
+                                      elevation: MaterialStateProperty.all(0)),
+                                  onPressed: () => Get.to(
+                                      () => DetailFotoOutlet(data: outlet)),
+                                  child: Text(
+                                    "Lihat Foto",
+                                    style: blackFontStyle3.copyWith(
+                                        color: Colors.white),
+                                  ),
+                                ),
                           ElevatedButton(
                             style: ButtonStyle(
                                 backgroundColor: MaterialStateProperty.all(

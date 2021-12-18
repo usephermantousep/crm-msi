@@ -393,4 +393,43 @@ class NooService {
       return ApiReturnValue(value: [], message: err.toString());
     }
   }
+
+  static Future<ApiReturnValue<bool>> submitKtp(int id, String ktp, File foto,
+      {http.MultipartRequest? client}) async {
+    try {
+      String url = baseUrl + 'lead/update';
+      Uri uri = Uri.parse(url);
+      SharedPreferences pref = await SharedPreferences.getInstance();
+
+      if (client == null) {
+        client = http.MultipartRequest('POST', uri)
+          ..headers["Content-Type"] = "application/json"
+          ..headers["Authorization"] = "Bearer ${pref.getString('token')}"
+          ..fields["noktp"] = ktp
+          ..fields["id"] = id.toString();
+      }
+
+      String fileName = foto.path.split('/').last;
+      var stream = new http.ByteStream(foto.openRead());
+
+      var length = await foto.length();
+
+      var multiPartImage =
+          new http.MultipartFile('photo', stream, length, filename: fileName);
+
+      client.files.add(multiPartImage);
+
+      var response = await client.send();
+
+      if (response.statusCode != 200) {
+        print(response.reasonPhrase);
+        return ApiReturnValue(
+            value: false,
+            message: 'Gagal registrasi Noo ${response.statusCode}');
+      }
+      return ApiReturnValue(value: true);
+    } catch (e) {
+      return ApiReturnValue(value: false, message: e.toString());
+    }
+  }
 }

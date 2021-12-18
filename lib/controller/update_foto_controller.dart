@@ -1,7 +1,7 @@
 part of 'controllers.dart';
 
 class UpdateFotoOutletController extends GetxController {
-  File? shopSign, depan, kanan, kiri, ktp, video;
+  File? video;
   TextEditingController namaPemilikOutlet = TextEditingController();
   TextEditingController nomorPemilikOutlet = TextEditingController();
   final submitFormKey = GlobalKey<FormState>();
@@ -85,135 +85,6 @@ class UpdateFotoOutletController extends GetxController {
           Text(msg, style: blackFontStyle2.copyWith(color: Colors.white)),
       backgroundColor: Colors.red[900]);
 
-  void opsiMediaFoto(String namaFile) {
-    Get.defaultDialog(
-      title: 'Upload Foto',
-      titleStyle: blackFontStyle2,
-      middleText: 'Pilih media :',
-      middleTextStyle: blackFontStyle3,
-      actions: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            ElevatedButton(
-              style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all("FF3F0A".toColor()),
-                  elevation: MaterialStateProperty.all(0)),
-              onPressed: () {
-                getImage(namaFile, ImageSource.gallery);
-              },
-              child: Text(
-                "Galeri",
-                style: blackFontStyle3.copyWith(
-                  color: Colors.white,
-                ),
-              ),
-            ),
-            ElevatedButton(
-              style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all("FF3F0A".toColor()),
-                  elevation: MaterialStateProperty.all(0)),
-              onPressed: () {
-                getImage(namaFile, ImageSource.camera);
-              },
-              child: Text(
-                "Kamera",
-                style: blackFontStyle3.copyWith(
-                  color: Colors.white,
-                ),
-              ),
-            ),
-          ],
-        )
-      ],
-    );
-  }
-
-  void deleteFoto(String namaFile) {
-    switch (namaFile) {
-      case 'fotodepan':
-        depan = null;
-        update(['fotodepan']);
-        break;
-      case 'fotokanan':
-        kanan = null;
-        update(['fotokanan']);
-        break;
-      case 'fotokiri':
-        kiri = null;
-        update(['fotokiri']);
-        break;
-      case 'fotoktp':
-        ktp = null;
-        update(['fotoktp']);
-        break;
-      default:
-        shopSign = null;
-        update(['fotoshopsign']);
-    }
-    update(['butfoto']);
-  }
-
-  void getImage(String namaFile, ImageSource source) async {
-    Get.back();
-    Get.defaultDialog(
-        title: 'Tunggu ...',
-        middleText: 'sedang memproses foto',
-        actions: [
-          Column(
-            children: [
-              Center(
-                child: CircularProgressIndicator(),
-              ),
-              SizedBox(
-                height: 50,
-              ),
-            ],
-          ),
-        ]);
-    final _picker = ImagePicker();
-
-    XFile? pickedFile = await _picker.pickImage(
-      source: source,
-    );
-
-    if (pickedFile != null) {
-      switch (namaFile) {
-        case 'fotodepan':
-          File convert = await convertImage(namaFile, pickedFile);
-          depan = convert;
-          update(['fotodepan']);
-          break;
-        case 'fotokanan':
-          File convert = await convertImage(namaFile, pickedFile);
-          kanan = convert;
-          update(['fotokanan']);
-          break;
-        case 'fotokiri':
-          File convert = await convertImage(namaFile, pickedFile);
-          kiri = convert;
-          update(['fotokiri']);
-          break;
-        case 'fotoktp':
-          File convert = await convertImage(namaFile, pickedFile);
-          ktp = convert;
-          update(['fotoktp']);
-          break;
-        default:
-          File convert = await convertImage(namaFile, pickedFile);
-          shopSign = convert;
-          update(['fotoshopsign']);
-      }
-      Get.back();
-      update(['butfoto']);
-    }
-    if (pickedFile == null) {
-      Get.back();
-    }
-  }
-
   void notifLoading(String title, String subtitle) => Get.defaultDialog(
         title: title,
         middleText: subtitle,
@@ -235,31 +106,6 @@ class UpdateFotoOutletController extends GetxController {
   Future<bool> submit(
       String namaOutlet, String namaPemilik, String nomerPemilik) async {
     String kodeOutlet = namaOutlet.split(' ').last;
-    List<File> images = [];
-    if (ktp == null) {
-      if (shopSign == null || depan == null || kanan == null || kiri == null) {
-        notif('Salah', 'Foto belum lengkap');
-        return false;
-      } else {
-        images.addAll([shopSign!, depan!, kanan!, kiri!]);
-      }
-    } else {
-      if (shopSign == null ||
-          depan == null ||
-          kanan == null ||
-          kiri == null ||
-          ktp == null) {
-        notif('Salah', 'Foto belum lengkap');
-        return false;
-      } else {
-        if (video == null) {
-          notif('Salah', 'Video belum lengkap');
-          return false;
-        } else {
-          images.addAll([shopSign!, depan!, kanan!, kiri!, ktp!]);
-        }
-      }
-    }
 
     Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
@@ -267,12 +113,12 @@ class UpdateFotoOutletController extends GetxController {
     String latlong = '${position.latitude},${position.longitude}';
 
     if (video == null) {
-      notif('Salah', 'Video belum lengkap');
+      notif('Salah', 'Video belum ada');
       return false;
     } else {
       notifLoading('tunggu', 'Sedang mengirim data');
       ApiReturnValue<bool> result = await OutletServices.updateOutlet(
-          images, kodeOutlet, namaPemilik, nomerPemilik, latlong, video!);
+          kodeOutlet, namaPemilik, nomerPemilik, latlong, video!);
       if (result.value!) {
         Get.back();
         return true;

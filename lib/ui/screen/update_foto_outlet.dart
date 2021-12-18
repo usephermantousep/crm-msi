@@ -40,287 +40,13 @@ class UpdateFotoOutlet extends StatelessWidget {
                 ],
               ),
             ),
-            Row(
-              children: [
-                Container(
-                  width: MediaQuery.of(context).size.width / 2,
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Container(
-                            padding: EdgeInsets.only(left: 8),
-                            child: Row(
-                              children: [
-                                LabelFormRegisterHalf(
-                                  nama: 'Foto Shop Sign',
-                                  width: 130,
-                                ),
-                                GetBuilder<UpdateFotoOutletController>(
-                                  id: 'fotoshopsign',
-                                  builder: (_) {
-                                    return (controller.shopSign == null)
-                                        ? SizedBox()
-                                        : IconButton(
-                                            onPressed: () {
-                                              controller
-                                                  .deleteFoto('fotoshopsign');
-                                            },
-                                            iconSize: defaultMargin,
-                                            color: Colors.red,
-                                            icon: Icon(
-                                              MdiIcons.closeBox,
-                                            ),
-                                          );
-                                  },
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                      GetBuilder<UpdateFotoOutletController>(
-                        id: 'fotoshopsign',
-                        builder: (_) {
-                          return (controller.shopSign == null)
-                              ? BoxFotoRegistration(
-                                  function: () {
-                                    controller.opsiMediaFoto('fotoshopsign');
-                                  },
-                                )
-                              : BoxFotoRegistrationNoo(
-                                  foto: controller.shopSign!,
-                                );
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width / 2,
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Container(
-                            padding: EdgeInsets.only(left: 8),
-                            child: Row(
-                              children: [
-                                LabelFormRegisterHalf(
-                                  nama: 'Foto Depan',
-                                  width: 130,
-                                ),
-                                GetBuilder<UpdateFotoOutletController>(
-                                  id: 'fotodepan',
-                                  builder: (_) {
-                                    return (controller.depan == null)
-                                        ? SizedBox()
-                                        : IconButton(
-                                            onPressed: () {
-                                              controller
-                                                  .deleteFoto('fotodepan');
-                                            },
-                                            iconSize: defaultMargin,
-                                            color: Colors.red,
-                                            icon: Icon(
-                                              MdiIcons.closeBox,
-                                            ),
-                                          );
-                                  },
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                      GetBuilder<UpdateFotoOutletController>(
-                        id: 'fotodepan',
-                        builder: (_) {
-                          return (controller.depan == null)
-                              ? BoxFotoRegistration(
-                                  function: () {
-                                    controller.opsiMediaFoto('fotodepan');
-                                  },
-                                )
-                              : BoxFotoRegistrationNoo(
-                                  foto: controller.depan!,
-                                );
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                Container(
-                  width: MediaQuery.of(context).size.width / 2,
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Container(
-                            padding: EdgeInsets.only(left: 8),
-                            child: Row(
-                              children: [
-                                LabelFormRegisterHalf(
-                                  nama: 'Foto Kanan',
-                                  width: 130,
-                                ),
-                                GetBuilder<UpdateFotoOutletController>(
-                                  id: 'fotokanan',
-                                  builder: (_) {
-                                    return (controller.kanan == null)
-                                        ? SizedBox()
-                                        : IconButton(
-                                            onPressed: () {
-                                              controller
-                                                  .deleteFoto('fotokanan');
-                                            },
-                                            iconSize: defaultMargin,
-                                            color: Colors.red,
-                                            icon: Icon(
-                                              MdiIcons.closeBox,
-                                            ),
-                                          );
-                                  },
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                      GetBuilder<UpdateFotoOutletController>(
-                        id: 'fotokanan',
-                        builder: (_) {
-                          return (controller.kanan == null)
-                              ? BoxFotoRegistration(
-                                  function: () {
-                                    controller.opsiMediaFoto('fotokanan');
-                                  },
-                                )
-                              : BoxFotoRegistrationNoo(
-                                  foto: controller.kanan!,
-                                );
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width / 2,
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Container(
-                            padding: EdgeInsets.only(left: 8),
-                            child: Row(
-                              children: [
-                                LabelFormRegisterHalf(
-                                  nama: 'Foto Kiri',
-                                  width: 130,
-                                ),
-                                GetBuilder<UpdateFotoOutletController>(
-                                  id: 'fotokiri',
-                                  builder: (_) {
-                                    return (controller.kiri == null)
-                                        ? SizedBox()
-                                        : IconButton(
-                                            onPressed: () {
-                                              controller.deleteFoto('fotokiri');
-                                            },
-                                            iconSize: defaultMargin,
-                                            color: Colors.red,
-                                            icon: Icon(MdiIcons.closeBox),
-                                          );
-                                  },
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                      GetBuilder<UpdateFotoOutletController>(
-                        id: 'fotokiri',
-                        builder: (_) {
-                          return (controller.kiri == null)
-                              ? BoxFotoRegistration(
-                                  function: () {
-                                    controller.opsiMediaFoto('fotokiri');
-                                  },
-                                )
-                              : BoxFotoRegistrationNoo(
-                                  foto: controller.kiri!,
-                                );
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  width: MediaQuery.of(context).size.width / 2,
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Container(
-                            padding: EdgeInsets.only(left: 8),
-                            child: Row(
-                              children: [
-                                LabelFormRegisterHalf(
-                                  nama: 'Foto KTP/NPWP (jika ada)',
-                                  width: 130,
-                                ),
-                                GetBuilder<UpdateFotoOutletController>(
-                                  id: 'fotoktp',
-                                  builder: (_) {
-                                    return (controller.ktp == null)
-                                        ? SizedBox()
-                                        : IconButton(
-                                            onPressed: () {
-                                              controller.deleteFoto('fotoktp');
-                                            },
-                                            iconSize: defaultMargin,
-                                            color: Colors.red,
-                                            icon: Icon(MdiIcons.closeBox),
-                                          );
-                                  },
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                      GetBuilder<UpdateFotoOutletController>(
-                        id: 'fotoktp',
-                        builder: (_) {
-                          return (controller.ktp == null)
-                              ? BoxFotoRegistration(
-                                  function: () {
-                                    controller.opsiMediaFoto('fotoktp');
-                                  },
-                                )
-                              : BoxFotoRegistrationNoo(
-                                  foto: controller.ktp!,
-                                );
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
             SizedBox(
               height: defaultMargin,
             ),
             Divider(),
+            SizedBox(
+              height: defaultMargin,
+            ),
             GetBuilder<UpdateFotoOutletController>(
               id: 'butvid',
               builder: (_) => ElevatedButton(
@@ -369,6 +95,18 @@ class UpdateFotoOutlet extends StatelessWidget {
                               ),
                             )));
                 }),
+            Container(
+              width: double.infinity,
+              child: Text(
+                "#Pastikan rekam shopsign outlet dan outletnya secara menyeluruh!!!",
+                style: blackFontStyle3.copyWith(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    decoration:
+                        TextDecoration.combine([TextDecoration.underline])),
+                textAlign: TextAlign.center,
+              ),
+            ),
             Container(
               width: double.infinity,
               child: Row(

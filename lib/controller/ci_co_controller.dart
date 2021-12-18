@@ -304,10 +304,7 @@ class CiCoController extends GetxController {
         await OutletServices.getSingleOutlet(outlet);
 
     if (result.value != null) {
-      if (result.value!.potoDepan == null ||
-          result.value!.potoShopSign == null ||
-          result.value!.potoKiri == null ||
-          result.value!.potoKanan == null) {
+      if (result.value!.video == null) {
         return false;
       }
     }
