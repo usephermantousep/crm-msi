@@ -29,7 +29,6 @@ class NooService {
           (data['data'] as Iterable).map((e) => NooModel.fromJson(e)).toList();
       return ApiReturnValue(value: value);
     } catch (err) {
-      print(err);
       return ApiReturnValue(value: [], message: err.toString());
     }
   }
@@ -109,8 +108,6 @@ class NooService {
               ..fields['fl'] = fl
               ..fields['latlong'] = latlong
               ..fields['clus'] = clus!;
-
-            print(clus);
           }
           break;
         default:
@@ -192,7 +189,6 @@ class NooService {
       }
       return ApiReturnValue(value: true, message: 'Behasil update');
     } catch (err) {
-      print(err.toString());
       return ApiReturnValue(value: false, message: err.toString());
     }
   }
@@ -215,8 +211,6 @@ class NooService {
         'id': id,
         'status': 'APPROVED'
       });
-
-      print(response.statusCode);
 
       if (response.statusCode != 200) {
         return ApiReturnValue(value: false, message: "Gagal update status NOO");
@@ -247,8 +241,6 @@ class NooService {
         'alasan': alasan.toUpperCase(),
         'status': 'REJECTED'
       });
-
-      print(response.statusCode);
 
       if (response.statusCode != 200) {
         return ApiReturnValue(value: false, message: "Gagal update status NOO");
@@ -422,7 +414,6 @@ class NooService {
       var response = await client.send();
 
       if (response.statusCode != 200) {
-        print(response.reasonPhrase);
         return ApiReturnValue(
             value: false,
             message: 'Gagal registrasi Noo ${response.statusCode}');

@@ -42,8 +42,6 @@ class VisitServices {
 
       var response = await request.send();
 
-      print(response.statusCode);
-
       if (response.statusCode != 200) {
         return ApiReturnValue(
             message: 'Ada permasalahan pada server', value: false);
@@ -55,8 +53,9 @@ class VisitServices {
     }
   }
 
-  static Future<ApiReturnValue<List<VisitModel>>> getVisit(
-      {http.Client? client}) async {
+  static Future<ApiReturnValue<List<VisitModel>>> getVisit({
+    http.Client? client,
+  }) async {
     if (client == null) {
       client = http.Client();
     }
@@ -121,13 +120,14 @@ class VisitServices {
   }
 
   static Future<ApiReturnValue<List<VisitModel>>> getMonitorVisit(
-      {http.Client? client}) async {
+      {http.Client? client, required DateTime date}) async {
     try {
       if (client == null) {
         client = http.Client();
       }
 
-      String url = baseUrl + "visit/monitor";
+      String url = baseUrl +
+          "visit/monitor?date=${DateFormat('yyyy-MM-dd').format(date)}";
       Uri uri = Uri.parse(url);
 
       SharedPreferences pref = await SharedPreferences.getInstance();
@@ -142,8 +142,6 @@ class VisitServices {
         String message = data['meta']['message'];
         return ApiReturnValue(value: [], message: message);
       }
-
-      print(response.statusCode);
       var data = jsonDecode(response.body);
 
       List<VisitModel> value = (data['data'] as Iterable)

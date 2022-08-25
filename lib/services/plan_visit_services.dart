@@ -76,7 +76,6 @@ class PlanVisitServices {
       if (client == null) {
         client = http.Client();
       }
-      print(kodeOutlet);
 
       String url = baseUrl + 'planvisit';
       Uri uri = Uri.parse(url);
@@ -122,8 +121,6 @@ class PlanVisitServices {
         'tahun': tahun,
         'kode_outlet': kodeOutlet,
       });
-
-      print(response.statusCode);
 
       if (response.statusCode != 200) {
         var data = jsonDecode(response.body);

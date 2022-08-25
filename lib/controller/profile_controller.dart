@@ -11,6 +11,7 @@ class ProfileController extends GetxController {
   String? selectedDivisi;
   String? selectedRegion;
   List<VisitModel>? visitMonitor;
+  DateTime date = DateTime.now();
 
   Future<bool> getDataOutlet({String? region, String? divisi}) async {
     ApiReturnValue<List<OutletModel>> result =
@@ -123,14 +124,19 @@ class ProfileController extends GetxController {
         backgroundColor: Colors.red[900]);
   }
 
-  Future<void> getMonitor() async {
+  Future<void> getMonitor({required DateTime date}) async {
     ApiReturnValue<List<VisitModel>> result =
-        await VisitServices.getMonitorVisit();
+        await VisitServices.getMonitorVisit(date: date);
 
     if (result.value != null) {
       visitMonitor = result.value!;
       update(['monitor']);
     }
+  }
+
+  void changeDate(DateTime date) {
+    this.date = date;
+    getMonitor(date: date);
   }
 
   @override
@@ -145,7 +151,7 @@ class ProfileController extends GetxController {
       getDataOutlet();
     }
     if (id == 1 || id == 2) {
-      getMonitor();
+      getMonitor(date: date);
     }
     super.onInit();
   }

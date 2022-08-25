@@ -8,34 +8,115 @@ class ListMonitorVisit extends GetView<ProfileController> {
   @override
   Widget build(BuildContext context) {
     return GeneralPage(
-      title: "Monitoring",
-      subtitle: "Live Visit",
-      onBackButtonPressed: () => Get.back(),
-      child: RefreshIndicator(
-        onRefresh: () => controller.getMonitor(),
-        child: Container(
-          padding: EdgeInsets.only(top: 10, left: 10, right: 10),
-          height: MediaQuery.of(context).size.height - 150,
-          child: controller.visitMonitor!.length < 1
-              ? Container(
-                  height: MediaQuery.of(context).size.height - 124,
-                  child: Text(
-                    "Belum ada histori visit",
-                    style: blackFontStyle1,
-                  ),
-                  alignment: Alignment.center,
-                )
-              : GetBuilder<ProfileController>(
-                  id: 'monitor',
-                  builder: (_) => ListView.builder(
-                    itemCount: controller.visitMonitor!.length,
-                    itemBuilder: (context, index) =>
-                        _cardMonitor(index, context),
-                  ),
-                ),
-        ),
-      ),
-    );
+        title: "Monitoring",
+        subtitle: "Live Visit",
+        onBackButtonPressed: () => Get.back(),
+        child: RefreshIndicator(
+          onRefresh: () => controller.getMonitor(date: controller.date),
+          child: GetBuilder<ProfileController>(
+            id: 'monitor',
+            builder: (_) => Container(
+              padding: EdgeInsets.only(top: 10, left: 10, right: 10),
+              height: MediaQuery.of(context).size.height - 150,
+              child: controller.visitMonitor?.length == 0
+                  ? Column(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              GestureDetector(
+                                onTap: () => _getDateUser(context),
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 4, horizontal: 10),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: "FF3F0A".toColor(),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black.withOpacity(0.1),
+                                        blurRadius: 10,
+                                      ),
+                                    ],
+                                  ),
+                                  child: Text('Change Date',
+                                      style: blackFontStyle1.copyWith(
+                                          color: Colors.white)),
+                                ),
+                              ),
+                              Text(
+                                DateFormat('dd MMMM yyyy')
+                                    .format(controller.date),
+                                style: blackFontStyle1,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Expanded(
+                          child: Center(
+                            child: Text(
+                              "Belum ada histori visit",
+                              style: blackFontStyle1,
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  : Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              GestureDetector(
+                                onTap: () => _getDateUser(context),
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 4, horizontal: 10),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: "FF3F0A".toColor(),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black.withOpacity(0.1),
+                                        blurRadius: 10,
+                                      ),
+                                    ],
+                                  ),
+                                  child: Text('Change Date',
+                                      style: blackFontStyle1.copyWith(
+                                          color: Colors.white)),
+                                ),
+                              ),
+                              Text(
+                                DateFormat('dd MMMM yyyy')
+                                    .format(controller.date),
+                                style: blackFontStyle1,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Expanded(
+                          child: Scrollbar(
+                            interactive: true,
+                            thickness: 5,
+                            radius: Radius.circular(10),
+                            child: ListView.builder(
+                              itemCount: controller.visitMonitor!.length,
+                              itemBuilder: (context, index) =>
+                                  _cardMonitor(index, context),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+            ),
+          ),
+        ));
   }
 
   Card _cardMonitor(int index, BuildContext context) {
@@ -101,30 +182,29 @@ class ListMonitorVisit extends GetView<ProfileController> {
                 SizedBox(
                   width: 10,
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      width: MediaQuery.of(context).size.width - 200,
-                      child: Text(
-                        controller.visitMonitor![index].outlet!.namaOutlet!,
-                        style: blackFontStyle3.copyWith(fontSize: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        child: Text(
+                          controller.visitMonitor![index].outlet!.namaOutlet!,
+                          style: blackFontStyle3.copyWith(fontSize: 12),
+                        ),
                       ),
-                    ),
-                    Container(
-                      width: MediaQuery.of(context).size.width - 200,
-                      child: Text(
-                        "${controller.visitMonitor![index].outlet!.alamatOutlet} - ${controller.visitMonitor![index].outlet!.distric ?? '-'}",
-                        style: blackFontStyle3.copyWith(
-                            fontSize: 8, color: greyColor),
-                        overflow: TextOverflow.clip,
+                      Container(
+                        child: Text(
+                          "${controller.visitMonitor![index].outlet!.alamatOutlet} - ${controller.visitMonitor![index].outlet!.distric ?? '-'}",
+                          style: blackFontStyle3.copyWith(
+                              fontSize: 8, color: greyColor),
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-                Spacer(),
                 Text(
-                  "${DateFormat('HH:mm').format(controller.visitMonitor![index].checkInTime!)} - ${controller.visitMonitor![index].checkOutTime == null ? '' : DateFormat('HH:mm').format(controller.visitMonitor![index].checkOutTime!)}",
+                  "${DateFormat('dd-MMM-yyyy').format(controller.visitMonitor![index].checkInTime!)} \n ${DateFormat('HH:mm').format(controller.visitMonitor![index].checkInTime!)} - ${controller.visitMonitor![index].checkOutTime == null ? '' : DateFormat('HH:mm').format(controller.visitMonitor![index].checkOutTime!)}",
                   style: blackFontStyle3.copyWith(fontSize: 10),
                 ),
               ],
@@ -136,7 +216,7 @@ class ListMonitorVisit extends GetView<ProfileController> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    width: MediaQuery.of(context).size.width * 0.7,
+                    width: 130,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -154,8 +234,56 @@ class ListMonitorVisit extends GetView<ProfileController> {
                       ],
                     ),
                   ),
+                  SizedBox(
+                    width: 150,
+                    height: 50,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            _createButton(
+                              "Foto CI",
+                              () => Get.to(() => DetailFoto(
+                                    foto:
+                                        "http://grosir.mediaselularindonesia.com/storage/${controller.visitMonitor![index].pictureVisitIn}",
+                                  )),
+                            ),
+                            controller.visitMonitor?[index].pictureVisitOut ==
+                                    null
+                                ? const SizedBox()
+                                : _createButton(
+                                    "Foto CO",
+                                    () => Get.to(() => DetailFoto(
+                                          foto:
+                                              "http://grosir.mediaselularindonesia.com/storage/${controller.visitMonitor![index].pictureVisitOut}",
+                                        )),
+                                  ),
+                          ],
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            _createButton("Lokasi CI", () async {
+                              if (!await launch(
+                                  "https://www.google.com/maps/search/${controller.visitMonitor![index].latlongIn}"))
+                                throw 'Could not launch';
+                            }),
+                            controller.visitMonitor?[index].latlongOut == null
+                                ? const SizedBox()
+                                : _createButton("Lokasi CO", () async {
+                                    if (!await launch(
+                                        "https://www.google.com/maps/search/${controller.visitMonitor![index].latlongOut}"))
+                                      throw 'Could not launch';
+                                  }),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
                   Container(
-                    width: MediaQuery.of(context).size.width * 0.1,
+                    width: 40,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
@@ -196,5 +324,38 @@ class ListMonitorVisit extends GetView<ProfileController> {
         ),
       ),
     );
+  }
+
+  Widget _createButton(String title, Function() function) => GestureDetector(
+        onTap: function,
+        child: Container(
+          padding: EdgeInsets.symmetric(
+            horizontal: 10,
+            vertical: 5,
+          ),
+          decoration: BoxDecoration(
+              color: "FF3F0A".toColor(),
+              borderRadius: BorderRadius.circular(8)),
+          child: Text(
+            title,
+            style: blackFontStyle3.copyWith(fontSize: 10, color: Colors.white),
+          ),
+        ),
+      );
+
+  _getDateUser(BuildContext context) async {
+    DateTime? _pickerDate = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(2022, 4, 25),
+        lastDate: DateTime(2025, 12, 31),
+        builder: (context, child) => Theme(
+              data: ThemeData.dark(),
+              child: child!,
+            ));
+
+    if (_pickerDate != null) {
+      controller.changeDate(_pickerDate);
+    }
   }
 }
